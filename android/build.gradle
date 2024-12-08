@@ -3,6 +3,11 @@ allprojects {
         google()
         mavenCentral()
     }
+
+    dependencies {
+        //classpath 'com.android.tools.build:gradle:8.11.1'  // Pastikan ini versi terbaru
+//        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.22'  // Sesuaikan dengan versi Kotlin Anda
+    }
 }
 
 rootProject.buildDir = "../build"
@@ -16,3 +21,5 @@ subprojects {
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
+
+
