@@ -58,8 +58,14 @@ class HomeScreen extends StatelessWidget {
               ),
               CircleAvatar(
                 radius: 24,
-                child: Image.asset('assets/images/profile.png'),
-              )
+                backgroundColor: Colors.grey[200],
+                backgroundImage:
+                const AssetImage('assets/images/profile1.png'),
+              ),
+              // CircleAvatar(
+              //   radius: 24,
+              //   child: Image.asset('assets/images/profile.png'),
+              // )
             ],
           ),
         ),
@@ -97,7 +103,7 @@ class HomeScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'Produk Pertanian',
+                          'Layanan Pertanian',
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w700,
@@ -224,7 +230,7 @@ class HomeScreen extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
-                    'Terbaru',
+                    'Produk Pertanian',
                     style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w700,
