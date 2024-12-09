@@ -73,7 +73,9 @@ class _ProdukDistributorScreenState extends State<DistributorScreen> {
                                           builder: (context) =>
                                               DetailDistributorScreen(
                                                   distributor: distributor
-                                              )))
+                                              )
+                                      )
+                                  )
                                 },
                                 child: DistributorCard(
                                   name: distributor.title,

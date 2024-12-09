@@ -45,13 +45,15 @@ class ProdusenCard extends StatelessWidget {
               width: 100,
               height: 100,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(15),
               ),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(15),
                 child: Image.asset(
                   imageUrl,
                   fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: double.infinity,
                 ),
               ),
             ),
@@ -95,10 +97,11 @@ class ProdusenCard extends StatelessWidget {
                     children: [
                       Text(
                         'Rp. ${price.toStringAsFixed(0)}',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.green,
+                          //color: Colors.green[900],
+                          color: Colors.green[800]
                         ),
                       ),
                       Container(

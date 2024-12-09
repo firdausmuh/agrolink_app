@@ -23,7 +23,7 @@ class produk_produsen {
 List<produk_produsen> produsens = [
   produk_produsen(
       title: "Sayur Kangkung",
-      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis quam consequuntur nulla? Repellat nihil quo deleniti doloremque consequuntur id pariatur?",
+      description: "Kangkung, yang memiliki nama ilmiah Ipomoea aquatica, adalah salah satu jenis sayuran hijau yang populer di banyak negara Asia, termasuk Indonesia. Kangkung dikenal sebagai sayuran yang tumbuh cepat dan mudah dibudidayakan, terutama di daerah tropis dengan banyak air.",
       readyStock: "20Pack",
       imageUrl: ['assets/images/produsen/kankung.png', 'assets/images/produsen/kankung.png'],
       harga: 65000,
@@ -33,7 +33,7 @@ List<produk_produsen> produsens = [
   ),
   produk_produsen(
       title: "Sayur Sawi Jadi",
-      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis quam consequuntur nulla? Repellat nihil quo deleniti doloremque consequuntur id pariatur?",
+      description: "Sawi adalah jenis sayuran hijau yang termasuk dalam keluarga Brassicaceae atau kubis-kubisan. Sayuran ini sering digunakan dalam berbagai masakan Asia karena rasanya yang segar dan kandungan gizinya yang tinggi. Di Indonesia, sawi sangat populer dan tersedia dalam beberapa varietas.",
       readyStock: "20Pcs",
       imageUrl: ['assets/images/produsen/sawi.png', 'assets/images/produsen/sawi.png'],
       harga: 15000,
@@ -43,7 +43,7 @@ List<produk_produsen> produsens = [
   ),
   produk_produsen(
       title: "Buah Naga Segar",
-      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis quam consequuntur nulla? Repellat nihil quo deleniti doloremque consequuntur id pariatur?",
+      description: "Buah naga, dikenal juga sebagai pitaya, adalah buah tropis yang berasal dari kaktus genus Hylocereus atau Selenicereus. Buah ini populer karena bentuknya yang unik, rasa manisnya yang menyegarkan, serta manfaat kesehatannya yang beragam.",
       readyStock: "20Kg",
       imageUrl: ['assets/images/produsen/buah_naga.png', 'assets/images/produsen/buah_naga.png'],
       harga: 65000,
