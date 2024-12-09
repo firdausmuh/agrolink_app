@@ -1,10 +1,10 @@
 import 'package:agrolink/components/informasi/informasi_card.dart';
 import 'package:agrolink/components/layanan_box.dart';
 import 'package:agrolink/models/InformasiData.dart';
-import 'package:agrolink/screens/belanja/belanja_screen.dart';
 import 'package:agrolink/screens/informasi/detail_informasi_screen.dart';
 import 'package:agrolink/screens/informasi/informasi_screen.dart';
 import 'package:agrolink/screens/perawatan_tanaman/perawatan_tanaman_screen.dart';
+import 'package:agrolink/screens/produk_supplier/belanja_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -33,7 +33,7 @@ class HomeScreen extends StatelessWidget {
                       children: [
                         Flexible(
                           child: Text(
-                            'Hey Ceeeeeeeeeeeeeeeeeeeeeeeeee',
+                            'Hey Nadila Azucena',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -97,9 +97,9 @@ class HomeScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'Paket Layanan',
+                          'Produk Pertanian',
                           style: TextStyle(
-                            color: Colors.blue,
+                            color: Colors.black,
                             fontWeight: FontWeight.w700,
                             fontSize: 24,
                           ),
@@ -125,8 +125,8 @@ class HomeScreen extends StatelessWidget {
                                 },
                                 child: const LayananBox(
                                     imagePath:
-                                        'assets/images/layanan/belanja.png',
-                                    label: 'Belanja'),
+                                        'assets/images/layanan/suplier.jpg',
+                                    label: 'Produk Suplier'),
                               ),
                             ),
                             const SizedBox(
@@ -145,8 +145,8 @@ class HomeScreen extends StatelessWidget {
                                 },
                                 child: const LayananBox(
                                     imagePath:
-                                        'assets/images/layanan/perawatan.png',
-                                    label: 'Perawatan'),
+                                        'assets/images/layanan/produsen.jpg',
+                                    label: 'Produk Produsen'),
                               ),
                             ),
                             const SizedBox(
@@ -165,10 +165,53 @@ class HomeScreen extends StatelessWidget {
                                 },
                                 child: const LayananBox(
                                     imagePath:
-                                        'assets/images/layanan/informasi.png',
-                                    label: 'Informasi'),
+                                        'assets/images/layanan/distributor.jpg',
+                                    label: 'Produk Distributor'),
                               ),
                             ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Flexible(
+                              flex: 1,
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(20),
+                                onTap: () => {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                          const InformasiScreen()))
+                                },
+                                child: const LayananBox(
+                                    imagePath:
+                                    'assets/images/layanan/retailer.jpg',
+                                    label: 'Produk Retailer'),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Flexible(
+                              flex: 1,
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(20),
+                                onTap: () => {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                          const InformasiScreen()))
+                                },
+                                child: const LayananBox(
+                                    imagePath:
+                                    'assets/images/layanan/informasi.png',
+                                    label: 'Informasi pertanian'),
+                              ),
+                            ),
+                            // const SizedBox(
+                            //   width: 10,
+                            // ),
                           ],
                         ),
                       ]),
@@ -183,7 +226,7 @@ class HomeScreen extends StatelessWidget {
                   child: Text(
                     'Terbaru',
                     style: TextStyle(
-                        color: Colors.blue,
+                        color: Colors.black,
                         fontWeight: FontWeight.w700,
                         fontSize: 24),
                   ),

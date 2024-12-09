@@ -1,9 +1,8 @@
-import 'package:agrolink/models/Belanja.dart';
-import 'package:agrolink/screens/belanja/detail_belanja_screen.dart';
-import 'package:agrolink/screens/belanja/favorite_belanja_screen.dart';
+import 'package:agrolink/models/Supplier.dart';
+import 'package:agrolink/screens/produk_supplier/detail_belanja_screen.dart';
+import 'package:agrolink/screens/produk_supplier/favorite_belanja_screen.dart';
 import 'package:flutter/material.dart';
-
-import '../../components/belanja/belanja_card.dart';
+import '../../components/produk_supplier/supplier_card.dart';
 import '../../components/search_bar.dart';
 
 class BelanjaScreen extends StatefulWidget {
@@ -25,7 +24,7 @@ class _BelanjaScreenState extends State<BelanjaScreen> {
           onPressed: () => Navigator.pop(context),
         ),
         title: const Text(
-          'Belanja',
+          'Produk Supplier',
           style: TextStyle(
               color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700),
         ),
@@ -48,7 +47,7 @@ class _BelanjaScreenState extends State<BelanjaScreen> {
           Padding(
             padding: const EdgeInsets.all(20),
             child: SearchBarWithController(
-              hintText: 'Cari Sayuran',
+              hintText: 'Cari produk suplier',
               onSearch: (query) {
                 // Handle search
                 print('Searching for: $query');
@@ -73,12 +72,13 @@ class _BelanjaScreenState extends State<BelanjaScreen> {
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             DetailBelanjaScreen(
-                                              belanja: belanja,
+                                              supplier: belanja,
                                             )))
                               },
                               child: BelanjaCard(
                                 name: belanja.title,
                                 description: belanja.description,
+                                readyStock: belanja.readyStock,
                                 price: belanja.harga,
                                 imageUrl: belanja.imageUrl[0],
                                 onAddPressed: () {

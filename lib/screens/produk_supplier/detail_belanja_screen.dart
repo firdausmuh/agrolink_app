@@ -1,10 +1,10 @@
-import 'package:agrolink/models/Belanja.dart';
+import 'package:agrolink/models/Supplier.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class DetailBelanjaScreen extends StatefulWidget {
-  final Belanja belanja;
-  const DetailBelanjaScreen({super.key, required this.belanja});
+  final Belanja supplier;
+  const DetailBelanjaScreen({super.key, required this.supplier});
 
   @override
   State<DetailBelanjaScreen> createState() => _DetailBelanjaScreenState();
@@ -21,7 +21,7 @@ class _DetailBelanjaScreenState extends State<DetailBelanjaScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.belanja.jumlah.length);
+    print(widget.supplier.jumlah.length);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -31,7 +31,7 @@ class _DetailBelanjaScreenState extends State<DetailBelanjaScreen> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          widget.belanja.title,
+          widget.supplier.title,
           style: const TextStyle(
               color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700),
         ),
@@ -47,12 +47,12 @@ class _DetailBelanjaScreenState extends State<DetailBelanjaScreen> {
                       height: MediaQuery.sizeOf(context).width,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: widget.belanja.imageUrl.length,
+                        itemCount: widget.supplier.imageUrl.length,
                         itemBuilder: (context, index) {
                           return SizedBox(
                             width: MediaQuery.sizeOf(context).width,
                             child: Image.asset(
-                              widget.belanja.imageUrl[index],
+                              widget.supplier.imageUrl[index],
                               fit: BoxFit.cover,
                             ),
                           );
@@ -67,7 +67,7 @@ class _DetailBelanjaScreenState extends State<DetailBelanjaScreen> {
                           children: [
                             Flexible(
                               child: Text(
-                                widget.belanja.title,
+                                widget.supplier.title,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
@@ -76,7 +76,7 @@ class _DetailBelanjaScreenState extends State<DetailBelanjaScreen> {
                             ),
                             Text(
                               'Rp ' +
-                                  formatCurrency(widget.belanja.harga)
+                                  formatCurrency(widget.supplier.harga)
                                       .toString(),
                               style: const TextStyle(fontSize: 24),
                             )
@@ -122,7 +122,7 @@ class _DetailBelanjaScreenState extends State<DetailBelanjaScreen> {
                         SizedBox(
                           height: 44,
                           child: ListView.builder(
-                              itemCount: widget.belanja.jumlah.length,
+                              itemCount: widget.supplier.jumlah.length,
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
                                 final bool isSelected = selectedIndex == index;
@@ -144,7 +144,7 @@ class _DetailBelanjaScreenState extends State<DetailBelanjaScreen> {
                                             borderRadius:
                                                 BorderRadius.circular(10)),
                                         child: Text(
-                                          '${widget.belanja.jumlah[index]} ${widget.belanja.satuan}',
+                                          '${widget.supplier.jumlah[index]} ${widget.supplier.satuan}',
                                           style: TextStyle(
                                               fontSize: 16,
                                               color: isSelected
@@ -180,7 +180,7 @@ class _DetailBelanjaScreenState extends State<DetailBelanjaScreen> {
                           children: [
                             Flexible(
                               child: Text(
-                                widget.belanja.description,
+                                widget.supplier.description,
                                 style: TextStyle(
                                     color: Colors.black.withOpacity(0.8),
                                     fontSize: 16),
@@ -188,6 +188,21 @@ class _DetailBelanjaScreenState extends State<DetailBelanjaScreen> {
                             ),
                           ],
                         ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        // Row(
+                        //   children: [
+                        //     Flexible(
+                        //       child: Text(
+                        //         widget.belanja.readyStock,
+                        //         style: TextStyle(
+                        //             color: Colors.black.withOpacity(0.8),
+                        //             fontSize: 16),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
                         const SizedBox(
                           height: 10,
                         ),

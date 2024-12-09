@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class BelanjaCard extends StatelessWidget {
   final String name;
   final String description;
+  final String readyStock;
   final double price;
   final String imageUrl;
   final VoidCallback onAddPressed;
@@ -11,6 +12,7 @@ class BelanjaCard extends StatelessWidget {
     Key? key,
     required this.name,
     required this.description,
+    required this.readyStock,
     required this.price,
     required this.imageUrl,
     required this.onAddPressed,
@@ -77,33 +79,61 @@ class BelanjaCard extends StatelessWidget {
                       color: Colors.grey[600],
                     ),
                   ),
+                  const SizedBox(height: 8,),
+                  Text(
+                    'Ready Stock: ${readyStock.toString()}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey[800],
+                    ),
+                  ),
                   const SizedBox(height: 8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Rp ${price.toStringAsFixed(0)}',
+                        'Rp. ${price.toStringAsFixed(0)}',
                         style: const TextStyle(
-                          fontSize: 16,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.red,
+                          color: Colors.green,
                         ),
                       ),
-                      IconButton(
-                        onPressed: onAddPressed,
-                        icon: Container(
-                          padding: const EdgeInsets.all(4),
-                          decoration: const BoxDecoration(
-                            color: Colors.red,
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(
-                            Icons.add,
-                            color: Colors.white,
-                            size: 20,
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                        child: const Center(
+                          child: Text(
+                            'Beli Sekarang',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                            )
+
                           ),
                         ),
-                      ),
+                      )
+                      // IconButton(
+                      //   onPressed: onAddPressed,
+                      //   icon: Container(
+                      //     padding: const EdgeInsets.all(4),
+                      //     decoration: const BoxDecoration(
+                      //       color: Colors.red,
+                      //       shape: BoxShape.circle,
+                      //     ),
+                      //     child: const Icon(
+                      //       Icons.add,
+                      //       color: Colors.white,
+                      //       size: 20,
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ],

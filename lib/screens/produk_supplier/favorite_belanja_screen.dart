@@ -1,8 +1,7 @@
-import 'package:agrolink/models/Belanja.dart';
-import 'package:agrolink/screens/belanja/detail_belanja_screen.dart';
+import 'package:agrolink/models/Supplier.dart';
+import 'package:agrolink/screens/produk_supplier/detail_belanja_screen.dart';
 import 'package:flutter/material.dart';
-
-import '../../components/belanja/belanja_card.dart';
+import '../../components/produk_supplier/supplier_card.dart';
 import '../../components/search_bar.dart';
 
 class FavoriteBelanjaScreen extends StatefulWidget {
@@ -59,12 +58,13 @@ class _FavoriteBelanjaScreenState extends State<FavoriteBelanjaScreen> {
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             DetailBelanjaScreen(
-                                              belanja: belanja,
+                                              supplier: belanja,
                                             )))
                               },
                               child: BelanjaCard(
                                 name: belanja.title,
                                 description: belanja.description,
+                                readyStock: belanja.readyStock,
                                 price: belanja.harga,
                                 imageUrl: belanja.imageUrl[0],
                                 onAddPressed: () {
