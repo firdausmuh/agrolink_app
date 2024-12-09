@@ -4,6 +4,9 @@ import 'package:agrolink/models/InformasiData.dart';
 import 'package:agrolink/screens/informasi/detail_informasi_screen.dart';
 import 'package:agrolink/screens/informasi/informasi_screen.dart';
 import 'package:agrolink/screens/perawatan_tanaman/perawatan_tanaman_screen.dart';
+import 'package:agrolink/screens/produk_distributor/distributor_screen.dart';
+import 'package:agrolink/screens/produk_produsen/produsen_screen.dart';
+import 'package:agrolink/screens/produk_retailer/retailer_screen.dart';
 import 'package:agrolink/screens/produk_supplier/belanja_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -147,7 +150,7 @@ class HomeScreen extends StatelessWidget {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const PerawatanTanamanScreen()))
+                                              const ProdusenScreen()))
                                 },
                                 child: const LayananBox(
                                     imagePath:
@@ -167,7 +170,7 @@ class HomeScreen extends StatelessWidget {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const InformasiScreen()))
+                                              const DistributorScreen()))
                                 },
                                 child: const LayananBox(
                                     imagePath:
@@ -187,7 +190,7 @@ class HomeScreen extends StatelessWidget {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                          const InformasiScreen()))
+                                          const RetailerScreen()))
                                 },
                                 child: const LayananBox(
                                     imagePath:
