@@ -8,6 +8,7 @@ import 'package:agrolink/screens/produk_distributor/distributor_screen.dart';
 import 'package:agrolink/screens/produk_produsen/produsen_screen.dart';
 import 'package:agrolink/screens/produk_retailer/retailer_screen.dart';
 import 'package:agrolink/screens/produk_supplier/belanja_screen.dart';
+import 'package:agrolink/screens/produk_supplier/supplier_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -129,7 +130,7 @@ class HomeScreen extends StatelessWidget {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            const BelanjaScreen()),
+                                            const SupplierScreen()),
                                   )
                                 },
                                 child: const LayananBox(

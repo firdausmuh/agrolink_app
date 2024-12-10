@@ -2,20 +2,20 @@ import 'package:agrolink/models/Supplier.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class DetailBelanjaScreen extends StatefulWidget {
-  final Belanja supplier;
-  const DetailBelanjaScreen({super.key, required this.supplier});
+class DetailSupplierScreen extends StatefulWidget {
+  final produk_supplier supplier;
+  const DetailSupplierScreen({super.key, required this.supplier});
 
   @override
-  State<DetailBelanjaScreen> createState() => _DetailBelanjaScreenState();
+  State<DetailSupplierScreen> createState() => _DetailBelanjaScreenState();
 }
 
-class _DetailBelanjaScreenState extends State<DetailBelanjaScreen> {
+class _DetailBelanjaScreenState extends State<DetailSupplierScreen> {
   int selectedIndex = 1;
 
   String formatCurrency(double value) {
     final formatter =
-        NumberFormat("#,##0", "id_ID"); // Locale for Indonesian formatting
+    NumberFormat("#,##0", "id_ID"); // Locale for Indonesian formatting
     return formatter.format(value);
   }
 
@@ -142,7 +142,7 @@ class _DetailBelanjaScreenState extends State<DetailBelanjaScreen> {
                                                 ? const Color(0xFFD3B398)
                                                 : Colors.black.withOpacity(0.1),
                                             borderRadius:
-                                                BorderRadius.circular(10)),
+                                            BorderRadius.circular(10)),
                                         child: Text(
                                           '${widget.supplier.jumlah[index]} ${widget.supplier.satuan}',
                                           style: TextStyle(
@@ -150,7 +150,7 @@ class _DetailBelanjaScreenState extends State<DetailBelanjaScreen> {
                                               color: isSelected
                                                   ? Colors.white
                                                   : Colors.black
-                                                      .withOpacity(0.3)),
+                                                  .withOpacity(0.3)),
                                         ),
                                       ),
                                     ),

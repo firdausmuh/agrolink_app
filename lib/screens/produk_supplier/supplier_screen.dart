@@ -1,18 +1,18 @@
 import 'package:agrolink/models/Supplier.dart';
-import 'package:agrolink/screens/produk_supplier/detail_belanja_screen.dart';
+import 'package:agrolink/screens/produk_supplier/detail_supplier_screen.dart';
 import 'package:agrolink/screens/produk_supplier/favorite_belanja_screen.dart';
 import 'package:flutter/material.dart';
 import '../../components/produk_supplier/supplier_card.dart';
 import '../../components/search_bar.dart';
 
-class BelanjaScreen extends StatefulWidget {
-  const BelanjaScreen({super.key});
+class SupplierScreen extends StatefulWidget {
+  const SupplierScreen({super.key});
 
   @override
-  State<BelanjaScreen> createState() => _BelanjaScreenState();
+  State<SupplierScreen> createState() => _ProdukSupplierScreenState();
 }
 
-class _BelanjaScreenState extends State<BelanjaScreen> {
+class _ProdukSupplierScreenState extends State<SupplierScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,11 +33,11 @@ class _BelanjaScreenState extends State<BelanjaScreen> {
             padding: EdgeInsets.only(right: 10),
             child: IconButton(
                 onPressed: () => {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => FavoriteBelanjaScreen()))
-                    },
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => FavoriteBelanjaScreen()))
+                },
                 icon: Icon(Icons.favorite, color: Colors.red.withOpacity(0.6),)),
           )
         ],
@@ -47,7 +47,7 @@ class _BelanjaScreenState extends State<BelanjaScreen> {
           Padding(
             padding: const EdgeInsets.all(20),
             child: SearchBarWithController(
-              hintText: 'Cari produk suplier',
+              hintText: 'Cari produk suplier yang anda inginkan',
               onSearch: (query) {
                 // Handle search
                 print('Searching for: $query');
@@ -62,7 +62,7 @@ class _BelanjaScreenState extends State<BelanjaScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Column(
-                      children: belanjas.map((belanja) {
+                      children: suppliers.map((supplier) {
                         return Column(
                           children: [
                             InkWell(
@@ -71,21 +71,21 @@ class _BelanjaScreenState extends State<BelanjaScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            DetailBelanjaScreen(
-                                              supplier: belanja,
+                                            DetailSupplierScreen(
+                                              supplier: supplier,
                                             )))
                               },
-                              child: BelanjaCard(
-                                name: belanja.title,
-                                description: belanja.description,
-                                readyStock: belanja.readyStock,
-                                price: belanja.harga,
-                                imageUrl: belanja.imageUrl[0],
+                              child: SupplierCard(
+                                name: supplier.title,
+                                description: supplier.description,
+                                readyStock: supplier.readyStock,
+                                price: supplier.harga,
+                                imageUrl: supplier.imageUrl[0],
                                 onAddPressed: () {
                                   // Handle add to cart action
                                   SnackBar(
                                     content: Text(
-                                        "${belanja.title} masuk ke keranjang"),
+                                        "${supplier.title} masuk ke keranjang"),
                                   );
                                 },
                               ),

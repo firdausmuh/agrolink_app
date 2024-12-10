@@ -1,5 +1,5 @@
 import 'package:agrolink/models/Supplier.dart';
-import 'package:agrolink/screens/produk_supplier/detail_belanja_screen.dart';
+import 'package:agrolink/screens/produk_supplier/detail_supplier_screen.dart';
 import 'package:flutter/material.dart';
 import '../../components/produk_supplier/supplier_card.dart';
 import '../../components/search_bar.dart';
@@ -48,7 +48,7 @@ class _FavoriteBelanjaScreenState extends State<FavoriteBelanjaScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Column(
-                      children: belanjas.map((belanja) {
+                      children: suppliers.map((supplier) {
                         return Column(
                           children: [
                             InkWell(
@@ -57,21 +57,21 @@ class _FavoriteBelanjaScreenState extends State<FavoriteBelanjaScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            DetailBelanjaScreen(
-                                              supplier: belanja,
+                                            DetailSupplierScreen(
+                                              supplier: supplier,
                                             )))
                               },
-                              child: BelanjaCard(
-                                name: belanja.title,
-                                description: belanja.description,
-                                readyStock: belanja.readyStock,
-                                price: belanja.harga,
-                                imageUrl: belanja.imageUrl[0],
+                              child: SupplierCard(
+                                name: supplier.title,
+                                description: supplier.description,
+                                readyStock: supplier.readyStock,
+                                price: supplier.harga,
+                                imageUrl: supplier.imageUrl[0],
                                 onAddPressed: () {
                                   // Handle add to cart action
                                   SnackBar(
                                     content: Text(
-                                        "${belanja.title} masuk ke keranjang"),
+                                        "${supplier.title} masuk ke keranjang"),
                                   );
                                 },
                               ),

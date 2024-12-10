@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class BelanjaCard extends StatelessWidget {
+class SupplierCard extends StatelessWidget {
   final String name;
   final String description;
   final String readyStock;
@@ -8,7 +8,7 @@ class BelanjaCard extends StatelessWidget {
   final String imageUrl;
   final VoidCallback onAddPressed;
 
-  const BelanjaCard({
+  const SupplierCard({
     Key? key,
     required this.name,
     required this.description,
