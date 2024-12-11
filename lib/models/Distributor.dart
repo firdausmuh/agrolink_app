@@ -39,7 +39,7 @@ List<produk_distributor> distributors = [
       description: "Pakan ayam adalah makanan yang diberikan kepada ayam untuk mendukung pertumbuhannya, produksi telur, atau kualitas daging ayam. Pakan ayam yang baik harus mengandung berbagai nutrisi penting seperti protein, lemak, karbohidrat, vitamin, dan mineral.",
       readyStock: "20Pcs",
       category: "Produk Distributor",
-      imageUrl: ['assets/images/distributor/pakan_ayam.png', 'assets/images/distributor/pakan_ayam.png'],
+      imageUrl: ['assets/images/distributor/pakan_ayam.png', 'assets/images/distributor/pakanayam2.png'],
       harga: 15000,
       rating: 4.2,
       jumlah: [10, 20, 30, 40, 50, 60],

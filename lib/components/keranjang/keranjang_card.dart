@@ -7,6 +7,15 @@ class KeranjangCard extends StatefulWidget {
   State<KeranjangCard> createState() => _KeranjangCardState();
 }
 
+// class KeranjangCard extends StatefulWidget {
+//   final CartItem cartItem;
+//
+//   const KeranjangCard({super.key, required this.cartItem});
+//
+//   @override
+//   State<KeranjangCard> createState() => _KeranjangCardState();
+// }
+
 class _KeranjangCardState extends State<KeranjangCard> {
   int quantity = 1;
   final int basePrice = 25000;
