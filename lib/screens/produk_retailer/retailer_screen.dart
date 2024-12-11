@@ -79,6 +79,7 @@ class _ProdukRetailerScreenState extends State<RetailerScreen> {
                                   name: retailer.title,
                                   description: retailer.description,
                                   readyStock: retailer.readyStock,
+                                  category: retailer.category,
                                   price: retailer.harga,
                                   imageUrl: retailer.imageUrl[0],
                                   onAddPressed: () {
