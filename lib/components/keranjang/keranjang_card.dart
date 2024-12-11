@@ -80,6 +80,14 @@ class _KeranjangCardState extends State<KeranjangCard> {
                         color: Colors.grey[600],
                       ),
                     ),
+                    const SizedBox(height: 5,),
+                    Text(
+                      'Stok : 50 Biji',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.green[800],
+                      ),
+                    ),
                     const SizedBox(height: 12),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

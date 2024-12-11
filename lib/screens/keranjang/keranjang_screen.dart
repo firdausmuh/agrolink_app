@@ -80,9 +80,9 @@ class _KeranjangScreenState extends State<KeranjangScreen> {
           SizedBox(
             width: MediaQuery.of(context).size.width,
             child: ElevatedButton(onPressed: () {}, style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xFF406A52),
+              backgroundColor: Color(0xFF07DF62),
 
-            ), child: Text('Pesan Sekarang', style: TextStyle(color: Colors.white),)),
+            ), child: Text('Beli Sekarang', style: TextStyle(color: Colors.white),)),
           ),
           const SizedBox(
             height: 20,
