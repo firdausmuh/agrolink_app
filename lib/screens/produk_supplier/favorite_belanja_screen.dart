@@ -65,6 +65,7 @@ class _FavoriteBelanjaScreenState extends State<FavoriteBelanjaScreen> {
                                 name: supplier.title,
                                 description: supplier.description,
                                 readyStock: supplier.readyStock,
+                                category: supplier.category,
                                 price: supplier.harga,
                                 imageUrl: supplier.imageUrl[0],
                                 onAddPressed: () {

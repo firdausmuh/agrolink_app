@@ -4,6 +4,7 @@ class DistributorCard extends StatelessWidget {
   final String name;
   final String description;
   final String readyStock;
+  final String category;
   final double price;
   final String imageUrl;
   final VoidCallback onAddPressed;
@@ -13,6 +14,7 @@ class DistributorCard extends StatelessWidget {
     required this.name,
     required this.description,
     required this.readyStock,
+    required this.category,
     required this.price,
     required this.imageUrl,
     required this.onAddPressed,
@@ -87,6 +89,16 @@ class DistributorCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.grey[800],
+                    ),
+                  ),
+                  const SizedBox(height: 5,),
+                  Text(
+                    'Kategory: ${category.toString()}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.black,
                     ),
                   ),
                   const SizedBox(height: 8),

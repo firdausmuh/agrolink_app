@@ -79,6 +79,7 @@ class _ProdukProdusenScreenState extends State<ProdusenScreen> {
                                   name: produsen.title,
                                   description: produsen.description,
                                   readyStock: produsen.readyStock,
+                                  category: produsen.category,
                                   price: produsen.harga,
                                   imageUrl: produsen.imageUrl[0],
                                   onAddPressed: () {
