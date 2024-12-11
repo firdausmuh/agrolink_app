@@ -76,133 +76,283 @@ class ProfileScreen extends StatelessWidget {
   }
 
 
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Padding(
+  //     padding: const EdgeInsets.symmetric(horizontal: 20.0),
+  //     child: SingleChildScrollView(
+  //       child: Column(
+  //         children: [
+  //           const SizedBox(height: 20),
+  //           // Profile Image and Name
+  //           Center(
+  //             child: _customContainer(
+  //               Row(
+  //                 children: [
+  //                   const CircleAvatar(
+  //                     radius: 32,
+  //                     child: CircleAvatar(
+  //                       radius: 30,
+  //                       backgroundImage:
+  //                           AssetImage('assets/images/profile1.png'),
+  //                     ),
+  //                   ),
+  //                   const SizedBox(
+  //                     width: 10,
+  //                   ),
+  //                   const Expanded(
+  //                     child: Column(
+  //                       crossAxisAlignment: CrossAxisAlignment.start,
+  //                       children: [
+  //                         Text(
+  //                           'Nadila Azucena',
+  //                           style: TextStyle(fontSize: 16),
+  //                         ),
+  //                         Text(
+  //                           'Bergabung pada: 5 Maret 2024',
+  //                           style: TextStyle(fontSize: 12, color: Colors.grey),
+  //                         ),
+  //                       ],
+  //                     ),
+  //                   ),
+  //                   InkWell(
+  //                     onTap: () => {
+  //                       Navigator.push(
+  //                         context,
+  //                         MaterialPageRoute(
+  //                             builder: (context) => const EditProfileScreen()),
+  //                       )
+  //                     },
+  //                     child: const Column(
+  //                       children: [
+  //                         Icon(
+  //                           Icons.edit,
+  //                           color: Colors.blue,
+  //                           size: 20,
+  //                         ),
+  //                         SizedBox(
+  //                           height: 5,
+  //                         ),
+  //                         Text(
+  //                           'Edit',
+  //                           style: TextStyle(fontSize: 12),
+  //                         ),
+  //                       ],
+  //                     ),
+  //                   )
+  //                 ],
+  //               ),
+  //             ),
+  //           ),
+  //           const SizedBox(height: 20),
+  //           // Informasi Pribadi Section
+  //           Container(
+  //             child: Column(
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               children: [
+  //                 const Text(
+  //                   'Informasi Pribadi',
+  //                   style: TextStyle(
+  //                       fontSize: 16,
+  //                       fontWeight: FontWeight.bold,
+  //                       color: Colors.blue),
+  //                 ),
+  //                 const SizedBox(height: 20),
+  //                 _customContainer(
+  //                   SizedBox(
+  //                     height: 400,
+  //                     child: Column(
+  //                       mainAxisAlignment: MainAxisAlignment.spaceAround,
+  //                       children: [
+  //                         _buildInfoRow(
+  //                             Icons.person_outlined, 'Nadila Azucena', false),
+  //                         _buildInfoRow(Icons.email_outlined,
+  //                             'rencabesar@gmail.com', false),
+  //                         _buildInfoRow(
+  //                             Icons.phone_outlined, '089532123456', false),
+  //                         _buildInfoRow(Icons.store_outlined, 'Toko', false),
+  //                         _buildInfoRow(Icons.cake_outlined, '20 Tahun', false),
+  //                         _buildInfoRow(Icons.location_on_outlined,
+  //                             'Bogor, Indonesia', true),
+  //                       ],
+  //                     ),
+  //                   ),
+  //                 ),
+  //                 const SizedBox(
+  //                   height: 10,
+  //                 ),
+  //                 InkWell(
+  //                   onTap: () => _showCustomLogoutDialog(context),
+  //                   child: _customContainer(
+  //                     _buildInfoRow(
+  //                       Icons.logout,
+  //                       'Keluar',
+  //                       true,
+  //                       textColor: Colors.red,
+  //                     ),
+  //                   ),
+  //                 ),
+  //                 const SizedBox(
+  //                   height: 20,
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
-            // Profile Image and Name
-            Center(
-              child: _customContainer(
-                Row(
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0, // Menghilangkan bayangan pada AppBar
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            Navigator.pop(context); // Aksi kembali
+          },
+        ),
+        title: const Text(
+          "Profile",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        centerTitle: false, // Mengatur teks di tengah
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              // Sisanya tetap seperti sebelumnya
+              Center(
+                child: _customContainer(
+                  Row(
+                    children: [
+                      const CircleAvatar(
+                        radius: 32,
+                        child: CircleAvatar(
+                          radius: 30,
+                          backgroundImage:
+                          AssetImage('assets/images/profile1.png'),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      const Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Nadila Azucena',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            Text(
+                              'Bergabung pada: 5 Maret 2024',
+                              style: TextStyle(fontSize: 12, color: Colors.grey),
+                            ),
+                          ],
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () => {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const EditProfileScreen()),
+                          )
+                        },
+                        child: const Column(
+                          children: [
+                            Icon(
+                              Icons.edit,
+                              color: Colors.blue,
+                              size: 20,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              'Edit',
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              // Informasi Pribadi Section
+              Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const CircleAvatar(
-                      radius: 32,
-                      child: CircleAvatar(
-                        radius: 30,
-                        backgroundImage:
-                            AssetImage('assets/images/profile1.png'),
+                    const Text(
+                      'Informasi Pribadi',
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue),
+                    ),
+                    const SizedBox(height: 20),
+                    _customContainer(
+                      SizedBox(
+                        height: 400,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            _buildInfoRow(
+                                Icons.person_outlined, 'Nadila Azucena', false),
+                            _buildInfoRow(Icons.email_outlined,
+                                'rencabesar@gmail.com', false),
+                            _buildInfoRow(
+                                Icons.phone_outlined, '089532123456', false),
+                            _buildInfoRow(Icons.store_outlined, 'Toko', false),
+                            _buildInfoRow(Icons.cake_outlined, '20 Tahun', false),
+                            _buildInfoRow(Icons.location_on_outlined,
+                                'Bogor, Indonesia', true),
+                          ],
+                        ),
                       ),
                     ),
                     const SizedBox(
-                      width: 10,
-                    ),
-                    const Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Nadila Azucena',
-                            style: TextStyle(fontSize: 16),
-                          ),
-                          Text(
-                            'Bergabung pada: 5 Maret 2024',
-                            style: TextStyle(fontSize: 12, color: Colors.grey),
-                          ),
-                        ],
-                      ),
+                      height: 10,
                     ),
                     InkWell(
-                      onTap: () => {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const EditProfileScreen()),
-                        )
-                      },
-                      child: const Column(
-                        children: [
-                          Icon(
-                            Icons.edit,
-                            color: Colors.blue,
-                            size: 20,
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            'Edit',
-                            style: TextStyle(fontSize: 12),
-                          ),
-                        ],
+                      onTap: () => _showCustomLogoutDialog(context),
+                      child: _customContainer(
+                        _buildInfoRow(
+                          Icons.logout,
+                          'Keluar',
+                          true,
+                          textColor: Colors.red,
+                        ),
                       ),
-                    )
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
                   ],
                 ),
               ),
-            ),
-            const SizedBox(height: 20),
-            // Informasi Pribadi Section
-            Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Informasi Pribadi',
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue),
-                  ),
-                  const SizedBox(height: 20),
-                  _customContainer(
-                    SizedBox(
-                      height: 400,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          _buildInfoRow(
-                              Icons.person_outlined, 'Nadila Azucena', false),
-                          _buildInfoRow(Icons.email_outlined,
-                              'rencabesar@gmail.com', false),
-                          _buildInfoRow(
-                              Icons.phone_outlined, '089532123456', false),
-                          _buildInfoRow(Icons.store_outlined, 'Toko', false),
-                          _buildInfoRow(Icons.cake_outlined, '20 Tahun', false),
-                          _buildInfoRow(Icons.location_on_outlined,
-                              'Bogor, Indonesia', true),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  InkWell(
-                    onTap: () => _showCustomLogoutDialog(context),
-                    child: _customContainer(
-                      _buildInfoRow(
-                        Icons.logout,
-                        'Keluar',
-                        true,
-                        textColor: Colors.red,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
+
 
   Widget _customContainer(Widget widget) {
     return Container(
