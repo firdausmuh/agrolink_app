@@ -82,6 +82,9 @@ class _ProdukDistributorScreenState extends State<DistributorScreen> {
                                   description: distributor.description,
                                   readyStock: distributor.readyStock,
                                   category: distributor.category,
+                                  // isOnline: distributor.isOnline,
+                                  // alamat: distributor.alamat,
+                                  // statusPesanan: distributor.statusPesanan[4],
                                   price: distributor.harga,
                                   imageUrl: distributor.imageUrl[0],
                                   onAddPressed: () {
