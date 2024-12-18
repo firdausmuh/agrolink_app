@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 
 class ShopCard extends StatelessWidget {
-  final String imageUrl;
+  final String shopImage;
   final String namaToko;
   final bool isOnline;
   final String alamat;
   final double rating;
   final String statusPesanan;
+  final VoidCallback onAddPressed;
 
   const ShopCard({
     Key? key,
-    required this.imageUrl,
+    required this.shopImage,
     required this.namaToko,
     required this.isOnline,
     required this.alamat,
     required this.rating,
     required this.statusPesanan,
+    required this.onAddPressed,
   }) : super(key: key);
 
   @override
@@ -34,9 +36,9 @@ class ShopCard extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Image.network(
-                imageUrl,
-                width: 80,
-                height: 80,
+                shopImage,
+                width: 50,
+                height: 50,
                 fit: BoxFit.cover,
               ),
             ),

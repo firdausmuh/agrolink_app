@@ -4,6 +4,8 @@ class RetailerCard extends StatelessWidget {
   final String name;
   final String description;
   final String readyStock;
+  final String shopName;
+  final String shopImage;
   final String category;
   final double price;
   final String imageUrl;
@@ -13,6 +15,8 @@ class RetailerCard extends StatelessWidget {
     Key? key,
     required this.name,
     required this.description,
+    required this.shopName,
+    required this.shopImage,
     required this.readyStock,
     required this.category,
     required this.price,
@@ -42,6 +46,70 @@ class RetailerCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Flexible(
+                    fit: FlexFit.loose,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(5),
+                      child: Image.network(
+                        shopImage,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return const Icon(Icons.image, size: 50);
+                        },
+                      ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    shopName,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            // Shop Image
+            // Container(
+            //   width: 50,
+            //   height: 50,
+            //   decoration: BoxDecoration(
+            //     borderRadius: BorderRadius.circular(5),
+            //   ),
+            //   child: ClipRRect(
+            //     borderRadius: BorderRadius.circular(5),
+            //     child: Image.network( // Gunakan NetworkImage jika gambar berasal dari URL
+            //       shopImage,
+            //       fit: BoxFit.cover,
+            //       errorBuilder: (context, error, stackTrace) {
+            //         return const Icon(Icons.image, size: 50); // Placeholder jika gambar gagal dimuat
+            //       },
+            //     ),
+            //   ),
+            // ),
+
+            // const SizedBox(width: 12),
+            // Expanded(
+            //     child: Column(
+            //       crossAxisAlignment: CrossAxisAlignment.start,
+            //       children: [
+            //         // Nama Toko
+            //         Text(
+            //           shopName,
+            //           style: const TextStyle(
+            //             fontSize: 18,
+            //             fontWeight: FontWeight.bold
+            //           ),
+            //         )
+            //       ],
+            //     )
+            // ),
             // Product Image
             Container(
               width: 100,
@@ -103,7 +171,7 @@ class RetailerCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
                         'Rp. ${price.toStringAsFixed(0)}',

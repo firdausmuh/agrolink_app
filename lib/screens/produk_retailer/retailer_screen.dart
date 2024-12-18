@@ -1,9 +1,12 @@
 import 'package:agrolink/components/search_bar.dart';
+import 'package:agrolink/components/toko/shop_card.dart';
 import 'package:agrolink/models/Retailer.dart';
 import 'package:agrolink/screens/produk_retailer/detail_retailer_screen.dart';
 import '../../components/produk_retailer/retailer_card.dart';
 import 'package:agrolink/screens/produk_supplier/favorite_belanja_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../../models/shop.dart';
 
 class RetailerScreen extends StatefulWidget {
   const RetailerScreen({super.key});
@@ -13,6 +16,8 @@ class RetailerScreen extends StatefulWidget {
 }
 
 class _ProdukRetailerScreenState extends State<RetailerScreen> {
+  get shop => null;
+
   @override
   Widget build(BuildContext contex) {
     return Scaffold(
@@ -54,6 +59,37 @@ class _ProdukRetailerScreenState extends State<RetailerScreen> {
               },
             ),
           ),
+          // Padding(
+          //     padding: const EdgeInsets.all(20),
+          //     child: Row(
+          //       children: [
+          //         CircleAvatar(
+          //           radius: 40,
+          //           backgroundImage: NetworkImage(
+          //             shops[0].imageUrl[0],
+          //           ),
+          //         ),
+          //         const SizedBox(width: 15),
+          //         Column(
+          //           crossAxisAlignment: CrossAxisAlignment.start,
+          //           children: [
+          //             Text(
+          //               shops[0].namaToko,
+          //               style: const TextStyle(
+          //                 fontSize: 18,
+          //                 fontWeight: FontWeight.bold,
+          //               ),
+          //             ),
+          //             const SizedBox(height: 5),
+          //             Text(
+          //               shops[0].alamat,
+          //               style: const TextStyle(fontSize: 14, color: Colors.grey),
+          //             )
+          //           ],
+          //         )
+          //       ],
+          //     ),
+          // ),
           Expanded(
             child: SingleChildScrollView(
               child: Padding(
@@ -65,6 +101,27 @@ class _ProdukRetailerScreenState extends State<RetailerScreen> {
                         children: retailers.map((retailer) {
                           return Column(
                             children: [
+                              //informasi toko
+                              // ListTile(
+                              //   leading: CircleAvatar(
+                              //     radius: 30,
+                              //     backgroundImage: NetworkImage(retailer.shop.imageUrl[0]),
+                              //   ),
+                              //   title: Text(
+                              //     retailer.shop.namaToko,
+                              //     style: const TextStyle(
+                              //       fontSize: 18,
+                              //       fontWeight: FontWeight.bold,
+                              //     ),
+                              //   ),
+                              //   subtitle: Text(
+                              //     retailer.shop.alamat,
+                              //     style: const TextStyle(
+                              //       fontSize: 14,
+                              //       color: Colors.grey,
+                              //     ),
+                              //   ),
+                              // ),
                               InkWell(
                                 onTap: () => {
                                   Navigator.push(
@@ -72,7 +129,7 @@ class _ProdukRetailerScreenState extends State<RetailerScreen> {
                                       MaterialPageRoute(
                                           builder: (context) =>
                                               DetailRetailerScreen(
-                                                  retailer: retailer
+                                                  retailer: retailer, shops: shop,
                                               )))
                                 },
                                 child: RetailerCard(
@@ -80,20 +137,20 @@ class _ProdukRetailerScreenState extends State<RetailerScreen> {
                                   description: retailer.description,
                                   readyStock: retailer.readyStock,
                                   category: retailer.category,
+                                  shopName: retailer.shop.namaToko,
                                   price: retailer.harga,
                                   imageUrl: retailer.imageUrl[0],
                                   onAddPressed: () {
-                                    // Handle add to cart action
-                                    SnackBar(
-                                      content: Text(
-                                          "${retailer.title} masuk ke keranjang"),
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                              "${retailer.title} masuk ke keranjang"),
+                                        )
                                     );
-                                  },
+                                  }, shopImage: '',
                                 ),
                               ),
-                              const SizedBox(
-                                height: 10,
-                              )
+                              const Divider(),
                             ],
                           );
                         }).toList()
@@ -108,5 +165,8 @@ class _ProdukRetailerScreenState extends State<RetailerScreen> {
     );
   }
 }
+
+
+
 
 
