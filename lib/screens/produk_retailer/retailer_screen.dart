@@ -137,7 +137,8 @@ class _ProdukRetailerScreenState extends State<RetailerScreen> {
                                   description: retailer.description,
                                   readyStock: retailer.readyStock,
                                   category: retailer.category,
-                                  shopName: retailer.shop.namaToko,
+                                  // shopImage: retailer.shopImage[0],
+                                  shopName: retailer.namaToko,
                                   price: retailer.harga,
                                   imageUrl: retailer.imageUrl[0],
                                   onAddPressed: () {
@@ -147,7 +148,7 @@ class _ProdukRetailerScreenState extends State<RetailerScreen> {
                                               "${retailer.title} masuk ke keranjang"),
                                         )
                                     );
-                                  }, shopImage: '',
+                                  }, shopImage: 'assets/images/toko/lydiastore.png',
                                 ),
                               ),
                               const Divider(),

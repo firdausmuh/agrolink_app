@@ -6,7 +6,7 @@ class produk_retailer {
   final String readyStock;
   final String category;
   final List<String> imageUrl;
-  //final List<String> shopImage;
+  final List<String> shopImage;
   final String namaToko;
   final double harga;
   final String statusPesanan;
@@ -14,7 +14,7 @@ class produk_retailer {
   final double rating;
   final List<double> jumlah;
   final String satuan;
-  final Shop shop;
+  //final Shop shop;
 
   produk_retailer({
     required this.title,
@@ -22,7 +22,7 @@ class produk_retailer {
     required this.readyStock,
     required this.category,
     required this.imageUrl,
-    //required this.shopImage,
+    required this.shopImage,
     required this.namaToko,
     required this.alamat,
     required this.statusPesanan,
@@ -30,7 +30,7 @@ class produk_retailer {
     required this.rating,
     required this.jumlah,
     required this.satuan,
-    required this.shop
+    //required this.shop
   });
 }
 
@@ -47,16 +47,17 @@ List<produk_retailer> retailers = [
       //shopImage: ['assets/images/toko/jagung'],
       harga: 65000,
       rating: 3.2,
+      shopImage: ['assets/images/retailer/beras.png'],
       jumlah: [10, 20, 30, 40, 50, 60],
       satuan: 'kg',
-      shop: Shop(
-          imageUrl: ["https://via.placeholder.com/150"],
-          namaToko: "Toko pak budi",
-          // isOnline: isOnline,
-          alamat: "yogyakarta",
-          // rating: rating,
-          // statusPesanan: statusPesanan
-      )
+      // shop: Shop(
+      //     imageUrl: ["assets/images/retailer/beras.png"],
+      //     namaToko: "Toko pak budi",
+      //     // isOnline: isOnline,
+      //     alamat: "yogyakarta",
+      //     // rating: rating,
+      //     // statusPesanan: statusPesanan
+      // )
   ),
   produk_retailer(
       title: "Keripik Kentang",
@@ -70,16 +71,17 @@ List<produk_retailer> retailers = [
       //shopImage: ['assets/images/toko/jagung'],
       harga: 15000,
       rating: 4.2,
+      shopImage: ['assets/images/retailer/beras.png'],
       jumlah: [10, 20, 30, 40, 50, 60],
       satuan: 'pcs',
-      shop: Shop(
-        imageUrl: ["https://via.placeholder.com/150"],
-        namaToko: "Toko pak budi",
-        // isOnline: isOnline,
-        alamat: "yogyakarta",
-        // rating: rating,
-        // statusPesanan: statusPesanan
-      )
+      // shop: Shop(
+      //   imageUrl: ["https://via.placeholder.com/150"],
+      //   namaToko: "Toko pak budi",
+      //   // isOnline: isOnline,
+      //   alamat: "yogyakarta",
+      //   // rating: rating,
+      //   // statusPesanan: statusPesanan
+      // )
   ),
   produk_retailer(
       title: "Selada Organik",
@@ -92,16 +94,18 @@ List<produk_retailer> retailers = [
       imageUrl: ['assets/images/retailer/selada_organik.png', 'assets/images/retailer/selada_organik.png'],
       //shopImage: ['assets/images/toko/jagung'],
       harga: 65000,
+      shopImage: ['assets/images/retailer/beras.png'],
       rating: 3.2,
       jumlah: [10, 20, 30, 40, 50, 60],
       satuan: 'kg',
-      shop: Shop(
-        imageUrl: ["https://via.placeholder.com/150"],
-        namaToko: "Toko pak budi",
-        // isOnline: isOnline,
-        alamat: "yogyakarta",
-        // rating: rating,
-        // statusPesanan: statusPesanan
-      )
+
+      // shop: Shop(
+      //   imageUrl: ["https://via.placeholder.com/150"],
+      //   namaToko: "Toko pak budi",
+      //   // isOnline: isOnline,
+      //   alamat: "yogyakarta",
+      //   // rating: rating,
+      //   // statusPesanan: statusPesanan
+      // )
   ),
 ];
