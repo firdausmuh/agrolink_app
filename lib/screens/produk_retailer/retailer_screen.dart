@@ -1,5 +1,4 @@
 import 'package:agrolink/components/search_bar.dart';
-import 'package:agrolink/components/toko/shop_card.dart';
 import 'package:agrolink/models/Retailer.dart';
 import 'package:agrolink/screens/produk_retailer/detail_retailer_screen.dart';
 import '../../components/produk_retailer/retailer_card.dart';

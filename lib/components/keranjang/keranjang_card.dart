@@ -60,15 +60,18 @@ class _KeranjangCardState extends State<KeranjangCard> {
           Row(
             children: [
               Container(
-                width: 80,
-                height: 80,
+                width: 95,
+                height: 115,
                 decoration: BoxDecoration(
                   color: Colors.green[50],
                 ),
-                child: Image.asset(
-                  'assets/images/informasi/informasi1.png',
-                  fit: BoxFit.cover,
-                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.asset(
+                    'assets/images/informasi/informasi1.png',
+                    fit: BoxFit.cover,
+                  ),
+                )
               ),
               const SizedBox(width: 10),
               Expanded(
@@ -78,7 +81,7 @@ class _KeranjangCardState extends State<KeranjangCard> {
                     const Text(
                       'Burger With Meat',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 18,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -95,6 +98,7 @@ class _KeranjangCardState extends State<KeranjangCard> {
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.green[800],
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: 12),
@@ -106,11 +110,12 @@ class _KeranjangCardState extends State<KeranjangCard> {
                             InkWell(
                               onTap: decreaseQuantity,
                               child: Container(
-                                width: 32,
-                                height: 32,
+                                width: 30,
+                                height: 30,
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey[300]!),
-                                  shape: BoxShape.circle,
+                                  border: Border.all(color: Colors.black26),
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: BorderRadius.circular(4),
                                 ),
                                 child: const Center(
                                   child: Icon(Icons.remove, size: 16),
@@ -129,11 +134,12 @@ class _KeranjangCardState extends State<KeranjangCard> {
                             InkWell(
                               onTap: increaseQuantity,
                               child: Container(
-                                width: 32,
-                                height: 32,
+                                width: 30,
+                                height: 30,
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey[300]!),
-                                  shape: BoxShape.circle,
+                                  border: Border.all(color: Colors.black26),
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: BorderRadius.circular(4),
                                 ),
                                 child: const Center(
                                   child: Icon(Icons.add, size: 16),
@@ -145,9 +151,9 @@ class _KeranjangCardState extends State<KeranjangCard> {
                         Text(
                           formatPrice(basePrice * quantity),
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 18,
                             fontWeight: FontWeight.w500,
-                            color: Colors.green[600],
+                            color: Colors.black,
                           ),
                         ),
                       ],
