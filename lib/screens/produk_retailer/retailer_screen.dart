@@ -100,27 +100,6 @@ class _ProdukRetailerScreenState extends State<RetailerScreen> {
                         children: retailers.map((retailer) {
                           return Column(
                             children: [
-                              //informasi toko
-                              // ListTile(
-                              //   leading: CircleAvatar(
-                              //     radius: 30,
-                              //     backgroundImage: NetworkImage(retailer.shop.imageUrl[0]),
-                              //   ),
-                              //   title: Text(
-                              //     retailer.shop.namaToko,
-                              //     style: const TextStyle(
-                              //       fontSize: 18,
-                              //       fontWeight: FontWeight.bold,
-                              //     ),
-                              //   ),
-                              //   subtitle: Text(
-                              //     retailer.shop.alamat,
-                              //     style: const TextStyle(
-                              //       fontSize: 14,
-                              //       color: Colors.grey,
-                              //     ),
-                              //   ),
-                              // ),
                               InkWell(
                                 onTap: () => {
                                   Navigator.push(

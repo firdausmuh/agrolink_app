@@ -1,20 +1,16 @@
-import 'package:agrolink/components/informasi/informasi_card.dart';
 import 'package:agrolink/components/layanan_box.dart';
-import 'package:agrolink/models/InformasiData.dart';
-import 'package:agrolink/screens/informasi/detail_informasi_screen.dart';
 import 'package:agrolink/screens/informasi/informasi_screen.dart';
 import 'package:agrolink/screens/produk_distributor/distributor_screen.dart';
 import 'package:agrolink/screens/produk_produsen/produsen_screen.dart';
 import 'package:agrolink/screens/produk_retailer/retailer_screen.dart';
 import 'package:agrolink/screens/produk_supplier/supplier_screen.dart';
 import 'package:flutter/material.dart';
+import '../../components/produk_produsen/produsen_card.dart';
+import '../../models/Produsen.dart';
+import '../produk_produsen/detail_produsen_screen.dart';
+
 
 class HomeScreen extends StatelessWidget {
-  final List<Color> _warnaTemaInformasi = [
-    const Color(0xFF2ECC71),
-    const Color(0xFF2DBAB1),
-    const Color(0xFF8A7E0D),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +43,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         Icon(
                           Icons.waving_hand,
-                          color: Colors.orange,
+                          color: Colors.green,
                         )
                       ],
                     ),
@@ -64,10 +60,6 @@ class HomeScreen extends StatelessWidget {
                 backgroundImage:
                 const AssetImage('assets/images/profile1.png'),
               ),
-              // CircleAvatar(
-              //   radius: 24,
-              //   child: Image.asset('assets/images/profile.png'),
-              // )
             ],
           ),
         ),
@@ -90,8 +82,7 @@ class HomeScreen extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-
-        // Content
+        // Content Produk
         Expanded(
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
@@ -217,9 +208,6 @@ class HomeScreen extends StatelessWidget {
                                     label: 'Informasi pertanian'),
                               ),
                             ),
-                            // const SizedBox(
-                            //   width: 10,
-                            // ),
                           ],
                         ),
                       ]),
@@ -240,36 +228,42 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                  child: Column(
-                    children: cardDataList.asMap().entries.map((entry) {
-                      int index = entry.key;
-                      var data = entry.value;
-
-                      return InkWell(
-                        borderRadius: BorderRadius.circular(20),
-                        onTap: () => {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => DetailInformasiScreen(
-                                      informasiData: data)))
-                        },
-                        child: Column(
-                          children: [
-                            InformasiCard(
-                              warnaTombol: _warnaTemaInformasi[index % 3],
-                              informasiData: data,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                          ],
-                        ),
-                      );
-                    }).toList(),
-                  ),
+                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                    child: Column(
+                      children: produsens.map((produsen) {
+                        return InkWell(
+                          borderRadius: BorderRadius.circular(20),
+                          onTap: () => {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => DetailProdusenScreen(
+                                        produsen: produsen)))
+                          },
+                          child: Column(
+                            children: [
+                              ProdusenCard(
+                                name: produsen.title,
+                                description: produsen.description,
+                                readyStock: produsen.readyStock,
+                                category: produsen.category,
+                                price: produsen.harga,
+                                imageUrl: produsen.imageUrl[0],
+                                onAddPressed: () {
+                                // Handle add to cart action
+                                  SnackBar(
+                                    content: Text("${produsen.title} masuk ke keranjang"),
+                                  );
+                                },
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          ),
+                        );
+                      }).toList(),
+                    ),
                 ),
               ],
             ),

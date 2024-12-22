@@ -298,12 +298,12 @@ class ProfileScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Informasi Pribadi',
                       style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.blue),
+                          color: Colors.blue[800]!),
                     ),
                     const SizedBox(height: 20),
                     _customContainer(
@@ -312,16 +312,12 @@ class ProfileScreen extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            _buildInfoRow(
-                                Icons.person_outlined, 'Nadila Azucena', false),
-                            _buildInfoRow(Icons.email_outlined,
-                                'rencabesar@gmail.com', false),
-                            _buildInfoRow(
-                                Icons.phone_outlined, '089532123456', false),
+                            _buildInfoRow(Icons.person_outlined, 'Nadila Azucena', false),
+                            _buildInfoRow(Icons.email_outlined, 'rencabesar@gmail.com', false),
+                            _buildInfoRow(Icons.phone_outlined, '089532123456', false),
                             _buildInfoRow(Icons.store_outlined, 'Toko', false),
                             _buildInfoRow(Icons.cake_outlined, '20 Tahun', false),
-                            _buildInfoRow(Icons.location_on_outlined,
-                                'Bogor, Indonesia', true),
+                            _buildInfoRow(Icons.location_on_outlined, 'Bogor, Indonesia', true),
                           ],
                         ),
                       ),
@@ -336,7 +332,7 @@ class ProfileScreen extends StatelessWidget {
                           Icons.logout,
                           'Keluar',
                           true,
-                          textColor: Colors.red,
+                          textColor: Colors.red[900],
                         ),
                       ),
                     ),
