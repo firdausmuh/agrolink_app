@@ -27,15 +27,16 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const SizedBox(height: 20),
                     Row(
                       children: [
                         Flexible(
                           child: Text(
-                            'Hey Nadila Azucena',
+                            'Helo Muhamad Firdaus',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.w700),
+                                fontSize: 20, fontWeight: FontWeight.w700),
                           ),
                         ),
                         SizedBox(
