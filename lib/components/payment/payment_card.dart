@@ -120,15 +120,45 @@ class _PaymentCardState extends State<PaymentCard> {
                 size: 24,
               ),
               const SizedBox(width: 8),
-              const Expanded(
-                child: Text(
-                  'Penting: Transfer virtual account hanya bisa dilakukan dari bank yang kamu pilih.',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey,
+              // const Expanded(
+              //   child: Text(
+              //     'Penting: Transfer virtual account hanya bisa dilakukan dari bank yang kamu pilih.',
+              //     style: TextStyle(
+              //       fontSize: 14,
+              //       color: Colors.grey,
+              //     ),
+              //   ),
+              // ),
+              Expanded(
+                child: RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: 'Penting: ',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold, // Bold for "Penting"
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'Transfer virtual account hanya bisa dilakukan dari ',
+                      ),
+                      TextSpan(
+                        text: 'bank yang kamu pilih.',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold, // Bold for "bank yang kamu pilih"
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
+
             ],
           ),
           const SizedBox(height: 16),
@@ -140,12 +170,12 @@ class _PaymentCardState extends State<PaymentCard> {
                 color: Colors.red[800],
                 size: 24,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: 4),
               const Expanded(
                 child: Text(
                   'Penting: Periksa ulang detail transaksi sebelum melakukan pembayaran.',
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 16,
                     color: Colors.grey,
                   ),
                 ),

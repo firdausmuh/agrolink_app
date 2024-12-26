@@ -1,4 +1,4 @@
-import 'package:agrolink/components/payment/payment.card.dart';
+import 'package:agrolink/components/payment/payment_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
