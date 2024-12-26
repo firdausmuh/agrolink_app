@@ -103,7 +103,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             ),
             const SizedBox(height: 20),
             const Text(
-              'Detail Pesanan',
+              'Cek ringkasan transaksimu, yuk',
               style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
             ),
             const SizedBox(height: 10),
@@ -137,6 +137,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 ),
               ],
             ),
+            // button bayar sekarang
             const SizedBox(height: 20),
             SizedBox(
               width: MediaQuery.of(context).size.width,
@@ -149,14 +150,54 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF07DF62),
+                  backgroundColor: const Color(0xFF168445),
                 ),
-                child: const Text(
-                  'Selesaikan Pembayaran',
-                  style: TextStyle(color: Colors.white),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran tombol dengan konten
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(5), // Memberikan jarak antara ikon dan lingkaran
+                      decoration: BoxDecoration(
+                        color: Colors.white, // Warna lingkaran
+                        shape: BoxShape.circle, // Bentuk lingkaran
+                      ),
+                      child: const Icon(
+                        Icons.check_circle_outline, // Ikon ceklis
+                        color: Colors.green, // Warna ceklis sesuai dengan tombol
+                        size: 15, // Ukuran ikon
+                      ),
+                    ),
+                    const SizedBox(width: 8), // Jarak antara ikon dan teks
+                    const Text(
+                      'Bayar Sekarang',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ],
                 ),
               ),
             ),
+
+            // const SizedBox(height: 20),
+            // SizedBox(
+            //   width: MediaQuery.of(context).size.width,
+            //   child: ElevatedButton(
+            //     onPressed: () {
+            //       // Logic untuk menyelesaikan transaksi
+            //       // Bisa tambahkan konfirmasi atau API untuk pengolahan pembayaran
+            //       ScaffoldMessenger.of(context).showSnackBar(
+            //         const SnackBar(content: Text('Pesanan Anda telah diproses!')),
+            //       );
+            //     },
+            //     style: ElevatedButton.styleFrom(
+            //       backgroundColor: const Color(0xFF07DF62),
+            //     ),
+            //
+            //     child: const Text(
+            //       'Bayar Sekarang',
+            //       style: TextStyle(color: Colors.white),
+            //     ),
+            //   ),
+            // ),
             const SizedBox(height: 20),
           ],
         ),
