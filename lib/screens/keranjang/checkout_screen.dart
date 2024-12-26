@@ -41,24 +41,49 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 20),
+
             const Text(
-              'Alamat Pengiriman',
-              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
-            ),
-            const SizedBox(height: 10),
-            TextFormField(
-              onChanged: (value) {
-                setState(() {
-                  alamat = value;
-                });
-              },
-              decoration: InputDecoration(
-                labelText: 'Masukkan alamat pengiriman',
-                border: OutlineInputBorder(),
+              'Alamat Pengiriman kamu',
+              style: TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 18,
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
+                    'Terbansari gank v No.106, RT.04/RW.01, Terban, Kec. '
+                        'Gondokusuman, Kota Yogyakarta, Daerah Istimewa Yogyakarta',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 13,
+                      color: Colors.grey,
+                    ),
+                    maxLines: 3, // Membatasi jumlah baris
+                    overflow: TextOverflow.ellipsis, // Menambahkan ... jika teks terlalu panjang
+                  ),
+                ),
+                const SizedBox(width: 8), // Memberikan jarak antara teks dan ikon
+                const Icon(
+                  Icons.arrow_forward_ios,
+                  size: 18,
+                  color: Colors.grey,
+                ),
+              ],
+            ),
+            const SizedBox(height: 8), // Jarak antara Row dan Divider
+            const Divider(
+              color: Colors.grey, // Warna garis
+              thickness: 1, // Ketebalan garis
+            ),
+            // Produk yang di beli
+
+            const SizedBox(height: 10),
+
             const Text(
               'Metode Pembayaran',
               style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
