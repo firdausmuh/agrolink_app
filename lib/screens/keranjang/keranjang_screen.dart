@@ -44,12 +44,6 @@ class _KeranjangScreenState extends State<KeranjangScreen> {
                   KeranjangCard(),
                   KeranjangCard(),
                   KeranjangCard(),
-                  KeranjangCard(),
-                  KeranjangCard(),
-                  KeranjangCard(),
-                  KeranjangCard(),
-                  KeranjangCard(),
-                  KeranjangCard(),
                   SizedBox(
                     height: 20,
                   ),

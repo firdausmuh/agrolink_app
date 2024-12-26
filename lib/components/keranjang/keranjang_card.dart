@@ -60,6 +60,30 @@ class _KeranjangCardState extends State<KeranjangCard> {
           Row(
             children: [
               Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/toko/shop_image.png'),
+                      fit: BoxFit.cover
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10),
+              const Text(
+                'Lydia Adinda store',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold
+                ),
+              )
+            ],
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              Container(
                 width: 95,
                 height: 115,
                 decoration: BoxDecoration(
