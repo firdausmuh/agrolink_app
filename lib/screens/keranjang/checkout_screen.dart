@@ -1,3 +1,4 @@
+import 'package:agrolink/screens/pembayaran/payment_screen.dart';
 import 'package:flutter/material.dart';
 
 class CheckoutScreen extends StatefulWidget {
@@ -143,11 +144,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               width: MediaQuery.of(context).size.width,
               child: ElevatedButton(
                 onPressed: () {
+                  Navigator.push(
+                      context, 
+                      MaterialPageRoute(builder: (context) => PaymentScreen()),
+                  );
                   // Logic untuk menyelesaikan transaksi
                   // Bisa tambahkan konfirmasi atau API untuk pengolahan pembayaran
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Pesanan Anda telah diproses!')),
-                  );
+                  // ScaffoldMessenger.of(context).showSnackBar(
+                  //   const SnackBar(content: Text('Pesanan Anda telah diproses!')),
+                  // );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF199D52),
