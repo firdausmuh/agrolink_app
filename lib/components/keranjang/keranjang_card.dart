@@ -75,7 +75,7 @@ class _KeranjangCardState extends State<KeranjangCard> {
                 'Lydia Adinda store',
                 style: TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.bold
+                  fontWeight: FontWeight.w700,
                 ),
               )
             ],
@@ -137,7 +137,7 @@ class _KeranjangCardState extends State<KeranjangCard> {
                                 width: 30,
                                 height: 30,
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black26),
+                                  border: Border.all(color: Colors.black),
                                   shape: BoxShape.rectangle,
                                   borderRadius: BorderRadius.circular(4),
                                 ),
@@ -151,7 +151,7 @@ class _KeranjangCardState extends State<KeranjangCard> {
                               child: Center(
                                 child: Text(
                                   quantity.toString(),
-                                  style: const TextStyle(fontSize: 16),
+                                  style: const TextStyle(fontSize: 18),
                                 ),
                               ),
                             ),
@@ -161,7 +161,7 @@ class _KeranjangCardState extends State<KeranjangCard> {
                                 width: 30,
                                 height: 30,
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black26),
+                                  border: Border.all(color: Colors.black),
                                   shape: BoxShape.rectangle,
                                   borderRadius: BorderRadius.circular(4),
                                 ),
@@ -176,7 +176,7 @@ class _KeranjangCardState extends State<KeranjangCard> {
                           formatPrice(basePrice * quantity),
                           style: TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.bold,
                             color: Colors.black,
                           ),
                         ),
