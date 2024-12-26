@@ -10,9 +10,7 @@ class KeranjangScreen extends StatefulWidget {
 }
 
 class _KeranjangScreenState extends State<KeranjangScreen> {
-
   void totalHarga() {
-
   }
 
   @override
@@ -41,8 +39,20 @@ class _KeranjangScreenState extends State<KeranjangScreen> {
               child: Column(
                 children: [
                   KeranjangCard(),
+                  const Divider(
+                    color: Colors.grey, // Warna garis
+                    thickness: 1, // Ketebalan garis
+                  ),
                   KeranjangCard(),
+                  const Divider(
+                    color: Colors.grey, // Warna garis
+                    thickness: 1, // Ketebalan garis
+                  ),
                   KeranjangCard(),
+                  const Divider(
+                    color: Colors.grey, // Warna garis
+                    thickness: 1, // Ketebalan garis
+                  ),
                   KeranjangCard(),
                   SizedBox(
                     height: 20,
@@ -69,17 +79,7 @@ class _KeranjangScreenState extends State<KeranjangScreen> {
               ),),
             ],
           ),
-          const SizedBox(
-            height: 20,
-          ),
-          // SizedBox(
-          //   width: MediaQuery.of(context).size.width,
-          //   child: ElevatedButton(
-          //       onPressed: () {}, style: ElevatedButton.styleFrom(
-          //       backgroundColor: Color(0xFF406A52),
-          //
-          //   ), child: Text('Beli Sekarang', style: TextStyle(color: Colors.white),)),
-          // ),
+          const SizedBox(height: 20,),
           SizedBox(
             width: MediaQuery.of(context).size.width,
             child: ElevatedButton(
@@ -90,11 +90,37 @@ class _KeranjangScreenState extends State<KeranjangScreen> {
                 );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF406A52),
+                backgroundColor: const Color(0xFF199D52),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                minimumSize: const Size(double.infinity, 40),
               ),
-              child: Text(
-                'Beli Sekarang',
-                style: TextStyle(color: Colors.white),
+              child: Row(
+                mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran tombol dengan konten
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(5), // Memberikan jarak antara ikon dan lingkaran
+                    decoration: BoxDecoration(
+                      //color: Colors.white, // Warna lingkaran
+                      shape: BoxShape.circle, // Bentuk lingkaran
+                    ),
+                    child: const Icon(
+                      Icons.check_circle_outline, // Ikon ceklis
+                      color: Colors.white, // Warna ceklis sesuai dengan tombol
+                      size: 25, // Ukuran ikon
+                    ),
+                  ),
+                  const SizedBox(width: 2), // Jarak antara ikon dan teks
+                  const Text(
+                    'Beli Sekarang',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

@@ -1,6 +1,7 @@
 import 'package:agrolink/screens/home/home_screen.dart';
 import 'package:agrolink/screens/keranjang/keranjang_screen.dart';
 import 'package:agrolink/screens/profile/profile_screen.dart';
+import 'package:agrolink/screens/riwayat_transaksi/riwayat_screen.dart';
 import 'package:agrolink/screens/toko/toko_screen.dart';
 import 'package:agrolink/screens/transaksi/riwayat_transaksi_screen.dart';
 import 'package:flutter/material.dart';
@@ -22,8 +23,8 @@ class _MainScreenState extends State<MainScreen> {
       label: 'Home',
     ),
     const BottomNavigationBarItem(
-      icon: Icon(Icons.list_alt),
-      label: 'Transaksi',
+      icon: Icon(Icons.shopping_cart_outlined),
+      label: 'Cart',
     ),
     BottomNavigationBarItem(
       icon: Container(
@@ -37,8 +38,8 @@ class _MainScreenState extends State<MainScreen> {
       label: 'Toko',
     ),
     const BottomNavigationBarItem(
-      icon: Icon(Icons.shopping_cart_outlined),
-      label: 'Cart',
+      icon: Icon(Icons.list_alt),
+      label: 'Transaksi',
     ),
     const BottomNavigationBarItem(
       icon: Icon(Icons.person_outline),
@@ -48,9 +49,9 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _listWidget = [
     HomeScreen(),
-    const RiwayatTransaksiScreen(),
-    const TokoScreen(),
     const KeranjangScreen(),
+    const TokoScreen(),
+    const RiwayatScreen(),
     const ProfileScreen(),
   ];
 
