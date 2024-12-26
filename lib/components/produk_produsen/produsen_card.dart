@@ -1,3 +1,4 @@
+import 'package:agrolink/screens/keranjang/checkout_screen.dart';
 import 'package:flutter/material.dart';
 
 class ProdusenCard extends StatelessWidget {
@@ -116,21 +117,45 @@ class ProdusenCard extends StatelessWidget {
                           color: Colors.green[800]
                         ),
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.green,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                        child: const Center(
-                          child: Text(
+                      // Container(
+                      //   decoration: BoxDecoration(
+                      //     color: Colors.green,
+                      //     borderRadius: BorderRadius.circular(8),
+                      //   ),
+                      //   padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                      //   child: const Center(
+                      //     child: Text(
+                      //         'Beli Sekarang',
+                      //         style: TextStyle(
+                      //           color: Colors.white,
+                      //           fontSize: 10,
+                      //           fontWeight: FontWeight.bold,
+                      //         )
+                      //     ),
+                      //   ),
+                      // )
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context, 
+                              MaterialPageRoute(builder: (context) => CheckoutScreen()),
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.green,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                          child: const Center(
+                            child: Text(
                               'Beli Sekarang',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 10,
                                 fontWeight: FontWeight.bold,
-                              )
-
+                              ),
+                            ),
                           ),
                         ),
                       )

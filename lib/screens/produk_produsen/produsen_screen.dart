@@ -1,6 +1,7 @@
 import 'package:agrolink/components/produk_produsen/produsen_card.dart';
 import 'package:agrolink/components/search_bar.dart';
 import 'package:agrolink/models/Produsen.dart';
+import 'package:agrolink/screens/keranjang/checkout_screen.dart';
 import 'package:agrolink/screens/produk_produsen/detail_produsen_screen.dart';
 import 'package:agrolink/screens/produk_supplier/favorite_belanja_screen.dart';
 import 'package:flutter/material.dart';
@@ -83,6 +84,10 @@ class _ProdukProdusenScreenState extends State<ProdusenScreen> {
                                   price: produsen.harga,
                                   imageUrl: produsen.imageUrl[0],
                                   onAddPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => CheckoutScreen()),
+                                    );
                                     // Handle add to cart action
                                     SnackBar(
                                       content: Text(

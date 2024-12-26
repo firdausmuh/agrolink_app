@@ -1,4 +1,5 @@
 import 'package:agrolink/components/keranjang/keranjang_card.dart';
+import 'package:agrolink/screens/keranjang/checkout_screen.dart';
 import 'package:flutter/material.dart';
 
 class KeranjangScreen extends StatefulWidget {
@@ -77,13 +78,33 @@ class _KeranjangScreenState extends State<KeranjangScreen> {
           const SizedBox(
             height: 20,
           ),
+          // SizedBox(
+          //   width: MediaQuery.of(context).size.width,
+          //   child: ElevatedButton(
+          //       onPressed: () {}, style: ElevatedButton.styleFrom(
+          //       backgroundColor: Color(0xFF406A52),
+          //
+          //   ), child: Text('Beli Sekarang', style: TextStyle(color: Colors.white),)),
+          // ),
           SizedBox(
             width: MediaQuery.of(context).size.width,
-            child: ElevatedButton(onPressed: () {}, style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xFF406A52),
-
-            ), child: Text('Beli Sekarang', style: TextStyle(color: Colors.white),)),
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CheckoutScreen()), // Arahkan ke layar checkout
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF406A52),
+              ),
+              child: Text(
+                'Beli Sekarang',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
           ),
+
           const SizedBox(
             height: 20,
           ),
