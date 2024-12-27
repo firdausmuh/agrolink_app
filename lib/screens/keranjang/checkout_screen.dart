@@ -350,10 +350,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   },
                 ),
               ),
-
               if (showNoteField)
                 const Padding(
-                  padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 10),
+                  padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 0.0),
                   child: TextField(
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
@@ -385,7 +384,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.all(20.0),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color(0xFF199D52),
