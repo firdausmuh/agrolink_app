@@ -10,241 +10,135 @@ class KeranjangScreen extends StatefulWidget {
 }
 
 class _KeranjangScreenState extends State<KeranjangScreen> {
-  void totalHarga() {
-  }
+  void totalHarga() {}
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(
-            height: 20,
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context); // Kembali ke layar sebelumnya
+          },
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+        ),
+        title: const Text(
+          'Keranjang',
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w700,
+            fontSize: 20,
           ),
-          const Text(
-            'Keranjang',
-            style: TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: 20,
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          const Expanded(
-            child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Column(
-                children: [
-                  KeranjangCard(),
-                  const Divider(
-                    color: Colors.grey, // Warna garis
-                    thickness: 1, // Ketebalan garis
-                  ),
-                  KeranjangCard(),
-                  const Divider(
-                    color: Colors.grey, // Warna garis
-                    thickness: 1, // Ketebalan garis
-                  ),
-                  KeranjangCard(),
-                  const Divider(
-                    color: Colors.grey, // Warna garis
-                    thickness: 1, // Ketebalan garis
-                  ),
-                  KeranjangCard(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Total', style: TextStyle(
-                color: Color(0xFF406A52),
-                fontWeight: FontWeight.w700,
-                fontSize: 24,
-              ),),
-              Text('Rp. 40.000', style: TextStyle(
-                color: Color(0xFF406A52),
-                fontWeight: FontWeight.w700,
-                fontSize: 24,
-              ),),
-            ],
-          ),
-          const SizedBox(height: 20,),
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CheckoutScreen()), // Arahkan ke layar checkout
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF199D52),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Expanded(
+              child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Column(
+                  children: [
+                    KeranjangCard(),
+                    Divider(
+                      color: Colors.grey, // Warna garis
+                      thickness: 1, // Ketebalan garis
+                    ),
+                    KeranjangCard(),
+                    Divider(
+                      color: Colors.grey, // Warna garis
+                      thickness: 1, // Ketebalan garis
+                    ),
+                    KeranjangCard(),
+                    Divider(
+                      color: Colors.grey, // Warna garis
+                      thickness: 1, // Ketebalan garis
+                    ),
+                    KeranjangCard(),
+                    SizedBox(
+                      height: 20,
+                    ),
+                  ],
                 ),
-                minimumSize: const Size(double.infinity, 40),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran tombol dengan konten
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(5), // Memberikan jarak antara ikon dan lingkaran
-                    decoration: BoxDecoration(
-                      //color: Colors.white, // Warna lingkaran
-                      shape: BoxShape.circle, // Bentuk lingkaran
-                    ),
-                    child: const Icon(
-                      Icons.check_circle_outline, // Ikon ceklis
-                      color: Colors.white, // Warna ceklis sesuai dengan tombol
-                      size: 25, // Ukuran ikon
-                    ),
-                  ),
-                  const SizedBox(width: 2), // Jarak antara ikon dan teks
-                  const Text(
-                    'Beli Sekarang',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700
-                    ),
-                  ),
-                ],
               ),
             ),
-          ),
-
-          const SizedBox(
-            height: 20,
-          ),
-        ],
+            const SizedBox(
+              height: 20,
+            ),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Total',
+                  style: TextStyle(
+                    color: Color(0xFF406A52),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 24,
+                  ),
+                ),
+                Text(
+                  'Rp. 40.000',
+                  style: TextStyle(
+                    color: Color(0xFF406A52),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 24,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CheckoutScreen()), // Arahkan ke layar checkout
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF199D52),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  minimumSize: const Size(double.infinity, 40),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran tombol dengan konten
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(5), // Memberikan jarak antara ikon dan lingkaran
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle, // Bentuk lingkaran
+                      ),
+                      child: const Icon(
+                        Icons.check_circle_outline, // Ikon ceklis
+                        color: Colors.white, // Warna ceklis sesuai dengan tombol
+                        size: 25, // Ukuran ikon
+                      ),
+                    ),
+                    const SizedBox(width: 2), // Jarak antara ikon dan teks
+                    const Text(
+                      'Beli Sekarang',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+          ],
+        ),
       ),
     );
   }
 }
-
-// import 'package:agrolink/components/keranjang/keranjang_card.dart';
-// import 'package:agrolink/screens/keranjang/checkout_screen.dart';
-// import 'package:flutter/material.dart';
-//
-// class KeranjangScreen extends StatefulWidget {
-//   const KeranjangScreen({super.key});
-//
-//   @override
-//   State<KeranjangScreen> createState() => _KeranjangScreenState();
-// }
-//
-// class _KeranjangScreenState extends State<KeranjangScreen> {
-//   // Menyimpan harga dan jumlah item di keranjang
-//   int totalHarga = 0;
-//   List<int> hargaItem = [25000, 30000, 15000]; // contoh harga per item
-//   List<int> jumlahItem = [1, 1, 1]; // jumlah item di keranjang, bisa ditambah atau dikurangi
-//
-//   void updateTotalHarga() {
-//     setState(() {
-//       totalHarga = 0;
-//       for (int i = 0; i < hargaItem.length; i++) {
-//         totalHarga += hargaItem[i] * jumlahItem[i];
-//       }
-//     });
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     updateTotalHarga(); // Memperbarui total harga saat tampilan di-render ulang
-//
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(horizontal: 20.0),
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           const SizedBox(height: 20),
-//           const Text(
-//             'Keranjang',
-//             style: TextStyle(
-//               fontWeight: FontWeight.w700,
-//               fontSize: 20,
-//             ),
-//           ),
-//           const SizedBox(height: 20),
-//           // Tampilan daftar produk di keranjang
-//           Expanded(
-//             child: SingleChildScrollView(
-//               physics: const BouncingScrollPhysics(),
-//               child: Column(
-//                 children: List.generate(hargaItem.length, (index) {
-//                   return KeranjangCard(
-//                     harga: hargaItem[index],
-//                     quantity: jumlahItem[index],
-//                     onQuantityChanged: (newQuantity) {
-//                       setState(() {
-//                         jumlahItem[index] = newQuantity;
-//                       });
-//                     },
-//                   );
-//                 }),
-//               ),
-//             ),
-//           ),
-//           const SizedBox(height: 20),
-//           // Tampilan Total
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             children: [
-//               const Text(
-//                 'Total',
-//                 style: TextStyle(
-//                   color: Color(0xFF406A52),
-//                   fontWeight: FontWeight.w700,
-//                   fontSize: 24,
-//                 ),
-//               ),
-//               Text(
-//                 'Rp. ${totalHarga.toString().replaceAllMapped(RegExp(r'(\d)(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}',
-//                 style: const TextStyle(
-//                   color: Color(0xFF406A52),
-//                   fontWeight: FontWeight.w700,
-//                   fontSize: 24,
-//                 ),
-//               ),
-//             ],
-//           ),
-//           const SizedBox(height: 20),
-//           // Tombol Beli Sekarang
-//           SizedBox(
-//             width: MediaQuery.of(context).size.width,
-//             child: ElevatedButton(
-//               onPressed: () {
-//                 // Navigasi ke halaman checkout
-//                 Navigator.push(
-//                   context,
-//                   MaterialPageRoute(builder: (context) => CheckoutScreen()),
-//                 );
-//               },
-//               style: ElevatedButton.styleFrom(
-//                 backgroundColor: const Color(0xFF07DF62),
-//               ),
-//               child: const Text(
-//                 'Beli Sekarang',
-//                 style: TextStyle(color: Colors.white),
-//               ),
-//             ),
-//           ),
-//           const SizedBox(height: 20),
-//         ],
-//       ),
-//     );
-//   }
-// }
-

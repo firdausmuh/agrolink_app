@@ -28,11 +28,17 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   @override
   Widget build(BuildContext context) {
     updateTotalHarga();
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Checkout'),
-        backgroundColor: const Color(0xFF406A52),
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: const Icon(Icons.arrow_back, color: Colors.black,),
+        ),
+        title: const Text(
+          'Checkout Screen',
+          style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),

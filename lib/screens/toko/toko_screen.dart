@@ -8,13 +8,18 @@ class TokoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Toko Saya'),
-        backgroundColor: Colors.green,
+        title: const Text(
+          'Toko Saya',
+          style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700),
+
+        ),
+        backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
             onPressed: () => Navigator.pop(context),
             icon: const Icon(Icons.arrow_back, color: Colors.black),
         ),
+
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),

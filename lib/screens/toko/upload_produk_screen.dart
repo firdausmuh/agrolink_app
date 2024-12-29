@@ -21,14 +21,14 @@ class _UploadProdukScreenState extends State<UploadProdukScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF406A52),
+        backgroundColor: Colors.white,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
+          icon: const Icon(Icons.arrow_back, color: Colors.black,),
         ),
         title: const Text(
           'Upload Produk',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700),
         ),
       ),
       body: Padding(
