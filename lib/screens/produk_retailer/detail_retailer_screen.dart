@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:agrolink/models/Retailer.dart';
 import 'package:intl/intl.dart';
 
+import '../keranjang/keranjang_screen.dart';
+
 
 class DetailRetailerScreen extends StatefulWidget {
   final Shop shops;
@@ -350,7 +352,12 @@ class _DetailProdukRetailerScreenState extends State<DetailRetailerScreen> {
                 ),
                 Expanded(
                   child: InkWell(
-                    onTap: () => {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => KeranjangScreen()),
+                      );
+                    },
                     borderRadius: BorderRadius.circular(10),
                     child: Container(
                         padding: const EdgeInsets.all(10),

@@ -4,6 +4,8 @@ import 'package:agrolink/models/shop.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../keranjang/keranjang_screen.dart';
+
 
 class DetailDistributorScreen extends StatefulWidget {
   final produk_distributor distributor;
@@ -237,12 +239,17 @@ class _DetailProdukDistributorScreenState extends State<DetailDistributorScreen>
                 ),
                 Expanded(
                   child: InkWell(
-                    onTap: () => {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => KeranjangScreen()),
+                      );
+                    },
                     borderRadius: BorderRadius.circular(10),
                     child: Container(
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                            color: Colors.green.withOpacity(0.8),
+                            color: Colors.green,
                             borderRadius: BorderRadius.circular(10)),
                         child: const Text(
                           'Add to cart',

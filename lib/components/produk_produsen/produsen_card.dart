@@ -49,6 +49,7 @@ class ProdusenCard extends StatelessWidget {
               height: 180,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
+                color: Colors.grey[200], // Latar belakang untuk padding
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),

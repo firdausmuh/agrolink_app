@@ -38,7 +38,7 @@ class _ProdukSupplierScreenState extends State<SupplierScreen> {
                       MaterialPageRoute(
                           builder: (context) => FavoriteBelanjaScreen()))
                 },
-                icon: Icon(Icons.favorite, color: Colors.red.withOpacity(0.6),)),
+                icon: Icon(Icons.favorite, color: Colors.red)),
           )
         ],
       ),

@@ -64,21 +64,55 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
         ),
-
-        const SizedBox(
-          height: 10,
-        ),
-
+        const SizedBox(height: 8),
         // Section iklan
-        Row(
-          children: [
-            Expanded(
-                child: Image.asset(
-              'assets/images/iklan.png',
-              fit: BoxFit.cover),
-            ),
-          ],
+        SizedBox(
+          height: 200, // Tetap menjaga tinggi agar tidak terlalu besar
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: [
+              // Gambar iklan pertama
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(5), // Opsional: Tambahkan radius
+                  child: Image.asset(
+                    'assets/images/iklan.png',
+                    width: 400, // Ukuran lebar tetap
+                    height: 200, // Ukuran tinggi tetap
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10),
+              // Gambar iklan kedua
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(5), // Opsional: Tambahkan radius
+                  child: Image.asset(
+                    'assets/images/banner2.png',
+                    width: 400, // Ukuran lebar tetap
+                    height: 200, // Ukuran tinggi tetap
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
+
+
+
+        // Row(
+        //   children: [
+        //     Expanded(
+        //         child: Image.asset(
+        //       'assets/images/iklan.png',
+        //       fit: BoxFit.cover),
+        //     ),
+        //   ],
+        // ),
 
         const SizedBox(
           height: 20,
