@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 
 class KeranjangCard extends StatefulWidget {
-  const KeranjangCard({super.key});
+  final bool isSelected;
+  final Function(bool?)? onSelectionChanged;
+
+  const KeranjangCard({
+    super.key,
+    this.isSelected = false,
+    this.onSelectionChanged,
+  });
 
   @override
   State<KeranjangCard> createState() => _KeranjangCardState();
 }
-
-// class KeranjangCard extends StatefulWidget {
-//   final CartItem cartItem;
-//
-//   const KeranjangCard({super.key, required this.cartItem});
-//
-//   @override
-//   State<KeranjangCard> createState() => _KeranjangCardState();
-// }
 
 class _KeranjangCardState extends State<KeranjangCard> {
   int quantity = 1;
@@ -59,14 +57,25 @@ class _KeranjangCardState extends State<KeranjangCard> {
         children: [
           Row(
             children: [
+              Checkbox(
+                value: widget.isSelected,
+                onChanged: widget.onSelectionChanged,
+                activeColor: Colors.green, // Ganti warna saat checkbox tercentang
+                checkColor: Colors.white, // Warna centang (tanda centang)
+                // Warna untuk checkbox saat tidak tercentang
+                hoverColor: Colors.grey, // Warna saat dihover
+                // inactiveThumbColor: Colors.grey, // Warna kotak checkbox tidak tercentang
+                // inactiveBorderColor: Colors., // Warna border saat tidak tercentang
+              ),
+              const SizedBox(width: 10),
               Container(
-                width: 40,
-                height: 40,
+                width: 30,
+                height: 30,
                 decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
                   image: DecorationImage(
                       image: AssetImage('assets/images/toko/shop_image.png'),
-                      fit: BoxFit.cover
+                      fit: BoxFit.cover,
                   ),
                 ),
               ),
@@ -77,7 +86,7 @@ class _KeranjangCardState extends State<KeranjangCard> {
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
                 ),
-              )
+              ),
             ],
           ),
           const SizedBox(height: 10),
@@ -92,10 +101,10 @@ class _KeranjangCardState extends State<KeranjangCard> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.asset(
-                    'assets/images/informasi/informasi1.png',
+                    'assets/images/profile1.png',
                     fit: BoxFit.cover,
                   ),
-                )
+                ),
               ),
               const SizedBox(width: 10),
               Expanded(
@@ -116,7 +125,7 @@ class _KeranjangCardState extends State<KeranjangCard> {
                         color: Colors.grey[600],
                       ),
                     ),
-                    const SizedBox(height: 5,),
+                    const SizedBox(height: 5),
                     Text(
                       'Stok : 50 Biji',
                       style: TextStyle(
@@ -174,7 +183,7 @@ class _KeranjangCardState extends State<KeranjangCard> {
                         ),
                         Text(
                           formatPrice(basePrice * quantity),
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
@@ -192,3 +201,4 @@ class _KeranjangCardState extends State<KeranjangCard> {
     );
   }
 }
+

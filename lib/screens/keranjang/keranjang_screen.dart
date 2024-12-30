@@ -1,6 +1,151 @@
+// import 'package:agrolink/components/keranjang/keranjang_card.dart';
+// import 'package:agrolink/screens/keranjang/checkout_screen.dart';
+// import 'package:flutter/material.dart';
+//
+// class KeranjangScreen extends StatefulWidget {
+//   const KeranjangScreen({super.key});
+//
+//   @override
+//   State<KeranjangScreen> createState() => _KeranjangScreenState();
+// }
+//
+// class _KeranjangScreenState extends State<KeranjangScreen> {
+//   void totalHarga() {}
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         backgroundColor: Colors.white,
+//         elevation: 0,
+//         leading: IconButton(
+//           onPressed: () {
+//             Navigator.pop(context); // Kembali ke layar sebelumnya
+//           },
+//           icon: const Icon(Icons.arrow_back, color: Colors.black),
+//         ),
+//         title: const Text(
+//           'Keranjang',
+//           style: TextStyle(
+//             color: Colors.black,
+//             fontWeight: FontWeight.w700,
+//             fontSize: 20,
+//           ),
+//         ),
+//       ),
+//       body: Padding(
+//         padding: const EdgeInsets.symmetric(horizontal: 20.0),
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             const Expanded(
+//               child: SingleChildScrollView(
+//                 physics: BouncingScrollPhysics(),
+//                 child: Column(
+//                   children: [
+//                     KeranjangCard(),
+//                     Divider(
+//                       color: Colors.grey, // Warna garis
+//                       thickness: 1, // Ketebalan garis
+//                     ),
+//                     KeranjangCard(),
+//                     Divider(
+//                       color: Colors.grey, // Warna garis
+//                       thickness: 1, // Ketebalan garis
+//                     ),
+//                     KeranjangCard(),
+//                     Divider(
+//                       color: Colors.grey, // Warna garis
+//                       thickness: 1, // Ketebalan garis
+//                     ),
+//                     KeranjangCard(),
+//                     SizedBox(
+//                       height: 20,
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             ),
+//             const SizedBox(
+//               height: 20,
+//             ),
+//             const Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: [
+//                 Text(
+//                   'Total',
+//                   style: TextStyle(
+//                     color: Color(0xFF406A52),
+//                     fontWeight: FontWeight.w700,
+//                     fontSize: 24,
+//                   ),
+//                 ),
+//                 Text(
+//                   'Rp. 40.000',
+//                   style: TextStyle(
+//                     color: Color(0xFF406A52),
+//                     fontWeight: FontWeight.w700,
+//                     fontSize: 24,
+//                   ),
+//                 ),
+//               ],
+//             ),
+//             const SizedBox(height: 20),
+//             SizedBox(
+//               width: MediaQuery.of(context).size.width,
+//               child: ElevatedButton(
+//                 onPressed: () {
+//                   Navigator.push(
+//                     context,
+//                     MaterialPageRoute(builder: (context) => CheckoutScreen()), // Arahkan ke layar checkout
+//                   );
+//                 },
+//                 style: ElevatedButton.styleFrom(
+//                   backgroundColor: const Color(0xFF199D52),
+//                   shape: RoundedRectangleBorder(
+//                     borderRadius: BorderRadius.circular(10),
+//                   ),
+//                   minimumSize: const Size(double.infinity, 40),
+//                 ),
+//                 child: Row(
+//                   mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran tombol dengan konten
+//                   children: [
+//                     Container(
+//                       padding: const EdgeInsets.all(5), // Memberikan jarak antara ikon dan lingkaran
+//                       decoration: const BoxDecoration(
+//                         shape: BoxShape.circle, // Bentuk lingkaran
+//                       ),
+//                       child: const Icon(
+//                         Icons.check_circle_outline, // Ikon ceklis
+//                         color: Colors.white, // Warna ceklis sesuai dengan tombol
+//                         size: 25, // Ukuran ikon
+//                       ),
+//                     ),
+//                     const SizedBox(width: 2), // Jarak antara ikon dan teks
+//                     const Text(
+//                       'Beli Sekarang',
+//                       style: TextStyle(
+//                           color: Colors.white,
+//                           fontSize: 18,
+//                           fontWeight: FontWeight.w700),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             ),
+//             const SizedBox(
+//               height: 20,
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+import 'package:flutter/material.dart';
 import 'package:agrolink/components/keranjang/keranjang_card.dart';
 import 'package:agrolink/screens/keranjang/checkout_screen.dart';
-import 'package:flutter/material.dart';
 
 class KeranjangScreen extends StatefulWidget {
   const KeranjangScreen({super.key});
@@ -10,7 +155,18 @@ class KeranjangScreen extends StatefulWidget {
 }
 
 class _KeranjangScreenState extends State<KeranjangScreen> {
-  void totalHarga() {}
+  final List<bool> selectedItems = List.filled(4, false);
+
+  int calculateTotal() {
+    int basePrice = 25000;
+    int total = 0;
+    for (int i = 0; i < selectedItems.length; i++) {
+      if (selectedItems[i]) {
+        total += basePrice;
+      }
+    }
+    return total;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +176,7 @@ class _KeranjangScreenState extends State<KeranjangScreen> {
         elevation: 0,
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context); // Kembali ke layar sebelumnya
+            Navigator.pop(context);
           },
           icon: const Icon(Icons.arrow_back, color: Colors.black),
         ),
@@ -38,41 +194,27 @@ class _KeranjangScreenState extends State<KeranjangScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Expanded(
-              child: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                child: Column(
-                  children: [
-                    KeranjangCard(),
-                    Divider(
-                      color: Colors.grey, // Warna garis
-                      thickness: 1, // Ketebalan garis
-                    ),
-                    KeranjangCard(),
-                    Divider(
-                      color: Colors.grey, // Warna garis
-                      thickness: 1, // Ketebalan garis
-                    ),
-                    KeranjangCard(),
-                    Divider(
-                      color: Colors.grey, // Warna garis
-                      thickness: 1, // Ketebalan garis
-                    ),
-                    KeranjangCard(),
-                    SizedBox(
-                      height: 20,
-                    ),
-                  ],
-                ),
+            Expanded(
+              child: ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                itemCount: selectedItems.length,
+                itemBuilder: (context, index) {
+                  return KeranjangCard(
+                    isSelected: selectedItems[index],
+                    onSelectionChanged: (value) {
+                      setState(() {
+                        selectedItems[index] = value ?? false;
+                      });
+                    },
+                  );
+                },
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            const Row(
+            const SizedBox(height: 20),
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   'Total',
                   style: TextStyle(
                     color: Color(0xFF406A52),
@@ -81,8 +223,8 @@ class _KeranjangScreenState extends State<KeranjangScreen> {
                   ),
                 ),
                 Text(
-                  'Rp. 40.000',
-                  style: TextStyle(
+                  'Rp. ${calculateTotal()}',
+                  style: const TextStyle(
                     color: Color(0xFF406A52),
                     fontWeight: FontWeight.w700,
                     fontSize: 24,
@@ -95,9 +237,10 @@ class _KeranjangScreenState extends State<KeranjangScreen> {
               width: MediaQuery.of(context).size.width,
               child: ElevatedButton(
                 onPressed: () {
+                  // Lanjutkan ke layar checkout hanya untuk item yang dipilih
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => CheckoutScreen()), // Arahkan ke layar checkout
+                    MaterialPageRoute(builder: (context) => const CheckoutScreen()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -105,37 +248,18 @@ class _KeranjangScreenState extends State<KeranjangScreen> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  minimumSize: const Size(double.infinity, 40),
                 ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min, // Menyesuaikan ukuran tombol dengan konten
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(5), // Memberikan jarak antara ikon dan lingkaran
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle, // Bentuk lingkaran
-                      ),
-                      child: const Icon(
-                        Icons.check_circle_outline, // Ikon ceklis
-                        color: Colors.white, // Warna ceklis sesuai dengan tombol
-                        size: 25, // Ukuran ikon
-                      ),
-                    ),
-                    const SizedBox(width: 2), // Jarak antara ikon dan teks
-                    const Text(
-                      'Beli Sekarang',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700),
-                    ),
-                  ],
+                child: const Text(
+                  'Beli Sekarang',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
           ],
         ),
       ),
