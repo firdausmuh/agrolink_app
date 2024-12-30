@@ -5,8 +5,6 @@ import '../../components/produk_retailer/retailer_card.dart';
 import 'package:agrolink/screens/produk_supplier/favorite_belanja_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../../models/shop.dart';
-
 class RetailerScreen extends StatefulWidget {
   const RetailerScreen({super.key});
 

@@ -26,7 +26,7 @@ List<Keranjang> belanjas = [
       description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis quam consequuntur nulla? Repellat nihil quo deleniti doloremque consequuntur id pariatur?",
       stok: "50 Biji",
-      imageUrl: ['assets/images/produk_supplier/bayam.png','assets/images/produk_supplier/bayam.png',],
+      imageUrl: ['assets/images/produk_supplier/bayam1.png','assets/images/produk_supplier/bayam1.png',],
       harga: 2000,
       rating: 4.2,
       jumlah: [10, 20, 30, 40, 50, 60],
@@ -37,7 +37,7 @@ List<Keranjang> belanjas = [
       description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis quam consequuntur nulla? Repellat nihil quo deleniti doloremque consequuntur id pariatur?",
       stok: "50 Biji",
-      imageUrl: ['assets/images/produk_supplier/edamame.png','assets/images/produk_supplier/edamame.png',],
+      imageUrl: ['assets/images/produk_supplier/edamame1.png','assets/images/produk_supplier/edamame1.png',],
       harga: 3000,
       rating: 4.4,
       jumlah: [10, 20, 30, 40, 50, 60],

@@ -13,7 +13,7 @@ class _UploadProdukScreenState extends State<UploadProdukScreen> {
   void addPhoto() {
     // Tambahkan logika untuk memilih foto dari galeri
     setState(() {
-      uploadedImages.add('assets/images/produsen/sawi.png'); // Contoh gambar
+      uploadedImages.add('assets/images/produsen/sayur_sawi3sayur_sawi3.png'); // Contoh gambar
     });
   }
 

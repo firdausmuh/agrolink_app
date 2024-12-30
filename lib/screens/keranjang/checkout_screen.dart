@@ -132,7 +132,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
                             image: const DecorationImage(
-                              image: AssetImage('assets/images/produk_supplier/bayam.png'), // Ganti sesuai aset Anda
+                              image: AssetImage('assets/images/produk_supplier/bayam1.png'), // Ganti sesuai aset Anda
                               fit: BoxFit.cover,
                             ),
                           ),

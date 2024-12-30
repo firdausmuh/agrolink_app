@@ -19,7 +19,7 @@ class Shop {
 List<Shop> shops = [
   Shop(
     namaToko: 'Lydias Store',
-    imageUrl: ['assets/images/produk_supplier/bayam.png'],
+    imageUrl: ['assets/images/produk_supplier/bayam1.png'],
     // isOnline: true,
     alamat: "Yogyakarta",
     // rating: 3.1,

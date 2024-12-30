@@ -83,7 +83,7 @@ class _KeranjangCardState extends State<KeranjangCard> {
               const Text(
                 'Lydia Adinda store',
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 14,
                   fontWeight: FontWeight.w700,
                 ),
               ),
