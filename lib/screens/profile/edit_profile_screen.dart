@@ -11,13 +11,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final _formKey = GlobalKey<FormState>();
 
   // Controllers for form fields
-  final _nameController = TextEditingController(text: 'Nadila Azucena');
+  final _nameController = TextEditingController(text: 'Muhamad Firdaus');
   final _phoneController = TextEditingController(text: '089532112456');
-  final _emailController = TextEditingController(text: 'nadilacena@gmail.com');
+  final _emailController = TextEditingController(text: 'mhfrds234@gmail.com');
   final _addressController = TextEditingController();
 
-  String _gender = 'Perempuan';
-  String _age = '20 Tahun';
+  String _gender = 'Laki-laki';
+  String _age = '22 Tahun';
 
   void _handleSubmit() {
     if (_formKey.currentState!.validate()) {
@@ -82,7 +82,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                 const SizedBox(height: 10),
                 Text(
-                  'Nadila Azucena',
+                  'Muhamad Firdaus',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,

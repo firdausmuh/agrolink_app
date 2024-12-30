@@ -32,7 +32,7 @@ class HomeScreen extends StatelessWidget {
                       children: [
                         Flexible(
                           child: Text(
-                            'Helo Muhamad Firdaus',
+                            'Hello Muhamad Firdaus',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -48,7 +48,7 @@ class HomeScreen extends StatelessWidget {
                         )
                       ],
                     ),
-                    Text('Selamat datang di Agrolink')
+                    Text('Selamat datang di Aplikasi Agrolink')
                   ],
                 ),
               ),
@@ -75,8 +75,8 @@ class HomeScreen extends StatelessWidget {
             Expanded(
                 child: Image.asset(
               'assets/images/iklan.png',
-              fit: BoxFit.cover,
-            )),
+              fit: BoxFit.cover),
+            ),
           ],
         ),
 

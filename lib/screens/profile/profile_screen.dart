@@ -253,7 +253,7 @@ class ProfileScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Nadila Azucena',
+                              'Muhamad Firdaus',
                               style: TextStyle(fontSize: 16),
                             ),
                             Text(
@@ -312,12 +312,12 @@ class ProfileScreen extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            _buildInfoRow(Icons.person_outlined, 'Nadila Azucena', false),
-                            _buildInfoRow(Icons.email_outlined, 'rencabesar@gmail.com', false),
+                            _buildInfoRow(Icons.person_outlined, 'Muhamad Firdaus', false),
+                            _buildInfoRow(Icons.email_outlined, 'mhfrds234@gmail.com', false),
                             _buildInfoRow(Icons.phone_outlined, '089532123456', false),
                             _buildInfoRow(Icons.store_outlined, 'Toko', false),
-                            _buildInfoRow(Icons.cake_outlined, '20 Tahun', false),
-                            _buildInfoRow(Icons.location_on_outlined, 'Bogor, Indonesia', true),
+                            _buildInfoRow(Icons.cake_outlined, '22 Tahun', false),
+                            _buildInfoRow(Icons.location_on_outlined, 'Bogor Raya, Indonesia', true),
                           ],
                         ),
                       ),
