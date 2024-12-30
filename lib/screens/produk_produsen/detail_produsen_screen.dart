@@ -1,3 +1,4 @@
+import 'package:agrolink/screens/produk_supplier/favorite_belanja_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:agrolink/models/Produsen.dart';
 import 'package:intl/intl.dart';
@@ -221,7 +222,13 @@ class _DetailProdukProdusenScreenState extends State<DetailProdusenScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
-                  onTap: () => {},
+                  onTap: () => {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => FavoriteBelanjaScreen()),
+                    ),
+                  },
                   borderRadius: BorderRadius.circular(10),
                   child: Container(
                       padding: const EdgeInsets.all(10),
