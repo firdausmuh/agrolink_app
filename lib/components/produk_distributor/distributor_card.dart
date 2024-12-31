@@ -7,6 +7,7 @@ class DistributorCard extends StatelessWidget {
   final String category;
   final double price;
   final String imageUrl;
+
   // final bool isOnline; // Menambahkan atribut isOnline
   // final String alamat; // Menambahkan atribut alamat
   // final String statusPesanan; // Menambahkan atribut statusPesanan
@@ -42,7 +43,6 @@ class DistributorCard extends StatelessWidget {
           ),
         ],
       ),
-
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
@@ -87,7 +87,9 @@ class DistributorCard extends StatelessWidget {
                       color: Colors.grey[600],
                     ),
                   ),
-                  const SizedBox(height: 8,),
+                  const SizedBox(
+                    height: 8,
+                  ),
                   Text(
                     'Ready Stock: ${readyStock.toString()}',
                     maxLines: 1,
@@ -97,7 +99,9 @@ class DistributorCard extends StatelessWidget {
                       color: Colors.grey[800],
                     ),
                   ),
-                  const SizedBox(height: 5,),
+                  const SizedBox(
+                    height: 5,
+                  ),
                   Text(
                     'Kategory: ${category.toString()}',
                     maxLines: 1,
@@ -107,7 +111,9 @@ class DistributorCard extends StatelessWidget {
                       color: Colors.black,
                     ),
                   ),
-                  const SizedBox(height: 5,),
+                  const SizedBox(
+                    height: 5,
+                  ),
                   // Text(
                   //   'isOnline: ${isOnline.toString()}',
                   //   maxLines: 1,
@@ -154,17 +160,15 @@ class DistributorCard extends StatelessWidget {
                           color: Colors.green,
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 12),
                         child: const Center(
-                          child: Text(
-                              'Beli Sekarang',
+                          child: Text('Beli Sekarang',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 10,
                                 fontWeight: FontWeight.bold,
-                              )
-
-                          ),
+                              )),
                         ),
                       )
                       // IconButton(
