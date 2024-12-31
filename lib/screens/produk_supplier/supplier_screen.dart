@@ -19,6 +19,8 @@ class _ProdukSupplierScreenState extends State<SupplierScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
+        leadingWidth: 50, // Mengatur lebar leading untuk kontrol jarak
+        titleSpacing: 0, // Menentukan jarak awal dari leading
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),

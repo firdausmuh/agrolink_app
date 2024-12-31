@@ -17,6 +17,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
         title: const Text('Payment Product', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700, fontSize: 20),),
         backgroundColor: Colors.white,
         elevation: 0,
+        leadingWidth: 50,
+        titleSpacing: 0,
         leading: IconButton(
             onPressed: () => Navigator.pop(context),
             icon: const Icon(Icons.arrow_back, color: Colors.black),
