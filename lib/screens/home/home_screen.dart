@@ -4,6 +4,7 @@ import 'package:agrolink/screens/produk_distributor/distributor_screen.dart';
 import 'package:agrolink/screens/produk_produsen/produsen_screen.dart';
 import 'package:agrolink/screens/produk_retailer/retailer_screen.dart';
 import 'package:agrolink/screens/produk_supplier/supplier_screen.dart';
+import 'package:agrolink/screens/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import '../../components/produk_produsen/produsen_card.dart';
 import '../../models/Produsen.dart';
@@ -55,12 +56,21 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(
                 width: 12,
               ),
-              CircleAvatar(
-                radius: 24,
-                backgroundColor: Colors.grey[200],
-                backgroundImage:
-                const AssetImage('assets/images/profile1.png'),
+              GestureDetector(
+                onTap: () {
+                  // Navigate to the profile page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ProfileScreen()),
+                  );
+                },
+                child: CircleAvatar(
+                  radius: 24,
+                  backgroundColor: Colors.grey[200],
+                  backgroundImage: const AssetImage('assets/images/profile2.png'),
+                ),
               ),
+
             ],
           ),
         ),

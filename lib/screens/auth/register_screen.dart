@@ -14,42 +14,106 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _checkPasswordController =
-      TextEditingController();
+  final TextEditingController _checkPasswordController = TextEditingController();
+
   bool _isPasswordVisible = false; // To toggle password visibility
   bool _isCheckPasswordVisible = false; // To toggle password visibility
+  String _selectedRole = 'Supplier'; // Default value
+
+
+
+  // void _register() async {
+  //   // Simple validation logic for the example
+  //   if (_passwordController.text == _checkPasswordController.text) {
+  //     // Credentials are valid
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(
+  //         content: Text('Login Successful!'),
+  //         backgroundColor: Colors.green,
+  //       ),
+  //     );
+  //
+  //     SharedPreferences prefs = await SharedPreferences.getInstance();
+  //     prefs.setString('username', _usernameController.text);
+  //     prefs.setBool('isLoggedIn', true);
+  //
+  //     Navigator.pushReplacement(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => MainScreen()),
+  //     );
+  //   } else {
+  //     // Credentials are invalid, show a SnackBar
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(
+  //         content: Text("Password doesn't match"),
+  //         backgroundColor: Colors.red, // Set the color of the SnackBar to red
+  //         duration:
+  //             Duration(seconds: 3), // SnackBar will disappear after 3 seconds
+  //       ),
+  //     );
+  //   }
+  // }
 
   void _register() async {
-    // Simple validation logic for the example
-    if (_passwordController.text == _checkPasswordController.text) {
-      // Credentials are valid
+    String nama = _namaController.text.trim();
+    String email = _emailController.text.trim();
+    String username = _usernameController.text.trim();
+    String password = _passwordController.text;
+    String confirmPassword = _checkPasswordController.text;
+
+    // Validation checks
+    if (nama.isEmpty || email.isEmpty || username.isEmpty || password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Login Successful!'),
-          backgroundColor: Colors.green,
+          content: Text('All fields are required!'),
+          backgroundColor: Colors.red,
         ),
       );
-
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString('username', _usernameController.text);
-      prefs.setBool('isLoggedIn', true);
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => MainScreen()),
-      );
-    } else {
-      // Credentials are invalid, show a SnackBar
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Password doesn't match"),
-          backgroundColor: Colors.red, // Set the color of the SnackBar to red
-          duration:
-              Duration(seconds: 3), // SnackBar will disappear after 3 seconds
-        ),
-      );
+      return;
     }
+
+    if (!RegExp(r"^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Invalid email format!'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    if (password != confirmPassword) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Passwords don't match!"),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    // Save user data to SharedPreferences
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('nama', nama);
+    await prefs.setString('email', email);
+    await prefs.setString('username', username);
+    await prefs.setString('role', _selectedRole);
+    await prefs.setBool('isLoggedIn', true);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Registration successful! Please log in.'),
+        backgroundColor: Colors.green,
+      ),
+    );
+
+    // Navigate to LoginScreen
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => LoginScreen()),
+    );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -78,6 +142,41 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       color: Colors.black, fontWeight: FontWeight.w500),
                 ),
                 const SizedBox(height: 20),
+
+                // Dropdown for selecting role register
+                Row(
+                  children: [
+                    const Text(
+                        'Daftar Sebagai apa?',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w500,
+                        ),
+                    ),
+                    const Spacer(),
+                    DropdownButton<String>(
+                      value: _selectedRole,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          _selectedRole = newValue!;
+                        });
+                      },
+                      items: <String>[
+                        'Supplier',
+                        'Produsen',
+                        'Distributor',
+                        'Retailer',
+                        'Customer'
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
 
                 // Nama input field
                 TextFormField(
@@ -313,7 +412,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
-
                 // Login button
                 SizedBox(
                   width: double.infinity, // Make the button full width
@@ -344,7 +442,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text('Belum punya akun?'),
+                    const Text('Sudah punya akun?'),
                     const SizedBox(
                       width: 4,
                     ),
@@ -375,3 +473,5 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 }
+
+

@@ -12,40 +12,91 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isPasswordVisible = false; // To toggle password visibility
+  bool _rememberMe = false; // To remember the user
 
   void _login() async {
-
     // Simple validation logic for the example
-    if (_passwordController.text != '' && _usernameController != '') {
-      // Credentials are valid
+    if (_passwordController.text != '' && _usernameController.text != '') {
+      // Check role from SharedPreferences
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String role = prefs.getString('role') ?? "Customer";  // Default to "Customer" if role is not found
+
+      // Store user data and role in SharedPreferences
+      prefs.setString('username', _usernameController.text);
+      prefs.setBool('isLoggedIn', true);
+
+      // Show success SnackBar based on role
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Login Successful!'),
+        SnackBar(
+          content: Text('Successfully logged in as $role!'),
           backgroundColor: Colors.green,
         ),
       );
 
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString('username', _usernameController.text);
-      prefs.setBool('isLoggedIn', true);
-
+      // Navigate to the MainScreen
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const MainScreen()),
       );
-
     } else {
-      // Credentials are invalid, show a SnackBar
+      // Credentials are invalid, show an error SnackBar
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text("Login credentials not match"),
-          backgroundColor: Colors.red, // Set the color of the SnackBar to red
-          duration:
-          Duration(seconds: 3), // SnackBar will disappear after 3 seconds
+          content: Text("Login credentials do not match"),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 3),
         ),
       );
     }
   }
+
+  // void _login() async {
+  //   // Simple validation logic for the example
+  //   if (_passwordController.text != '' && _usernameController.text != '') {
+  //     // Simulate checking credentials and user role
+  //     String role = "";
+  //     if (_usernameController.text == "supplier") {
+  //       role = "Supplier";
+  //     } else if (_usernameController.text == "distributor") {
+  //       role = "Distributor";
+  //     } else if (_usernameController.text == "produsen") {
+  //       role = "Produsen";
+  //     } else if (_usernameController.text == "retailer") {
+  //       role = "Retailer";
+  //     } else {
+  //       role = "Customer";  // Default role if none match
+  //     }
+  //
+  //     // Store user data and role in SharedPreferences
+  //     SharedPreferences prefs = await SharedPreferences.getInstance();
+  //     prefs.setString('username', _usernameController.text);
+  //     prefs.setBool('isLoggedIn', true);
+  //     prefs.setString('role', role); // Save the role
+  //
+  //     // Show success SnackBar based on role
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         content: Text('Successfully logged in as $role!'),
+  //         backgroundColor: Colors.green,
+  //       ),
+  //     );
+  //
+  //     // Navigate to the MainScreen
+  //     Navigator.pushReplacement(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => const MainScreen()),
+  //     );
+  //   } else {
+  //     // Credentials are invalid, show an error SnackBar
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(
+  //         content: Text("Login credentials do not match"),
+  //         backgroundColor: Colors.red, // Set the color of the SnackBar to red
+  //         duration: Duration(seconds: 3), // SnackBar will disappear after 3 seconds
+  //       ),
+  //     );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -159,8 +210,29 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 5),
 
+                // Remember me and select button
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Checkbox(
+                          value: _rememberMe,
+                          onChanged: (value) {
+                            setState(() {
+                              _rememberMe = value!;
+                            });
+                          },
+                        ),
+                        const Text('Remember Me'),
+                      ],
+                    ),
+                    const Text('Forgot Password?'),
+                  ],
+                ),
+                const SizedBox(height: 20),
                 // Login button
                 SizedBox(
                   width: double.infinity, // Make the button full width
@@ -219,3 +291,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+

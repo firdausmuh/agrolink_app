@@ -98,11 +98,7 @@ class TokoScreen extends StatelessWidget {
                   ],
                 ),
                 // Garis pemisah
-                Container(
-                  height: 40,
-                  width: 1,
-                  color: Colors.grey.shade300,
-                ),
+                Container(height: 40, width: 1, color: Colors.grey.shade300,),
                 // Balas chat & diskusi
                 Column(
                   children: const [
@@ -121,11 +117,7 @@ class TokoScreen extends StatelessWidget {
                   ],
                 ),
                 // Garis pemisah
-                Container(
-                  height: 40,
-                  width: 1,
-                  color: Colors.grey.shade300,
-                ),
+                Container(height: 40, width: 1, color: Colors.grey.shade300,),
                 // Jam operasional toko
                 Column(
                   children: const [
@@ -181,7 +173,7 @@ class TokoScreen extends StatelessWidget {
                         const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 8.0),
                           child: Text(
-                            'Nama Produk',
+                            'Keripik Kentang',
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
