@@ -58,6 +58,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     String nama = _namaController.text.trim();
     String email = _emailController.text.trim();
     String username = _usernameController.text.trim();
+    String phone = _phoneController.text.trim();
     String password = _passwordController.text;
     String confirmPassword = _checkPasswordController.text;
 
@@ -97,6 +98,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     await prefs.setString('nama', nama);
     await prefs.setString('email', email);
     await prefs.setString('username', username);
+    await prefs.setString('phone', phone);
     await prefs.setString('role', _selectedRole);
     await prefs.setBool('isLoggedIn', true);
 

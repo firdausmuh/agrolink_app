@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:agrolink/screens/auth/login_screen.dart';
 import 'package:agrolink/screens/profile/edit_profile_screen.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +5,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
+
+  Future<SharedPreferences?> _getPrefs() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs;
+  }
 
   void _logout(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -43,7 +46,8 @@ class ProfileScreen extends StatelessWidget {
               color: Colors.grey[600], // Set content color to a grey shade
             ),
           ),
-          actionsAlignment: MainAxisAlignment.center, // Center-align the actions
+          actionsAlignment:
+              MainAxisAlignment.center, // Center-align the actions
           actions: [
             TextButton(
               onPressed: () {
@@ -74,7 +78,6 @@ class ProfileScreen extends StatelessWidget {
       },
     );
   }
-
 
   // @override
   // Widget build(BuildContext context) {
@@ -206,151 +209,172 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leadingWidth: 50,
-        titleSpacing: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {
-            Navigator.pop(context); // Aksi kembali
-          },
-        ),
-        title: const Text(
-          "Profile",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        centerTitle: false, // Mengatur teks di tengah
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(height: 20),
-              // Sisanya tetap seperti sebelumnya
-              Center(
-                child: _customContainer(
-                  Row(
+    return FutureBuilder(
+        future: _getPrefs(),
+        builder:
+            (BuildContext context, AsyncSnapshot<SharedPreferences?> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else {
+            SharedPreferences? prefs = snapshot.data;
+
+            return Scaffold(
+              appBar: AppBar(
+                backgroundColor: Colors.white,
+                elevation: 0,
+                leadingWidth: 50,
+                titleSpacing: 0,
+                leading: IconButton(
+                  icon: const Icon(Icons.arrow_back, color: Colors.black),
+                  onPressed: () {
+                    Navigator.pop(context); // Aksi kembali
+                  },
+                ),
+                title: const Text(
+                  "Profile",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                centerTitle: false, // Mengatur teks di tengah
+              ),
+              body: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: SingleChildScrollView(
+                  child: Column(
                     children: [
-                      const CircleAvatar(
-                        radius: 32,
-                        child: CircleAvatar(
-                          radius: 30,
-                          backgroundImage:
-                          AssetImage('assets/images/profile1.png'),
+                      const SizedBox(height: 20),
+                      // Sisanya tetap seperti sebelumnya
+                      Center(
+                        child: _customContainer(
+                          Row(
+                            children: [
+                              const CircleAvatar(
+                                radius: 32,
+                                child: CircleAvatar(
+                                  radius: 30,
+                                  backgroundImage:
+                                      AssetImage('assets/images/profile1.png'),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      prefs!.getString('nama') ?? '',
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                    const Text(
+                                      'Bergabung pada: 5 Maret 2024',
+                                      style: TextStyle(
+                                          fontSize: 12, color: Colors.grey),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () => {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const EditProfileScreen()),
+                                  )
+                                },
+                                child: const Column(
+                                  children: [
+                                    Icon(
+                                      Icons.edit,
+                                      color: Colors.blue,
+                                      size: 20,
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      'Edit',
+                                      style: TextStyle(fontSize: 12),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      const Expanded(
+                      const SizedBox(height: 20),
+                      // Informasi Pribadi Section
+                      Container(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Muhamad Firdaus',
-                              style: TextStyle(fontSize: 16),
+                              'Informasi Pribadi',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue[800]!),
                             ),
-                            Text(
-                              'Bergabung pada: 5 Maret 2024',
-                              style: TextStyle(fontSize: 12, color: Colors.grey),
+                            const SizedBox(height: 20),
+                            _customContainer(
+                              SizedBox(
+                                height: 400,
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    _buildInfoRow(Icons.person_outlined,
+                                        prefs!.getString('nama') ?? '', false),
+                                    _buildInfoRow(Icons.email_outlined,
+                                        prefs!.getString('email') ?? '', false),
+                                    _buildInfoRow(Icons.phone_outlined,
+                                        prefs!.getString('phone') ?? '', false),
+                                    _buildInfoRow(
+                                        Icons.store_outlined, 'Toko', false),
+                                    _buildInfoRow(
+                                        Icons.cake_outlined, '22 Tahun', false),
+                                    _buildInfoRow(Icons.location_on_outlined,
+                                        'Bogor Raya, Indonesia', true),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            InkWell(
+                              onTap: () => _showCustomLogoutDialog(context),
+                              child: _customContainer(
+                                _buildInfoRow(
+                                  Icons.logout,
+                                  'Keluar',
+                                  true,
+                                  textColor: Colors.red[900],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
                             ),
                           ],
                         ),
                       ),
-                      InkWell(
-                        onTap: () => {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const EditProfileScreen()),
-                          )
-                        },
-                        child: const Column(
-                          children: [
-                            Icon(
-                              Icons.edit,
-                              color: Colors.blue,
-                              size: 20,
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              'Edit',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ],
-                        ),
-                      )
                     ],
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
-              // Informasi Pribadi Section
-              Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Informasi Pribadi',
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue[800]!),
-                    ),
-                    const SizedBox(height: 20),
-                    _customContainer(
-                      SizedBox(
-                        height: 400,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            _buildInfoRow(Icons.person_outlined, 'Muhamad Firdaus', false),
-                            _buildInfoRow(Icons.email_outlined, 'mhfrds234@gmail.com', false),
-                            _buildInfoRow(Icons.phone_outlined, '089532123456', false),
-                            _buildInfoRow(Icons.store_outlined, 'Toko', false),
-                            _buildInfoRow(Icons.cake_outlined, '22 Tahun', false),
-                            _buildInfoRow(Icons.location_on_outlined, 'Bogor Raya, Indonesia', true),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    InkWell(
-                      onTap: () => _showCustomLogoutDialog(context),
-                      child: _customContainer(
-                        _buildInfoRow(
-                          Icons.logout,
-                          'Keluar',
-                          true,
-                          textColor: Colors.red[900],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+            );
+          }
+        });
   }
-
 
   Widget _customContainer(Widget widget) {
     return Container(

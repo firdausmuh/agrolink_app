@@ -25,20 +25,48 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_passwordController.text != '' && _usernameController.text != '') {
       // Check role from SharedPreferences
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      String role = prefs.getString('role') ?? "Customer";  // Default to "Customer" if role is not found
+      String? username = prefs.getString('username');
 
-      // Store user data and role in SharedPreferences
-      prefs.setString('username', _usernameController.text);
-      prefs.setBool('isLoggedIn', true);
+      if(username != null) {
+        if(username == _usernameController.text) {
+          // Store user data and role in SharedPreferences
+          prefs.setString('username', _usernameController.text);
+          prefs.setBool('isLoggedIn', true);
+          String? role = prefs.getString('role');
 
-      // Show success SnackBar based on role
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Successfully logged in as $role!'),
-          backgroundColor: Colors.green,
-        ),
-      );
+          // Show success SnackBar based on role
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Successfully logged in as $role!'),
+              backgroundColor: Colors.green,
+            ),
+          );
 
+          // Navigate to the MainScreen
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const MainScreen()),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Login credentials do not match"),
+              backgroundColor: Colors.red,
+              duration: Duration(seconds: 3),
+            ),
+          );
+        }
+
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Login credentials do not match"),
+            backgroundColor: Colors.red,
+            duration: Duration(seconds: 3),
+          ),
+        );
+      }
+      // update form faiz
       // Navigasi berdasarkan role
       if (role == 'Supplier') {
         Navigator.pushReplacement(
