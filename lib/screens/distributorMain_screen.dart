@@ -10,14 +10,15 @@ import 'package:agrolink/screens/riwayat_transaksi/riwayat_screen.dart';
 import 'package:agrolink/screens/toko/toko_screen.dart';
 import 'package:flutter/material.dart';
 
-class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+class DistributormainScreen extends StatefulWidget {
+  const DistributormainScreen({super.key});
+
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  State<DistributormainScreen> createState() => _DistributorScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _DistributorScreenState extends State<DistributormainScreen> {
   int _bottomNavIndex = 0;
   static const Color selectedGreen = Colors.green;
 
@@ -55,7 +56,7 @@ class _MainScreenState extends State<MainScreen> {
   ];
 
   final List<Widget> _listWidget = [
-    HomeScreen(),
+    DistributorHome(),
     // const SupplierHome(),
     // const ProdusenHome(),
     // const DistributorHome(),

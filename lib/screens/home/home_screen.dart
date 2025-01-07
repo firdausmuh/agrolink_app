@@ -70,7 +70,6 @@ class HomeScreen extends StatelessWidget {
                   backgroundImage: const AssetImage('assets/images/profile2.png'),
                 ),
               ),
-
             ],
           ),
         ),
@@ -111,19 +110,6 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
         ),
-
-
-
-        // Row(
-        //   children: [
-        //     Expanded(
-        //         child: Image.asset(
-        //       'assets/images/iklan.png',
-        //       fit: BoxFit.cover),
-        //     ),
-        //   ],
-        // ),
-
         const SizedBox(
           height: 20,
         ),
@@ -157,7 +143,7 @@ class HomeScreen extends StatelessWidget {
                           children: [
                             Flexible(
                               flex: 1,
-                              child: InkWell(
+                              child: InkWell (
                                 borderRadius: BorderRadius.circular(20),
                                 onTap: () => {
                                   Navigator.push(

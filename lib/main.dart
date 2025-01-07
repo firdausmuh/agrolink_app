@@ -1,5 +1,6 @@
 import 'package:agrolink/screens/auth/login_screen.dart';
 import 'package:agrolink/screens/main_screen.dart';
+import 'package:agrolink/screens/produk_supplier/supplier_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/welcome_screen.dart';
@@ -60,8 +61,10 @@ class _MyAppState extends State<MyApp> {
           ? WelcomeScreen()
 
           : _isLoggedIn
-              ? MainScreen()
+              ? MainScreen() // Change this to DistributormainScreen() or ProdusenMainScreen() or MainScreen() or RetailerMainScreen() or CustomerMainScreen() or LoginScreen() or RegisterScreen() or ForgotPasswordScreen() or ResetPasswordScreen() or ChangePasswordScreen() or
               : LoginScreen(),
     );
   }
 }
+
+
