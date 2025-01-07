@@ -1,4 +1,9 @@
+import 'package:agrolink/screens/home/customer_home.dart';
+import 'package:agrolink/screens/home/distributor_home.dart';
 import 'package:agrolink/screens/home/home_screen.dart';
+import 'package:agrolink/screens/home/produsen_home.dart';
+import 'package:agrolink/screens/home/retailer_home.dart';
+import 'package:agrolink/screens/home/supplier_home.dart';
 import 'package:agrolink/screens/keranjang/keranjang_screen.dart';
 import 'package:agrolink/screens/produk_distributor/distributor_screen.dart';
 import 'package:agrolink/screens/produk_produsen/produsen_screen.dart';
@@ -60,6 +65,20 @@ class _MainScreenState extends State<MainScreen> {
       icon: Icon(Icons.person_outline, size: 28), // Ikon diperbesar
       label: 'Profile',
     ),
+  ];
+
+  // update from faiz
+  final List<Widget> _listWidget = [
+    HomeScreen(),
+    // const SupplierHome(),
+    // const ProdusenHome(),
+    // const DistributorHome(),
+    // RetailerHome(),
+    // CustomerHome(),
+    const KeranjangScreen(),
+    const TokoScreen(),
+    const RiwayatScreen(),
+    const ProfileScreen(),
   ];
 
   @override

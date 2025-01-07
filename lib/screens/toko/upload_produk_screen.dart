@@ -13,7 +13,7 @@ class _UploadProdukScreenState extends State<UploadProdukScreen> {
   void addPhoto() {
     // Tambahkan logika untuk memilih foto dari galeri
     setState(() {
-      uploadedImages.add('assets/images/produsen/sayur_sawi3sayur_sawi3.png'); // Contoh gambar
+      uploadedImages.add('assets/images/produsen/buah_naga1.png',);// Contoh gambar
     });
   }
 
@@ -84,6 +84,7 @@ class _UploadProdukScreenState extends State<UploadProdukScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Container(
                         width: 250,
+                        height: 250,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           image: DecorationImage(
@@ -126,7 +127,7 @@ class _UploadProdukScreenState extends State<UploadProdukScreen> {
               buildInputField('Kondisi Produk', 'Masukkan kondisi produk'),
               buildInputField('Deskripsi Produk', 'Masukkan deskripsi produk',
                   maxLines: 5),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               // Tombol Upload Produk
               SizedBox(
                 width: double.infinity,
@@ -138,8 +139,12 @@ class _UploadProdukScreenState extends State<UploadProdukScreen> {
                     ),
                     padding: const EdgeInsets.symmetric(vertical: 15),
                   ),
+                  // Logika upload produk dan menampilkan snackbar
                   onPressed: () {
-                    // Logika upload produk
+                    showTopSnackBar(context, 'Produk telah berhasil di Upload');
+                    Future.delayed(const Duration(seconds: 3), () {
+                      Navigator.pop(context);
+                    });
                   },
                   child: const Text(
                     'Upload Produk',
@@ -190,4 +195,38 @@ class _UploadProdukScreenState extends State<UploadProdukScreen> {
       ),
     );
   }
+
+  // showsnackbar above not from bellow
+  void showTopSnackBar(BuildContext context, String message) {
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: MediaQuery.of(context).padding.top + 10, // Posisi di bawah status bar
+        left: 20,
+        right: 20,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            decoration: BoxDecoration(
+              color: Colors.green,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Text(
+              message,
+              style: const TextStyle(color: Colors.white, fontSize: 16),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay?.insert(overlayEntry);
+
+    // Menghapus snackbar setelah 3 detik
+    Future.delayed(const Duration(seconds: 2), () {
+      overlayEntry.remove();
+    });
+  }
+
 }

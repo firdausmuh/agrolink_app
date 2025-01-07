@@ -87,6 +87,7 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
+              // update faiz
               const SizedBox(height: 8),
               // Section iklan
               SizedBox(
@@ -280,6 +281,82 @@ class HomeScreen extends StatelessWidget {
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: Text(
                           'Produk Pertanian',
+
+              const SizedBox(
+                width: 12,
+              ),
+              GestureDetector(
+                onTap: () {
+                  // Navigate to the profile page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ProfileScreen()),
+                  );
+                },
+                child: CircleAvatar(
+                  radius: 24,
+                  backgroundColor: Colors.grey[200],
+                  backgroundImage: const AssetImage('assets/images/profile2.png'),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 8),
+        // Section iklan
+        SizedBox(
+          height: 200, // Tetap menjaga tinggi agar tidak terlalu besar
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: [
+              // Gambar iklan pertama
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(5), // Opsional: Tambahkan radius
+                  child: Image.asset(
+                    'assets/images/iklan.png',
+                    width: 400, // Ukuran lebar tetap
+                    height: 200, // Ukuran tinggi tetap
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10),
+              // Gambar iklan kedua
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(5), // Opsional: Tambahkan radius
+                  child: Image.asset(
+                    'assets/images/banner2.png',
+                    width: 400, // Ukuran lebar tetap
+                    height: 200, // Ukuran tinggi tetap
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        // Content Produk
+        Expanded(
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Section paket layanan
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Layanan Pertanian',
                           style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.w700,
@@ -295,6 +372,18 @@ class HomeScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(20),
                               onTap: () => {
                                 Navigator.push(
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment
+                              .spaceBetween, // Even space between items
+                          children: [
+                            Flexible(
+                              flex: 1,
+                              child: InkWell (
+                                borderRadius: BorderRadius.circular(20),
+                                onTap: () => {
+                                  Navigator.push(
+                                    
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => DetailProdusenScreen(
