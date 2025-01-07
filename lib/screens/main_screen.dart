@@ -137,13 +137,13 @@ Future<Widget> homeScreenArranger() async {
 
   late Widget defaultHomeScreen;
   if (role == 'Supplier') {
-    defaultHomeScreen = const SupplierScreen();
-  } else if (role == 'Produsen') {
-    defaultHomeScreen = const ProdusenScreen();
-  } else if (role == 'Distributor') {
-    defaultHomeScreen = const DistributorScreen();
-  } else if (role == 'Retailer') {
     defaultHomeScreen = const RetailerScreen();
+  } else if (role == 'Produsen') {
+    defaultHomeScreen = const SupplierScreen();
+  } else if (role == 'Distributor') {
+    defaultHomeScreen = const ProdusenScreen();
+  } else if (role == 'Retailer') {
+    defaultHomeScreen = const DistributorScreen();
   } else {
     defaultHomeScreen = HomeScreen();
   }
