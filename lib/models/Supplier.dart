@@ -63,7 +63,7 @@ List<produk_supplier> suppliers = [
       readyStock: "50 Buah",
       category: "Produk Supplier",
       imageUrl: ['assets/images/produk_supplier/labu.png','assets/images/produk_supplier/labu.png',],
-      harga: 100000,
+      harga: 100,
       rating: 4.2,
       jumlah: [10, 20, 30, 40, 50, 60],
       satuan: 'karung'),

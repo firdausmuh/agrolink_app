@@ -74,8 +74,12 @@ class _UploadProdukScreenState extends State<UploadProdukScreen> {
   void addPhoto() {
     // Tambahkan logika untuk memilih foto dari galeri
     setState(() {
+      // update by faiz
       uploadedImages.add(
           'assets/images/produsen/sayur_sawi3sayur_sawi3.png'); // Contoh gambar
+      // update by faiz
+      uploadedImages.add('assets/images/produsen/buah_naga1.png',);// Contoh gambar
+      // update by faiz
     });
   }
 
@@ -131,6 +135,7 @@ class _UploadProdukScreenState extends State<UploadProdukScreen> {
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(color: Colors.grey),
                   ),
+                  // update by faiz
                   child: _image != null
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -161,6 +166,23 @@ class _UploadProdukScreenState extends State<UploadProdukScreen> {
                               size: 50,
                               color: Colors.grey,
                             ),
+                  // update by faiz
+                )
+                    : ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: uploadedImages.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Container(
+                        width: 250,
+                        height: 250,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                            image: AssetImage(uploadedImages[index]),
+                            fit: BoxFit.cover,
+                  // update by faiz
                           ),
                         )),
               const SizedBox(height: 10),
@@ -202,7 +224,7 @@ class _UploadProdukScreenState extends State<UploadProdukScreen> {
               buildInputField('Deskripsi Produk', 'Masukkan deskripsi produk',
                   _textController,
                   maxLines: 5),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               // Tombol Upload Produk
               SizedBox(
                 width: double.infinity,
@@ -214,9 +236,17 @@ class _UploadProdukScreenState extends State<UploadProdukScreen> {
                     ),
                     padding: const EdgeInsets.symmetric(vertical: 15),
                   ),
+                  // Logika upload produk dan menampilkan snackbar
                   onPressed: () {
+                    // update by faiz
                     // Logika upload produk
                     _upload();
+                    // update by faiz
+                    showTopSnackBar(context, 'Produk telah berhasil di Upload');
+                    Future.delayed(const Duration(seconds: 3), () {
+                      Navigator.pop(context);
+                    });
+                    // update by faiz
                   },
                   child: const Text(
                     'Upload Produk',
@@ -270,4 +300,38 @@ class _UploadProdukScreenState extends State<UploadProdukScreen> {
       ),
     );
   }
+
+  // showsnackbar above not from bellow
+  void showTopSnackBar(BuildContext context, String message) {
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: MediaQuery.of(context).padding.top + 10, // Posisi di bawah status bar
+        left: 20,
+        right: 20,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            decoration: BoxDecoration(
+              color: Colors.green,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Text(
+              message,
+              style: const TextStyle(color: Colors.white, fontSize: 16),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    overlay?.insert(overlayEntry);
+
+    // Menghapus snackbar setelah 3 detik
+    Future.delayed(const Duration(seconds: 2), () {
+      overlayEntry.remove();
+    });
+  }
+
 }

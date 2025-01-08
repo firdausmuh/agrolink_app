@@ -184,8 +184,13 @@ class TokoScreen extends StatelessWidget {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
                               image: const DecorationImage(
+                               
+                                 // update by faiz
                                 image: AssetImage(
                                     'assets/images/retailer/keripik_kentang.png'), // Ganti dengan gambar produk
+                                 // update by faiz
+                                image: AssetImage('assets/images/produsen/buah_naga1.png'), // Ganti dengan gambar produk
+                                 // update by faiz
                                 fit: BoxFit.cover,
                               ),
                             ),
