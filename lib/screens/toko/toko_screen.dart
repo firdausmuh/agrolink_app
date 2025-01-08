@@ -1,8 +1,17 @@
+import 'dart:io';
+
 import 'package:agrolink/screens/toko/upload_produk_screen.dart';
 import 'package:flutter/material.dart';
 
 class TokoScreen extends StatelessWidget {
-  const TokoScreen({super.key});
+  final String? namaProdukUpload;
+  final String? hargaProdukUpload;
+  final File? imageProdukUpload;
+  const TokoScreen(
+      {this.namaProdukUpload,
+      this.hargaProdukUpload,
+      this.imageProdukUpload,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +25,8 @@ class TokoScreen extends StatelessWidget {
         ),
         title: const Text(
           'Toko Saya',
-          style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700),
+          style: TextStyle(
+              color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700),
         ),
       ),
       body: Padding(
@@ -30,7 +40,8 @@ class TokoScreen extends StatelessWidget {
               children: [
                 const CircleAvatar(
                   radius: 50,
-                  backgroundImage: AssetImage('assets/images/profile1.png'), // Ganti dengan gambar toko
+                  backgroundImage: AssetImage(
+                      'assets/images/profile1.png'), // Ganti dengan gambar toko
                 ),
                 Positioned(
                   bottom: 0, // Posisikan tombol edit di bawah lingkaran
@@ -38,13 +49,17 @@ class TokoScreen extends StatelessWidget {
                   child: Container(
                     width: 30,
                     height: 30,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
-                      color: const Color(0xFF406A52), // Warna latar belakang
+                      color: Color(0xFF406A52), // Warna latar belakang
                     ),
                     child: IconButton(
-                      padding: EdgeInsets.zero, // Hapus padding default dari IconButton
-                      icon: const Icon(Icons.edit, size: 16, color: Colors.white), // Ikon pensil dengan warna putih
+                      padding: EdgeInsets
+                          .zero, // Hapus padding default dari IconButton
+                      icon: const Icon(Icons.edit,
+                          size: 16,
+                          color:
+                              Colors.white), // Ikon pensil dengan warna putih
                       onPressed: () {
                         // Aksi edit
                       },
@@ -64,9 +79,9 @@ class TokoScreen extends StatelessWidget {
             ),
             const SizedBox(height: 5),
             // Status dan alamat
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 Icon(Icons.circle, color: Colors.green, size: 12),
                 SizedBox(width: 5),
                 Text(
@@ -81,8 +96,8 @@ class TokoScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 // Produk di toko
-                Column(
-                  children: const [
+                const Column(
+                  children: [
                     Text(
                       '5',
                       style: TextStyle(
@@ -98,10 +113,14 @@ class TokoScreen extends StatelessWidget {
                   ],
                 ),
                 // Garis pemisah
-                Container(height: 40, width: 1, color: Colors.grey.shade300,),
+                Container(
+                  height: 40,
+                  width: 1,
+                  color: Colors.grey.shade300,
+                ),
                 // Balas chat & diskusi
-                Column(
-                  children: const [
+                const Column(
+                  children: [
                     Text(
                       '> 1 jam',
                       style: TextStyle(
@@ -117,10 +136,14 @@ class TokoScreen extends StatelessWidget {
                   ],
                 ),
                 // Garis pemisah
-                Container(height: 40, width: 1, color: Colors.grey.shade300,),
+                Container(
+                  height: 40,
+                  width: 1,
+                  color: Colors.grey.shade300,
+                ),
                 // Jam operasional toko
-                Column(
-                  children: const [
+                const Column(
+                  children: [
                     Text(
                       'Buka 24 Jam',
                       style: TextStyle(
@@ -142,16 +165,15 @@ class TokoScreen extends StatelessWidget {
             const SizedBox(height: 10),
             // Daftar produk
             Expanded(
-              child: GridView.builder(
-                itemCount: 5, // Jumlah produk
+              child: GridView(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   childAspectRatio: 3 / 4,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
                 ),
-                itemBuilder: (context, index) {
-                  return Card(
+                children: [
+                  Card(
                     elevation: 2,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,7 +184,8 @@ class TokoScreen extends StatelessWidget {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
                               image: const DecorationImage(
-                                image: AssetImage('assets/images/retailer/keripik_kentang.png'), // Ganti dengan gambar produk
+                                image: AssetImage(
+                                    'assets/images/retailer/keripik_kentang.png'), // Ganti dengan gambar produk
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -198,8 +221,61 @@ class TokoScreen extends StatelessWidget {
                         const SizedBox(height: 5),
                       ],
                     ),
-                  );
-                },
+                  ),
+                  namaProdukUpload != null
+                      ? Card(
+                          elevation: 2,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // Gambar produk
+                              Expanded(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Image.file(
+                                    imageProdukUpload!,
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                              // Nama produk
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: Text(
+                                  namaProdukUpload ?? '',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                              // Harga produk
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: Text(
+                                  hargaProdukUpload ?? '',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 14,
+                                    color: Colors.green,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                            ],
+                          ),
+                        )
+                      : const SizedBox(),
+                ],
               ),
             ),
           ],
@@ -221,4 +297,3 @@ class TokoScreen extends StatelessWidget {
     );
   }
 }
-
