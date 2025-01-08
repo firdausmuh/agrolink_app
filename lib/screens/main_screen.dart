@@ -67,7 +67,7 @@ class _MainScreenState extends State<MainScreen> {
     ),
   ];
 
-  // update from faiz
+  //update from faiz
   final List<Widget> _listWidget = [
     HomeScreen(),
     // const SupplierHome(),
@@ -158,7 +158,7 @@ Future<Widget> homeScreenArranger() async {
   if (role == 'Supplier') {
     defaultHomeScreen = const RetailerScreen();
   } else if (role == 'Produsen') {
-    defaultHomeScreen = const SupplierScreen();
+    defaultHomeScreen = const SupplierHome();
   } else if (role == 'Distributor') {
     defaultHomeScreen = const ProdusenScreen();
   } else if (role == 'Retailer') {

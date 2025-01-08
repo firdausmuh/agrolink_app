@@ -36,6 +36,7 @@ class SupplierCard extends StatelessWidget {
           ),
         ],
       ),
+      margin: const EdgeInsets.symmetric(vertical: 8),
 
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -157,3 +158,5 @@ class SupplierCard extends StatelessWidget {
     );
   }
 }
+
+

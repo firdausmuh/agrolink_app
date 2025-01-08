@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import '../../components/produk_supplier/supplier_card.dart';
+import '../../models/Supplier.dart';
+import '../produk_supplier/detail_supplier_screen.dart';
 import '../profile/profile_screen.dart';
 
 class SupplierHome extends StatelessWidget {
@@ -63,8 +66,9 @@ class SupplierHome extends StatelessWidget {
             const Text(
               'Temukan produk yang kamu inginkan',
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 28,
                 fontWeight: FontWeight.w700,
+                color: Colors.deepOrangeAccent,
               ),
             ),
             const SizedBox(height: 16),
@@ -76,7 +80,25 @@ class SupplierHome extends StatelessWidget {
                       hintText: 'Cari Produk Supplier...',
                       prefixIcon: const Icon(Icons.search),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(6),
+                        borderSide: const BorderSide(
+                          color: Colors.grey, // Warna garis
+                          width: 1.5, // Ketebalan garis
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(6),
+                        borderSide: const BorderSide(
+                          color: Colors.grey, // Warna garis saat tidak fokus
+                          width: 1.5, // Ketebalan garis
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(6),
+                        borderSide: const BorderSide(
+                          color: Colors.blue, // Warna garis saat fokus
+                          width: 2.0, // Ketebalan garis saat fokus
+                        ),
                       ),
                     ),
                     onSubmitted: (query) {
@@ -86,11 +108,27 @@ class SupplierHome extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 IconButton(
-                  icon: const Icon(Icons.filter_list, color: Colors.green),
+                  icon: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.yellow, // Warna latar belakang
+                      border: Border.all(
+                        color: Colors.yellow, // Warna garis persegi
+                        width: 6, // Ketebalan garis
+                      ),
+                      borderRadius: BorderRadius.circular(8), // Membuat sudut persegi lebih lembut
+                    ),
+                    padding: const EdgeInsets.all(8), // Spasi di sekitar ikon
+                    child: const Icon(
+                      Icons.filter_list,
+                      color: Colors.deepOrange, // Warna ikon
+                      size: 24, // Ukuran ikon
+                    ),
+                  ),
                   onPressed: () {
                     print('Filter button pressed');
                   },
                 ),
+
               ],
             ),
             const SizedBox(height: 16),
@@ -111,62 +149,49 @@ class SupplierHome extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Expanded(
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16,
-                  childAspectRatio: 0.75,
-                ),
-                itemCount: 8, // Replace with the number of products
-                itemBuilder: (context, index) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Colors.grey[200],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: 100,
-                          decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.vertical(
-                              top: Radius.circular(8),
-                            ),
-                            image: DecorationImage(
-                              image: AssetImage('assets/images/produk_supplier/bayam1.png'), // Replace with product images
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 0),  // Adjusted padding to remove side margin
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Column(
+                        children: suppliers.map((supplier) {
+                          return Column(
                             children: [
-                              Text(
-                                'Produk $index', // Replace with product name
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                'Rp 100.000', // Replace with product price
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.green,
+                              InkWell(
+                                onTap: () => {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              DetailSupplierScreen(
+                                                supplier: supplier,
+                                              ))),
+                                },
+                                child: SupplierCard(
+                                  name: supplier.title,
+                                  description: supplier.description,
+                                  readyStock: supplier.readyStock,
+                                  category: supplier.category,
+                                  price: supplier.harga,
+                                  imageUrl: supplier.imageUrl[0],
+                                  onAddPressed: () {
+                                    // Handle add to cart action
+                                    SnackBar(
+                                      content: Text(
+                                          "${supplier.title} masuk ke keranjang"),
+                                    );
+                                  },
                                 ),
                               ),
                             ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+                          );
+                        }).toList(),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
           ],
@@ -175,3 +200,6 @@ class SupplierHome extends StatelessWidget {
     );
   }
 }
+
+
+

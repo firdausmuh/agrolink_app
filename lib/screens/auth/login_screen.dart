@@ -68,38 +68,38 @@ class _LoginScreenState extends State<LoginScreen> {
       }
       // update form faiz
       // Navigasi berdasarkan role
-      if (role == 'Supplier') {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const SupplierHome()),
-        );
-      } else if (role == 'Produsen') {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const SupplierHome()), // Menggunakan halaman SupplierHome untuk Producer
-        );
-      }
-      else if (role == 'Distributor') {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) =>  ProdusenHome()), // Ganti dengan halaman DistributorHome Anda
-        );
-      } else if (role == 'Retailer') {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => DistributorHome()), // Ganti dengan halaman RetailerHome Anda
-        );
-      } else if (role == 'Customer') {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const MainScreen()), // Ganti dengan halaman HomeScreen untuk Customer
-        );
-      } else {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const MainScreen()), // Halaman default jika role tidak dikenali
-        );
-      }
+      // if (role == 'Supplier') {
+      //   Navigator.pushReplacement(
+      //     context,
+      //     MaterialPageRoute(builder: (context) => const SupplierHome()),
+      //   );
+      // } else if (role == 'Produsen') {
+      //   Navigator.pushReplacement(
+      //     context,
+      //     MaterialPageRoute(builder: (context) => const SupplierHome()), // Menggunakan halaman SupplierHome untuk Producer
+      //   );
+      // }
+      // else if (role == 'Distributor') {
+      //   Navigator.pushReplacement(
+      //     context,
+      //     MaterialPageRoute(builder: (context) =>  ProdusenHome()), // Ganti dengan halaman DistributorHome Anda
+      //   );
+      // } else if (role == 'Retailer') {
+      //   Navigator.pushReplacement(
+      //     context,
+      //     MaterialPageRoute(builder: (context) => DistributorHome()), // Ganti dengan halaman RetailerHome Anda
+      //   );
+      // } else if (role == 'Customer') {
+      //   Navigator.pushReplacement(
+      //     context,
+      //     MaterialPageRoute(builder: (context) => const MainScreen()), // Ganti dengan halaman HomeScreen untuk Customer
+      //   );
+      // } else {
+      //   Navigator.pushReplacement(
+      //     context,
+      //     MaterialPageRoute(builder: (context) => const MainScreen()), // Halaman default jika role tidak dikenali
+      //   );
+      // }
     } else {
       // Credentials are invalid, show an error SnackBar
       ScaffoldMessenger.of(context).showSnackBar(
