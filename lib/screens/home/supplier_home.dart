@@ -1,6 +1,10 @@
+import 'package:agrolink/components/produk_produsen/produsen_card.dart';
+import 'package:agrolink/screens/produk_produsen/detail_produsen_screen.dart';
 import 'package:flutter/material.dart';
 import '../../components/produk_supplier/supplier_card.dart';
+import '../../models/Produsen.dart';
 import '../../models/Supplier.dart';
+import '../keranjang/checkout_screen.dart';
 import '../produk_supplier/detail_supplier_screen.dart';
 import '../profile/profile_screen.dart';
 
@@ -63,15 +67,40 @@ class SupplierHome extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Temukan produk yang kamu inginkan',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.w700,
-                color: Colors.deepOrangeAccent,
+            SizedBox(
+              height: 200,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(5),
+                      child: Image.asset(
+                        'assets/images/iklan.png',
+                        width: 400,
+                        height: 200,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(0),
+                      child: Image.asset(
+                        'assets/images/banner2.png',
+                        width: 400,
+                        height: 200,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 10),
             Row(
               children: [
                 Expanded(
@@ -151,44 +180,51 @@ class SupplierHome extends StatelessWidget {
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 0),  // Adjusted padding to remove side margin
+                  padding: const EdgeInsets.symmetric(horizontal: 0),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Column(
-                        children: suppliers.map((supplier) {
-                          return Column(
-                            children: [
-                              InkWell(
-                                onTap: () => {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              DetailSupplierScreen(
-                                                supplier: supplier,
-                                              ))),
-                                },
-                                child: SupplierCard(
-                                  name: supplier.title,
-                                  description: supplier.description,
-                                  readyStock: supplier.readyStock,
-                                  category: supplier.category,
-                                  price: supplier.harga,
-                                  imageUrl: supplier.imageUrl[0],
-                                  onAddPressed: () {
-                                    // Handle add to cart action
-                                    SnackBar(
-                                      content: Text(
-                                          "${supplier.title} masuk ke keranjang"),
-                                    );
+                          children: produsens.map((produsen) {
+                            return Column(
+                              children: [
+                                InkWell(
+                                  onTap: () => {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                DetailProdusenScreen(
+                                                    produsen: produsen
+                                                )))
                                   },
+                                  child: ProdusenCard(
+                                    name: produsen.title,
+                                    description: produsen.description,
+                                    readyStock: produsen.readyStock,
+                                    category: produsen.category,
+                                    price: produsen.harga,
+                                    imageUrl: produsen.imageUrl[0],
+                                    onAddPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => CheckoutScreen()),
+                                      );
+                                      // Handle add to cart action
+                                      SnackBar(
+                                        content: Text(
+                                            "${produsen.title} masuk ke keranjang"),
+                                      );
+                                    },
+                                  ),
                                 ),
-                              ),
-                            ],
-                          );
-                        }).toList(),
-                      ),
+                                const SizedBox(
+                                  height: 10,
+                                )
+                              ],
+                            );
+                          }).toList()
+                      )
                     ],
                   ),
                 ),
