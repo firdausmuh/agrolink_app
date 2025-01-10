@@ -202,3 +202,198 @@ class _KeranjangCardState extends State<KeranjangCard> {
   }
 }
 
+
+
+//
+// import 'package:flutter/cupertino.dart';
+// import 'package:flutter/material.dart';
+//
+// import '../../models/Keranjang.dart';
+//
+// class KeranjangCard extends StatefulWidget {
+//   final Keranjang keranjang;
+//   final bool isSelected;
+//   final Function(bool?)? onSelectionChanged;
+//
+//   const KeranjangCard({
+//     super.key,
+//     required this.keranjang,
+//     this.isSelected = false,
+//     this.onSelectionChanged,
+//   });
+//
+//   @override
+//   State<KeranjangCard> createState() => _KeranjangCardState();
+// }
+//
+// class _KeranjangCardState extends State<KeranjangCard> {
+//   int quantity = 1;
+//
+//   void decreaseQuantity() {
+//     if (quantity > 1) {
+//       setState(() {
+//         quantity--;
+//       });
+//     }
+//   }
+//
+//   void increaseQuantity() {
+//     if (quantity < widget.keranjang.stok) {
+//       setState(() {
+//         quantity++;
+//       });
+//     }
+//   }
+//
+//   String formatPrice(double price) {
+//     return 'Rp. ${price.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}';
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       padding: const EdgeInsets.all(16),
+//       decoration: BoxDecoration(
+//         color: Colors.white,
+//         borderRadius: BorderRadius.circular(12),
+//         boxShadow: [
+//           BoxShadow(
+//             color: Colors.grey.withOpacity(0.1),
+//             spreadRadius: 1,
+//             blurRadius: 4,
+//             offset: const Offset(0, 5),
+//           ),
+//         ],
+//       ),
+//       child: Column(
+//         mainAxisSize: MainAxisSize.min,
+//         children: [
+//           Row(
+//             children: [
+//               Checkbox(
+//                 value: widget.isSelected,
+//                 onChanged: widget.onSelectionChanged,
+//                 activeColor: Colors.green,
+//               ),
+//               const SizedBox(width: 10),
+//               Text(
+//                 'Lydia Adinda Store',
+//                 style: const TextStyle(
+//                   fontSize: 14,
+//                   fontWeight: FontWeight.w700,
+//                 ),
+//               ),
+//             ],
+//           ),
+//           const SizedBox(height: 10),
+//           Row(
+//             children: [
+//               Container(
+//                 width: 95,
+//                 height: 115,
+//                 decoration: BoxDecoration(
+//                   color: Colors.green[50],
+//                 ),
+//                 child: ClipRRect(
+//                   borderRadius: BorderRadius.circular(10),
+//                   child: Image.asset(
+//                     widget.keranjang.imageUrl.first,
+//                     fit: BoxFit.cover,
+//                   ),
+//                 ),
+//               ),
+//               const SizedBox(width: 10),
+//               Expanded(
+//                 child: Column(
+//                   crossAxisAlignment: CrossAxisAlignment.start,
+//                   children: [
+//                     Text(
+//                       widget.keranjang.title,
+//                       style: const TextStyle(
+//                         fontSize: 18,
+//                         fontWeight: FontWeight.w500,
+//                       ),
+//                     ),
+//                     Text(
+//                       widget.keranjang.description,
+//                       style: TextStyle(
+//                         fontSize: 14,
+//                         color: Colors.grey[600],
+//                       ),
+//                       maxLines: 2,
+//                       overflow: TextOverflow.ellipsis,
+//                     ),
+//                     const SizedBox(height: 5),
+//                     Text(
+//                       'Stok: ${widget.keranjang.stok} ${widget.keranjang.satuan}',
+//                       style: TextStyle(
+//                         fontSize: 16,
+//                         color: Colors.green[800],
+//                         fontWeight: FontWeight.bold,
+//                       ),
+//                     ),
+//                     const SizedBox(height: 12),
+//                     Row(
+//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                       children: [
+//                         Row(
+//                           children: [
+//                             InkWell(
+//                               onTap: decreaseQuantity,
+//                               child: Container(
+//                                 width: 30,
+//                                 height: 30,
+//                                 decoration: BoxDecoration(
+//                                   border: Border.all(color: Colors.black),
+//                                   borderRadius: BorderRadius.circular(4),
+//                                 ),
+//                                 child: const Center(
+//                                   child: Icon(Icons.remove, size: 16),
+//                                 ),
+//                               ),
+//                             ),
+//                             SizedBox(
+//                               width: 32,
+//                               child: Center(
+//                                 child: Text(
+//                                   quantity.toString(),
+//                                   style: const TextStyle(fontSize: 18),
+//                                 ),
+//                               ),
+//                             ),
+//                             InkWell(
+//                               onTap: increaseQuantity,
+//                               child: Container(
+//                                 width: 30,
+//                                 height: 30,
+//                                 decoration: BoxDecoration(
+//                                   border: Border.all(color: Colors.black),
+//                                   borderRadius: BorderRadius.circular(4),
+//                                 ),
+//                                 child: const Center(
+//                                   child: Icon(Icons.add, size: 16),
+//                                 ),
+//                               ),
+//                             ),
+//                           ],
+//                         ),
+//                         Text(
+//                           formatPrice(widget.keranjang.harga * quantity),
+//                           style: const TextStyle(
+//                             fontSize: 18,
+//                             fontWeight: FontWeight.bold,
+//                             color: Colors.black,
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }

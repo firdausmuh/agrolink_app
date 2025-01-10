@@ -1,9 +1,6 @@
-import 'package:agrolink/components/toko/shop_card.dart';
 import 'package:agrolink/models/Distributor.dart';
-import 'package:agrolink/models/shop.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import '../keranjang/keranjang_screen.dart';
 
 

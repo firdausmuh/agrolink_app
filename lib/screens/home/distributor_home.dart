@@ -175,7 +175,7 @@ class _DistributorHomeState extends State<DistributorHome> {
             ),
             const SizedBox(height: 16),
             const Text(
-              'Produk-produk supplier',
+              'Produk-produk distributor',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
@@ -183,7 +183,7 @@ class _DistributorHomeState extends State<DistributorHome> {
             ),
             const SizedBox(height: 8),
             const Text(
-              'Buat momen istimewamu belanja produk supplier',
+              'Buat momen istimewamu belanja produk distributor',
               style: TextStyle(
                 fontSize: 14,
                 color: Colors.grey,
