@@ -5,6 +5,8 @@ import 'package:agrolink/screens/produk_distributor/detail_distributor_screen.da
 import 'package:agrolink/screens/produk_supplier/favorite_belanja_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../keranjang/checkout_screen.dart';
+
 class DistributorScreen extends StatefulWidget {
   const DistributorScreen({super.key});
 
@@ -84,13 +86,14 @@ class _ProdukDistributorScreenState extends State<DistributorScreen> {
                                   description: distributor.description,
                                   readyStock: distributor.readyStock,
                                   category: distributor.category,
-                                  // isOnline: distributor.isOnline,
-                                  // alamat: distributor.alamat,
-                                  // statusPesanan: distributor.statusPesanan[4],
                                   price: distributor.harga,
                                   imageUrl: distributor.imageUrl[0],
                                   onAddPressed: () {
                                     // Handle add to cart action
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => CheckoutScreen()),
+                                    );
                                     SnackBar(
                                       content: Text(
                                           "${distributor.title} masuk ke keranjang"),

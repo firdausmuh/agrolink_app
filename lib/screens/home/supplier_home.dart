@@ -1,21 +1,30 @@
 import 'package:agrolink/components/produk_produsen/produsen_card.dart';
 import 'package:agrolink/screens/produk_produsen/detail_produsen_screen.dart';
 import 'package:flutter/material.dart';
-import '../../components/produk_supplier/supplier_card.dart';
 import '../../models/Produsen.dart';
-import '../../models/Supplier.dart';
 import '../keranjang/checkout_screen.dart';
-import '../produk_supplier/detail_supplier_screen.dart';
 import '../profile/profile_screen.dart';
 
-class SupplierHome extends StatelessWidget {
+class SupplierHome extends StatefulWidget {
   const SupplierHome({Key? key}) : super(key: key);
 
   @override
+  _SupplierHomeState createState() => _SupplierHomeState();
+}
+
+class _SupplierHomeState extends State<SupplierHome> {
+  String searchQuery = ""; // Menyimpan query pencarian
+
+  @override
   Widget build(BuildContext context) {
+    // Filter data berdasarkan query
+    List<produk_produsen> filteredRetailers = produsens.where((produsen) {
+      return produsen.title.toLowerCase().contains(searchQuery.toLowerCase());
+    }).toList();
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.white,
         elevation: 0,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -29,7 +38,7 @@ class SupplierHome extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -39,7 +48,7 @@ class SupplierHome extends StatelessWidget {
                     'Selamat datang di Agrolink',
                     style: TextStyle(
                       fontSize: 16,
-                      color: Colors.white70,
+                      color: Colors.black,
                     ),
                   ),
                 ],
@@ -111,27 +120,29 @@ class SupplierHome extends StatelessWidget {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                         borderSide: const BorderSide(
-                          color: Colors.grey, // Warna garis
-                          width: 1.5, // Ketebalan garis
+                          color: Colors.grey,
+                          width: 1.5,
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                         borderSide: const BorderSide(
-                          color: Colors.grey, // Warna garis saat tidak fokus
-                          width: 1.5, // Ketebalan garis
+                          color: Colors.grey,
+                          width: 1.5,
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                         borderSide: const BorderSide(
-                          color: Colors.blue, // Warna garis saat fokus
-                          width: 2.0, // Ketebalan garis saat fokus
+                          color: Colors.blue,
+                          width: 2.0,
                         ),
                       ),
                     ),
-                    onSubmitted: (query) {
-                      print('Searching for: $query');
+                    onChanged: (query) {
+                      setState(() {
+                        searchQuery = query; // Perbarui query pencarian
+                      });
                     },
                   ),
                 ),
@@ -139,25 +150,24 @@ class SupplierHome extends StatelessWidget {
                 IconButton(
                   icon: Container(
                     decoration: BoxDecoration(
-                      color: Colors.yellow, // Warna latar belakang
+                      color: Colors.yellow,
                       border: Border.all(
-                        color: Colors.yellow, // Warna garis persegi
-                        width: 6, // Ketebalan garis
+                        color: Colors.yellow,
+                        width: 6,
                       ),
-                      borderRadius: BorderRadius.circular(8), // Membuat sudut persegi lebih lembut
+                      borderRadius: BorderRadius.circular(8),
                     ),
-                    padding: const EdgeInsets.all(8), // Spasi di sekitar ikon
+                    padding: const EdgeInsets.all(8),
                     child: const Icon(
                       Icons.filter_list,
-                      color: Colors.deepOrange, // Warna ikon
-                      size: 24, // Ukuran ikon
+                      color: Colors.deepOrange,
+                      size: 24,
                     ),
                   ),
                   onPressed: () {
                     print('Filter button pressed');
                   },
                 ),
-
               ],
             ),
             const SizedBox(height: 16),
@@ -178,57 +188,60 @@ class SupplierHome extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Column(
-                          children: produsens.map((produsen) {
-                            return Column(
-                              children: [
-                                InkWell(
-                                  onTap: () => {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                DetailProdusenScreen(
-                                                    produsen: produsen
-                                                )))
-                                  },
-                                  child: ProdusenCard(
-                                    name: produsen.title,
-                                    description: produsen.description,
-                                    readyStock: produsen.readyStock,
-                                    category: produsen.category,
-                                    price: produsen.harga,
-                                    imageUrl: produsen.imageUrl[0],
-                                    onAddPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) => CheckoutScreen()),
-                                      );
-                                      // Handle add to cart action
-                                      SnackBar(
-                                        content: Text(
-                                            "${produsen.title} masuk ke keranjang"),
-                                      );
-                                    },
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                )
-                              ],
-                            );
-                          }).toList()
-                      )
-                    ],
+                child: filteredRetailers.isEmpty
+                    ? Center(
+                  child: Text(
+                    'Produk tidak ditemukan',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey,
+                    ),
                   ),
-                ),
-              ),
+                )
+                    : ListView.builder(
+                  itemCount: filteredRetailers.length,
+                  itemBuilder: (context, index) {
+                    final produsen = filteredRetailers[index];
+                    return Column(
+                      children: [
+                        InkWell(
+                          onTap: () => {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        DetailProdusenScreen(
+                                          produsen: produsen,
+                                        )))
+                          },
+                          child: ProdusenCard(
+                            name: produsen.title,
+                            description: produsen.description,
+                            readyStock: produsen.readyStock,
+                            category: produsen.category,
+                            price: produsen.harga,
+                            imageUrl: produsen.imageUrl[0],
+                            onAddPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CheckoutScreen()),
+                              );
+                              // Handle add to cart action
+                              SnackBar(
+                                content: Text(
+                                    "${produsen.title} masuk ke keranjang"),
+                              );
+                            },
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        )
+                      ],
+                    );
+                  },
+                )
             ),
           ],
         ),
@@ -236,6 +249,4 @@ class SupplierHome extends StatelessWidget {
     );
   }
 }
-
-
 

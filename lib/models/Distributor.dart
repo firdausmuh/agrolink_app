@@ -5,10 +5,7 @@ class produk_distributor {
   final String category;
   final List<String> imageUrl;
   final double harga;
-  // final double rating;
-  // final bool isOnline;
-  // final String alamat;
-  final String statusPesanan;
+  final double rating;
   final List<double> jumlah;
   final String satuan;
 
@@ -18,11 +15,8 @@ class produk_distributor {
     required this.readyStock,
     required this.category,
     required this.imageUrl,
-    // required this.isOnline,
-    // required this.alamat,
-    required this.statusPesanan,
     required this.harga,
-   // required this.rating,
+    required this.rating,
     required this.jumlah,
     required this.satuan,
   });
@@ -36,10 +30,7 @@ List<produk_distributor> distributors = [
       category: "Produk Distributor",
       imageUrl: ['assets/images/distributor/bumbu_kari.png', 'assets/images/distributor/bumbu_kari.png'],
       harga: 65000,
-      // isOnline: true,
-      // alamat: "Yogyakarta",
-      statusPesanan: "5",
-      // rating: 3.2,
+      rating: 3.2,
       jumlah: [10, 20, 30, 40, 50, 60],
       satuan: 'kg'
   ),
@@ -50,10 +41,7 @@ List<produk_distributor> distributors = [
       category: "Produk Distributor",
       imageUrl: ['assets/images/distributor/pakan_ayam.png', 'assets/images/distributor/pakanayam2.png'],
       harga: 15000,
-      // alamat: "Yogyakarta",
-      // isOnline: true,
-      statusPesanan: "5",
-      // rating: 4.2,
+      rating: 3.2,
       jumlah: [10, 20, 30, 40, 50, 60],
       satuan: 'pcs'
   ),
@@ -61,13 +49,10 @@ List<produk_distributor> distributors = [
       title: "Pupuk Organik",
       description: "Pupuk organik adalah jenis pupuk yang terbuat dari bahan-bahan alami, baik itu dari bahan nabati, hewani, atau mikroorganisme yang telah melalui proses dekomposisi. Pupuk ini digunakan untuk memperbaiki kualitas tanah, meningkatkan kesuburan tanah, serta memberikan nutrisi bagi tanaman secara alami. Pupuk organik tidak hanya mengandung unsur hara, tetapi juga bahan organik yang dapat memperbaiki struktur tanah, meningkatkan kapasitas penyerapan air, serta meningkatkan aktivitas mikroorganisme tanah.",
       readyStock: "20Kg",
-      // isOnline: true,
-      statusPesanan: "5",
-      // alamat: "Yogyakarta",
       category: "Produk Distributor",
       imageUrl: ['assets/images/distributor/pupuk_organik.png', 'assets/images/distributor/pupuk_organik.png'],
       harga: 65000,
-      // rating: 3.2,
+      rating: 3.2,
       jumlah: [10, 20, 30, 40, 50, 60],
       satuan: 'kg'
   ),

@@ -345,8 +345,6 @@ class RetailerCard extends StatelessWidget {
   final String name;
   final String description;
   final String readyStock;
-  final String shopName;
-  final String shopImage;
   final String category;
   final double price;
   final String imageUrl;
@@ -356,8 +354,6 @@ class RetailerCard extends StatelessWidget {
     Key? key,
     required this.name,
     required this.description,
-    required this.shopName,
-    required this.shopImage,
     required this.readyStock,
     required this.category,
     required this.price,
@@ -486,21 +482,6 @@ class RetailerCard extends StatelessWidget {
                               ),
                             ),
                           )
-                          // IconButton(
-                          //   onPressed: onAddPressed,
-                          //   icon: Container(
-                          //     padding: const EdgeInsets.all(4),
-                          //     decoration: const BoxDecoration(
-                          //       color: Colors.red,
-                          //       shape: BoxShape.circle,
-                          //     ),
-                          //     child: const Icon(
-                          //       Icons.add,
-                          //       color: Colors.white,
-                          //       size: 20,
-                          //     ),
-                          //   ),
-                          // ),
                         ],
                       ),
                     ],
