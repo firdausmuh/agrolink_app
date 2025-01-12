@@ -50,8 +50,9 @@ class _KeranjangScreenState extends State<KeranjangScreen> {
                     // Contoh penggunaan KeranjangCard
                     KeranjangCard(
                       basePrice: 20000, // Harga satuan produk
+                      imagePath: 'assets/images/retailer/beras.png',
                       productName: "Beras Premium",
-                      deskripsi: "Beras premium dengan kualitas terbaik.",
+                      deskripsi: "Beras premium adalah jenis beras berkualitas tinggi.",
                       size: "20 Kg",
                       category: "Retailer",
                       onQuantityChanged: updateTotalPrice,
@@ -62,8 +63,9 @@ class _KeranjangScreenState extends State<KeranjangScreen> {
                     ),
                     KeranjangCard(
                       basePrice: 15000, // Harga satuan produk
+                      imagePath: 'assets/images/retailer/selada_organik.png',
                       productName: "Wortel Segar",
-                      deskripsi: "Wortel segar langsung dari kebun.",
+                      deskripsi: "Selada organik adalah jenis sayuran hijau yang ditanam tanpa pestisida.",
                       size: "10 Kg",
                       category: "Produsen",
                       onQuantityChanged: updateTotalPrice,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class KeranjangCard extends StatefulWidget {
   final int basePrice; // Harga satuan produk
+  final String imagePath; // Path gambar produk
   final String productName; // Nama produk
   final String deskripsi;
   final String size; // Ukuran produk, misal 20 Kg
@@ -11,6 +12,7 @@ class KeranjangCard extends StatefulWidget {
   const KeranjangCard({
     super.key,
     required this.basePrice,
+    required this.imagePath,
     required this.productName,
     required this.deskripsi,
     required this.size,
@@ -70,7 +72,7 @@ class _KeranjangCardState extends State<KeranjangCard> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image.asset(
-                'assets/images/retailer/beras.png', // Gambar produk
+                widget.imagePath, // Gambar produk yang dinamis
                 fit: BoxFit.cover,
               ),
             ),
