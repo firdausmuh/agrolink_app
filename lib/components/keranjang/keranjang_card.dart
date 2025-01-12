@@ -101,7 +101,7 @@ class _KeranjangCardState extends State<KeranjangCard> {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
-                // Ukuran Produk
+                const SizedBox(height: 8),
                 Text(
                   'Total Satuan: ${widget.size}', // Menampilkan ukuran produk
                   style: const TextStyle(
@@ -109,7 +109,7 @@ class _KeranjangCardState extends State<KeranjangCard> {
                     color: Colors.black,
                   ),
                 ),
-                // Menampilkan kategori produk
+                const SizedBox(height: 6),
                 Text(
                   'Jenis Produk: ${widget.category}', // Menampilkan kategori produk
                   style: const TextStyle(

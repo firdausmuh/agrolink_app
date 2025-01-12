@@ -140,7 +140,7 @@ class _KeranjangScreenState extends State<KeranjangScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 50),
           ],
         ),
       ),
