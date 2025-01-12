@@ -42,24 +42,25 @@ class _CustomerHomeState extends State<CustomerHome> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Hello $username',
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.black,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                          Row(
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  'Hello ${username}',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      fontSize: 20, fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                              SizedBox(width: 6),
+                              Icon(
+                                Icons.waving_hand,
+                                color: Colors.green,
+                              )
+                            ],
                           ),
-                          const SizedBox(height: 4),
-                          const Text(
-                            'Selamat datang di Agrolink',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),
-                          ),
+                          Text('Selamat datang di Aplikasi Agrolink')
                         ],
                       ),
                     ),
