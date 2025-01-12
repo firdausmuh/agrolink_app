@@ -219,21 +219,14 @@ class ProfileScreen extends StatelessWidget {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
             SharedPreferences? prefs = snapshot.data;
-
             return Scaffold(
               appBar: AppBar(
                 backgroundColor: Colors.white,
                 elevation: 0,
                 leadingWidth: 50,
-                titleSpacing: 0,
-                leading: IconButton(
-                  icon: const Icon(Icons.arrow_back, color: Colors.black),
-                  onPressed: () {
-                    Navigator.pop(context); // Aksi kembali
-                  },
-                ),
+                titleSpacing: 20,
                 title: const Text(
-                  "Profile",
+                  "Profile Account",
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 20,
@@ -247,8 +240,7 @@ class ProfileScreen extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      const SizedBox(height: 20),
-                      // Sisanya tetap seperti sebelumnya
+                      // Profile Image and Name
                       Center(
                         child: _customContainer(
                           Row(
@@ -258,7 +250,7 @@ class ProfileScreen extends StatelessWidget {
                                 child: CircleAvatar(
                                   radius: 30,
                                   backgroundImage:
-                                      AssetImage('assets/images/profile1.png'),
+                                      AssetImage('assets/images/profile/profile1.png'),
                                 ),
                               ),
                               const SizedBox(

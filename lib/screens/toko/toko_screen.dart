@@ -19,15 +19,17 @@ class TokoScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-        ),
+        leadingWidth: 50,
+        titleSpacing: 20,
         title: const Text(
-          'Toko Saya',
+          "Toko Saya",
           style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700),
+            color: Colors.black,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
         ),
+        centerTitle: false, // Mengatur teks di tengah
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -41,7 +43,7 @@ class TokoScreen extends StatelessWidget {
                 const CircleAvatar(
                   radius: 50,
                   backgroundImage: AssetImage(
-                      'assets/images/profile1.png'), // Ganti dengan gambar toko
+                      'assets/images/profile/profile1.png'), // Ganti dengan gambar toko
                 ),
                 Positioned(
                   bottom: 0, // Posisikan tombol edit di bawah lingkaran

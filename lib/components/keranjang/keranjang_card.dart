@@ -101,7 +101,7 @@ class _KeranjangCardState extends State<KeranjangCard> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.asset(
-                    'assets/images/profile1.png',
+                    'assets/images/profile/profile1.png',
                     fit: BoxFit.cover,
                   ),
                 ),

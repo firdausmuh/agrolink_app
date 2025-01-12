@@ -71,7 +71,7 @@ class HomeScreen extends StatelessWidget {
                       child: CircleAvatar(
                         radius: 24,
                         backgroundColor: Colors.grey[200],
-                        backgroundImage: const AssetImage('assets/images/profile2.png'),
+                        backgroundImage: const AssetImage('assets/images/profile/profile2.png'),
                       ),
                     ),
                   ],
@@ -221,7 +221,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
 
-                      const SizedBox(height: 20),
+                      //const SizedBox(height: 20),
 
                       // Section Produk Pertanian
                       const Padding(

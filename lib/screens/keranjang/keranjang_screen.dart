@@ -18,20 +18,17 @@ class _KeranjangScreenState extends State<KeranjangScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context); // Kembali ke layar sebelumnya
-          },
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-        ),
+        leadingWidth: 50,
+        titleSpacing: 20,
         title: const Text(
-          'Keranjang',
+          "Keranjang Belanja",
           style: TextStyle(
             color: Colors.black,
-            fontWeight: FontWeight.w700,
             fontSize: 20,
+            fontWeight: FontWeight.w600,
           ),
         ),
+        centerTitle: false, // Mengatur teks di tengah
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
