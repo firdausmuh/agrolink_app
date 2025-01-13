@@ -2,6 +2,7 @@ import 'package:agrolink/screens/produk_supplier/favorite_belanja_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:agrolink/models/Produsen.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../keranjang/keranjang_screen.dart';
 
@@ -16,6 +17,26 @@ class DetailProdusenScreen extends StatefulWidget {
 
 class _DetailProdukProdusenScreenState extends State<DetailProdusenScreen> {
   int selectedIndext = 1;
+
+  _addCart() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('cart_title', widget.produsen.title);
+    prefs.setString('cart_description', widget.produsen.description);
+    prefs.setString('cart_stock', widget.produsen.readyStock);
+    prefs.setDouble('cart_harga', widget.produsen.harga);
+    prefs.setString('cart_imageUrl', widget.produsen.imageUrl[0]);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Successfully add new cart!'),
+        backgroundColor: Colors.green,
+      ),
+    );
+
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const KeranjangScreen()));
+  }
+
 
   String formatCurrency(double value) {
     final formatter =
@@ -247,10 +268,7 @@ class _DetailProdukProdusenScreenState extends State<DetailProdusenScreen> {
                 Expanded(
                   child: InkWell(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => KeranjangScreen()),
-                      );
+                      _addCart();
                     },
                     borderRadius: BorderRadius.circular(10),
                     child: Container(

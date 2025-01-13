@@ -78,6 +78,8 @@ class _ProdukRetailerScreenState extends State<RetailerScreen> {
                                           builder: (context) =>
                                               DetailRetailerScreen(
                                                   retailer: retailer,
+                                                // shops: shop,
+
                                               )))
                                 },
                                 child: RetailerCard(

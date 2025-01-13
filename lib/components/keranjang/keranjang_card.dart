@@ -1,6 +1,27 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 class KeranjangCard extends StatefulWidget {
+
+  final bool isSelected;
+  final Function(bool?)? onSelectionChanged;
+  final String? title;
+  final String? description;
+  final String? stok;
+  final Double? harga;
+  final String? imageUrl;
+
+  const KeranjangCard({
+    super.key,
+    this.isSelected = false,
+    this.onSelectionChanged,
+    this.title,
+    this.description,
+    this.stok,
+    this.harga,
+    this.imageUrl,
+
   final int basePrice; // Harga satuan produk
   final String imagePath; // Path gambar produk
   final String productName; // Nama produk
@@ -18,6 +39,7 @@ class KeranjangCard extends StatefulWidget {
     required this.size,
     required this.category,
     this.onQuantityChanged,
+
   });
 
   @override
@@ -26,6 +48,15 @@ class KeranjangCard extends StatefulWidget {
 
 class _KeranjangCardState extends State<KeranjangCard> {
   int quantity = 1;
+
+  int? basePrice;
+
+  @override
+  void initState() {
+    super.initState();
+    basePrice = widget.harga as int? ?? 25000;
+  }
+
 
   void decreaseQuantity() {
     if (quantity > 1) {
@@ -62,6 +93,29 @@ class _KeranjangCardState extends State<KeranjangCard> {
       ),
       child: Row(
         children: [
+          Row(
+            children: [
+              Checkbox(
+                value: widget.isSelected,
+                onChanged: widget.onSelectionChanged,
+                activeColor:
+                    Colors.green, // Ganti warna saat checkbox tercentang
+                checkColor: Colors.white, // Warna centang (tanda centang)
+                // Warna untuk checkbox saat tidak tercentang
+                hoverColor: Colors.grey, // Warna saat dihover
+                // inactiveThumbColor: Colors.grey, // Warna kotak checkbox tidak tercentang
+                // inactiveBorderColor: Colors., // Warna border saat tidak tercentang
+              ),
+              const SizedBox(width: 10),
+              Container(
+                width: 30,
+                height: 30,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/toko/shop_image.png'),
+                    fit: BoxFit.cover,
+
           // Gambar Produk
           Container(
             width: 95,
@@ -89,6 +143,7 @@ class _KeranjangCardState extends State<KeranjangCard> {
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
+
                   ),
                 ),
                 // Deskripsi Produk
@@ -109,12 +164,19 @@ class _KeranjangCardState extends State<KeranjangCard> {
                     color: Colors.black,
                   ),
                 ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.asset(
+                    widget.imageUrl ?? 'assets/images/profile1.png',
+                    fit: BoxFit.cover,
+
                 const SizedBox(height: 6),
                 Text(
                   'Jenis Produk: ${widget.category}', // Menampilkan kategori produk
                   style: const TextStyle(
                     fontSize: 14,
                     color: Colors.black54,
+
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -122,7 +184,35 @@ class _KeranjangCardState extends State<KeranjangCard> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+
+                    Text(
+                      widget.title ?? 'Burger With Meat',
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Text(
+                      widget.description ?? 'Bayam adalah sayuran enak untuk',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      widget.stok ?? 'Stok : 50 Biji',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.green[800],
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
                     // Tombol untuk menambah/mengurangi kuantitas
+
                     Row(
                       children: [
                         InkWell(
@@ -148,6 +238,14 @@ class _KeranjangCardState extends State<KeranjangCard> {
                             ),
                           ),
                         ),
+
+                        Text(
+                          formatPrice(basePrice ?? 0 * quantity),
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+
                         InkWell(
                           onTap: increaseQuantity,
                           child: Container(
@@ -160,6 +258,7 @@ class _KeranjangCardState extends State<KeranjangCard> {
                             child: const Center(
                               child: Icon(Icons.add, size: 16),
                             ),
+
                           ),
                         ),
                       ],
@@ -183,4 +282,3 @@ class _KeranjangCardState extends State<KeranjangCard> {
     );
   }
 }
-

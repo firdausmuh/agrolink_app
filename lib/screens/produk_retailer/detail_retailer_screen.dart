@@ -2,6 +2,19 @@ import 'package:agrolink/screens/keranjang/checkout_screen.dart';
 import 'package:agrolink/screens/produk_supplier/favorite_belanja_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../keranjang/keranjang_screen.dart';
+
+class DetailRetailerScreen extends StatefulWidget {
+  // final Shop shops;
+  final produk_retailer retailer;
+  const DetailRetailerScreen(
+      {super.key,
+      // required this.shops,
+      required this.retailer});
+
 import '../../models/Retailer.dart';
 import '../keranjang/keranjang_screen.dart';
 
@@ -9,18 +22,40 @@ class DetailRetailerScreen extends StatefulWidget {
   final produk_retailer retailer;
   const DetailRetailerScreen({super.key, required this.retailer});
 
+
   @override
-  State<DetailRetailerScreen> createState() => _DetailProdukRetailerScreenState();
+  State<DetailRetailerScreen> createState() =>
+      _DetailProdukRetailerScreenState();
 }
 
 class _DetailProdukRetailerScreenState extends State<DetailRetailerScreen> {
   int selectedIndext = 1;
+
+  _addCart() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('cart_title', widget.retailer.title);
+    prefs.setString('cart_description', widget.retailer.description);
+    prefs.setString('cart_stock', widget.retailer.readyStock);
+    prefs.setDouble('cart_harga', widget.retailer.harga);
+    prefs.setString('cart_imageUrl', widget.retailer.imageUrl[0]);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Successfully add new cart!'),
+        backgroundColor: Colors.green,
+      ),
+    );
+
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const KeranjangScreen()));
+  }
 
   String formatCurrency(double value) {
     final formatter =
     NumberFormat("#,##0", "id_ID"); //Locale for Indonesian formating
     return formatter.format(value);
   }
+
   @override
   Widget build(BuildContext context) {
     print(widget.retailer.jumlah.length);
@@ -60,6 +95,140 @@ class _DetailProdukRetailerScreenState extends State<DetailRetailerScreen> {
                           );
                         },
                       )),
+
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    height: MediaQuery.sizeOf(context).width,
+                    child: ListView.builder(itemBuilder: (context, index) {
+                      return SizedBox(
+                        width: MediaQuery.sizeOf(context).width,
+                        child: Image.asset(
+                          widget.retailer.imageUrl[index],
+                          fit: BoxFit.cover,
+                        ),
+                      );
+                    }),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Flexible(
+                                child: Text(
+                              widget.retailer.namaToko,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w700, fontSize: 20),
+                            )),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        // Row(
+                        //   crossAxisAlignment: CrossAxisAlignment.center,
+                        //   children: [
+                        //     Flexible(
+                        //       child: Text(
+                        //         widget.shops.isOnline as String,
+                        //         maxLines: 1,
+                        //         overflow: TextOverflow.ellipsis,
+                        //         style: const TextStyle(
+                        //             fontWeight: FontWeight.w700, fontSize: 24),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Flexible(
+                              child: Text(
+                                widget.retailer.alamat,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w700, fontSize: 24),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.star,
+                              color: Colors.orange.withOpacity(0.8),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              '4.9',
+                              style: TextStyle(
+                                  color: Colors.grey.withOpacity(0.8),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700),
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.access_time,
+                              color: Colors.orange.withOpacity(0.8),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            // Text(
+                            //   widget.shopsshops.statusPesanan,
+                            //   style: TextStyle(
+                            //       color: Colors.orange.withOpacity(0.8),
+                            //       fontSize: 20,
+                            //       fontWeight: FontWeight.w700),
+                            // )
+                          ],
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.green,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 8, horizontal: 12),
+                          child: const Center(
+                            child: Text('Beli Sekarang',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
@@ -144,7 +313,7 @@ class _DetailProdukRetailerScreenState extends State<DetailRetailerScreen> {
                                                 ? const Color(0xFFD3B398)
                                                 : Colors.black.withOpacity(0.1),
                                             borderRadius:
-                                            BorderRadius.circular(10)),
+                                                BorderRadius.circular(10)),
                                         child: Text(
                                           '${widget.retailer.jumlah[index]} ${widget.retailer.satuan}',
                                           style: TextStyle(
@@ -152,7 +321,7 @@ class _DetailProdukRetailerScreenState extends State<DetailRetailerScreen> {
                                               color: isSelected
                                                   ? Colors.white
                                                   : Colors.black
-                                                  .withOpacity(0.3)),
+                                                      .withOpacity(0.3)),
                                         ),
                                       ),
                                     ),
@@ -246,10 +415,7 @@ class _DetailProdukRetailerScreenState extends State<DetailRetailerScreen> {
                 Expanded(
                   child: InkWell(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => KeranjangScreen()),
-                      );
+                      _addCart();
                     },
                     borderRadius: BorderRadius.circular(10),
                     child: Container(
