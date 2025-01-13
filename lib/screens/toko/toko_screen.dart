@@ -1,17 +1,17 @@
 import 'dart:io';
-
 import 'package:agrolink/screens/toko/upload_produk_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-class TokoScreen extends StatelessWidget {
-  final String? namaProdukUpload;
-  final String? hargaProdukUpload;
-  final File? imageProdukUpload;
-  const TokoScreen(
-      {this.namaProdukUpload,
-      this.hargaProdukUpload,
-      this.imageProdukUpload,
-      super.key});
+class TokoScreen extends StatefulWidget {
+
+  const TokoScreen({Key? key}) : super(key: key);
+  @override
+  _TokoScreenState createState() => _TokoScreenState();
+}
+
+class _TokoScreenState extends State<TokoScreen> {
+  List<Map<String, dynamic>> produkList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +19,6 @@ class TokoScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leadingWidth: 50,
-        titleSpacing: 20,
         title: const Text(
           "Toko Saya",
           style: TextStyle(
@@ -29,39 +27,33 @@ class TokoScreen extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-        centerTitle: false, // Mengatur teks di tengah
+        centerTitle: false,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 20),
-            // Gambar lingkaran dengan ikon pensil
             Stack(
               children: [
                 const CircleAvatar(
                   radius: 50,
-                  backgroundImage: AssetImage(
-                      'assets/images/profile/profile1.png'), // Ganti dengan gambar toko
+                  backgroundImage:
+                  AssetImage('assets/images/profile/profile1.png'),
                 ),
                 Positioned(
-                  bottom: 0, // Posisikan tombol edit di bawah lingkaran
-                  right: 0, // Posisikan ke kanan
+                  bottom: 0,
+                  right: 0,
                   child: Container(
                     width: 30,
                     height: 30,
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Color(0xFF406A52), // Warna latar belakang
+                      color: Color(0xFF406A52),
                     ),
                     child: IconButton(
-                      padding: EdgeInsets
-                          .zero, // Hapus padding default dari IconButton
-                      icon: const Icon(Icons.edit,
-                          size: 16,
-                          color:
-                              Colors.white), // Ikon pensil dengan warna putih
+                      padding: EdgeInsets.zero,
+                      icon: const Icon(Icons.edit, size: 16, color: Colors.white),
                       onPressed: () {
                         // Aksi edit
                       },
@@ -71,7 +63,6 @@ class TokoScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 10),
-            // Nama toko
             const Text(
               'Lydia Garden Store',
               style: TextStyle(
@@ -80,7 +71,6 @@ class TokoScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 5),
-            // Status dan alamat
             const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -93,34 +83,30 @@ class TokoScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 20),
-            // Grid dengan informasi toko
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Produk di toko
-                const Column(
+                Column(
                   children: [
                     Text(
-                      '5',
-                      style: TextStyle(
+                      produkList.length.toString(),
+                      style: const TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 18,
                       ),
                     ),
-                    SizedBox(height: 5),
-                    Text(
+                    const SizedBox(height: 5),
+                    const Text(
                       'Produk di Toko',
                       style: TextStyle(fontSize: 14, color: Colors.grey),
                     ),
                   ],
                 ),
-                // Garis pemisah
                 Container(
                   height: 40,
                   width: 1,
                   color: Colors.grey.shade300,
                 ),
-                // Balas chat & diskusi
                 const Column(
                   children: [
                     Text(
@@ -137,13 +123,11 @@ class TokoScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                // Garis pemisah
                 Container(
                   height: 40,
                   width: 1,
                   color: Colors.grey.shade300,
                 ),
-                // Jam operasional toko
                 const Column(
                   children: [
                     Text(
@@ -162,125 +146,146 @@ class TokoScreen extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 20),
             const Divider(),
             const SizedBox(height: 10),
+
             // Daftar produk
             Expanded(
-              child: GridView(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 3 / 4,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                ),
-                children: [
-                  Card(
+              child: produkList.isNotEmpty
+                  ? ListView.builder(
+                itemCount: produkList.length,
+                itemBuilder: (context, index) {
+                  final produk = produkList[index];
+                  return Card(
                     elevation: 2,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    child: Row(
                       children: [
                         // Gambar produk
+                        Container(
+                          width: 120,
+                          height: 150,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: Colors.grey.shade200,
+                          ),
+                          child: produk['image'] != null
+                              ? ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.file(
+                              produk['image'],
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                              : const Icon(
+                            Icons.image,
+                            color: Colors.grey,
+                            size: 50,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        // Detail produk
                         Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              image: const DecorationImage(
-                                 // update by faiz
-                                image: AssetImage('assets/images/retailer/keripik_kentang.png'), // Ganti dengan gambar produk
-                                //image: AssetImage('assets/images/produsen/buah_naga1.png'), // Ganti dengan gambar produk
-                                 // update by faiz
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        ),
-
-                        const SizedBox(height: 5),
-                        // Nama produk
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Text(
-                            'Keripik Kentang',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 16,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        const SizedBox(height: 5),
-                        // Harga produk
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Text(
-                            'Rp 10.000',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 14,
-                              color: Colors.green,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 5),
-                      ],
-                    ),
-                  ),
-                  namaProdukUpload != null
-                      ? Card(
-                          elevation: 2,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // Gambar produk
-                              Expanded(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Image.file(
-                                    imageProdukUpload!,
-                                    width: double.infinity,
-                                    fit: BoxFit.cover,
-                                  ),
+                              Text(
+                                produk['nama'],
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              const SizedBox(height: 5),
+                              Text(
+                                _formatCurrency(produk['harga']),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14,
+                                  color: Colors.green,
                                 ),
                               ),
                               const SizedBox(height: 5),
-                              // Nama produk
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
-                                child: Text(
-                                  namaProdukUpload ?? '',
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 16,
-                                  ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
+                              Text(
+                                produk['deskripsi'] ?? '',
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                               ),
                               const SizedBox(height: 5),
-                              // Harga produk
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
-                                child: Text(
-                                  hargaProdukUpload ?? '',
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 14,
-                                    color: Colors.green,
+                              Row(
+                                children: [
+                                  const Text(
+                                    'Minimal Pembelian: ',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
                                   ),
-                                ),
+                                  Text(
+                                    produk['minimalPembelian'] ?? 'Tidak ada',
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 5),
+                              Row(
+                                children: [
+                                  const Text(
+                                    'Kualitas: ',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  Text(
+                                    produk['kualitas'] ?? 'Tidak ada',
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 5),
+                              Row(
+                                children: [
+                                  const Text(
+                                    maxLines: 3,
+                                    'Alamat: ',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  Text(
+                                    maxLines: 3,
+                                    produk['alamat'] ?? 'Tidak ada',
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ],
                               ),
                               const SizedBox(height: 5),
                             ],
                           ),
-                        )
-                      : const SizedBox(),
-                ],
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              )
+                  : const Center(
+                child: Text(
+                  "Belum ada produk di toko",
+                  style: TextStyle(color: Colors.grey, fontSize: 16),
+                ),
               ),
             ),
           ],
@@ -289,16 +294,33 @@ class TokoScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xFF406A52),
         onPressed: () {
-          // Arahkan ke halaman tambah produk
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const UploadProdukScreen(),
+              builder: (context) =>
+                  UploadProdukScreen(produkList: produkList),
             ),
-          );
+          ).then((updatedList) {
+            if (updatedList != null) {
+              setState(() {
+                produkList = updatedList;
+              });
+            }
+          });
         },
         child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
+
+  String _formatCurrency(String value) {
+    final formatter =
+    NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+    try {
+      return formatter.format(int.parse(value));
+    } catch (_) {
+      return 'Rp 0';
+    }
+  }
 }
+

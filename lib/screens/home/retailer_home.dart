@@ -124,7 +124,7 @@ class _RetailerHomeState extends State<RetailerHome> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(5),
                             child: Image.asset(
-                              'assets/images/iklan/BannerRetailer.png',
+                              'assets/images/iklan/BannerAgrolink.png',
                               width: 400,
                               height: 200,
                               fit: BoxFit.contain,
@@ -135,7 +135,7 @@ class _RetailerHomeState extends State<RetailerHome> {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(0),
                           child: Image.asset(
-                            'assets/images/iklan/BannerRetailer2.png',
+                            'assets/images/iklan/BannerRetailer.png',
                             width: 400,
                             height: 200,
                             fit: BoxFit.contain,
