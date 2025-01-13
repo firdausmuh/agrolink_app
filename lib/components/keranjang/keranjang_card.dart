@@ -1,13 +1,25 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 class KeranjangCard extends StatefulWidget {
   final bool isSelected;
   final Function(bool?)? onSelectionChanged;
+  final String? title;
+  final String? description;
+  final String? stok;
+  final Double? harga;
+  final String? imageUrl;
 
   const KeranjangCard({
     super.key,
     this.isSelected = false,
     this.onSelectionChanged,
+    this.title,
+    this.description,
+    this.stok,
+    this.harga,
+    this.imageUrl,
   });
 
   @override
@@ -16,7 +28,13 @@ class KeranjangCard extends StatefulWidget {
 
 class _KeranjangCardState extends State<KeranjangCard> {
   int quantity = 1;
-  final int basePrice = 25000;
+  int? basePrice;
+
+  @override
+  void initState() {
+    super.initState();
+    basePrice = widget.harga as int? ?? 25000;
+  }
 
   void decreaseQuantity() {
     if (quantity > 1) {
@@ -60,7 +78,8 @@ class _KeranjangCardState extends State<KeranjangCard> {
               Checkbox(
                 value: widget.isSelected,
                 onChanged: widget.onSelectionChanged,
-                activeColor: Colors.green, // Ganti warna saat checkbox tercentang
+                activeColor:
+                    Colors.green, // Ganti warna saat checkbox tercentang
                 checkColor: Colors.white, // Warna centang (tanda centang)
                 // Warna untuk checkbox saat tidak tercentang
                 hoverColor: Colors.grey, // Warna saat dihover
@@ -71,11 +90,11 @@ class _KeranjangCardState extends State<KeranjangCard> {
               Container(
                 width: 30,
                 height: 30,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.rectangle,
                   image: DecorationImage(
-                      image: AssetImage('assets/images/toko/shop_image.png'),
-                      fit: BoxFit.cover,
+                    image: AssetImage('assets/images/toko/shop_image.png'),
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
@@ -101,7 +120,7 @@ class _KeranjangCardState extends State<KeranjangCard> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.asset(
-                    'assets/images/profile1.png',
+                    widget.imageUrl ?? 'assets/images/profile1.png',
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -111,15 +130,17 @@ class _KeranjangCardState extends State<KeranjangCard> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Burger With Meat',
-                      style: TextStyle(
+                    Text(
+                      widget.title ?? 'Burger With Meat',
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     Text(
-                      'Bayam adalah sayuran enak untuk',
+                      widget.description ?? 'Bayam adalah sayuran enak untuk',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.grey[600],
@@ -127,7 +148,7 @@ class _KeranjangCardState extends State<KeranjangCard> {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      'Stok : 50 Biji',
+                      widget.stok ?? 'Stok : 50 Biji',
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.green[800],
@@ -182,7 +203,7 @@ class _KeranjangCardState extends State<KeranjangCard> {
                           ],
                         ),
                         Text(
-                          formatPrice(basePrice * quantity),
+                          formatPrice(basePrice ?? 0 * quantity),
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -201,4 +222,3 @@ class _KeranjangCardState extends State<KeranjangCard> {
     );
   }
 }
-

@@ -107,7 +107,8 @@ class _ProdukRetailerScreenState extends State<RetailerScreen> {
                                       MaterialPageRoute(
                                           builder: (context) =>
                                               DetailRetailerScreen(
-                                                  retailer: retailer, shops: shop,
+                                                  retailer: retailer,
+                                                // shops: shop,
                                               )))
                                 },
                                 child: RetailerCard(

@@ -1,7 +1,12 @@
+import 'dart:math';
+
 import 'package:agrolink/models/Supplier.dart';
 import 'package:agrolink/screens/produk_supplier/favorite_belanja_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../keranjang/keranjang_screen.dart';
 
 class DetailSupplierScreen extends StatefulWidget {
   final produk_supplier supplier;
@@ -16,8 +21,27 @@ class _DetailBelanjaScreenState extends State<DetailSupplierScreen> {
 
   String formatCurrency(double value) {
     final formatter =
-    NumberFormat("#,##0", "id_ID"); // Locale for Indonesian formatting
+        NumberFormat("#,##0", "id_ID"); // Locale for Indonesian formatting
     return formatter.format(value);
+  }
+
+  _addCart() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('cart_title', widget.supplier.title);
+    prefs.setString('cart_description', widget.supplier.description);
+    prefs.setString('cart_stock', widget.supplier.readyStock);
+    prefs.setDouble('cart_harga', widget.supplier.harga);
+    prefs.setString('cart_imageUrl', widget.supplier.imageUrl[0]);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Successfully add new cart!'),
+        backgroundColor: Colors.green,
+      ),
+    );
+
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const KeranjangScreen()));
   }
 
   @override
@@ -145,7 +169,7 @@ class _DetailBelanjaScreenState extends State<DetailSupplierScreen> {
                                                 ? const Color(0xFFD3B398)
                                                 : Colors.black.withOpacity(0.1),
                                             borderRadius:
-                                            BorderRadius.circular(10)),
+                                                BorderRadius.circular(10)),
                                         child: Text(
                                           '${widget.supplier.jumlah[index]} ${widget.supplier.satuan}',
                                           style: TextStyle(
@@ -153,7 +177,7 @@ class _DetailBelanjaScreenState extends State<DetailSupplierScreen> {
                                               color: isSelected
                                                   ? Colors.white
                                                   : Colors.black
-                                                  .withOpacity(0.3)),
+                                                      .withOpacity(0.3)),
                                         ),
                                       ),
                                     ),
@@ -225,7 +249,8 @@ class _DetailBelanjaScreenState extends State<DetailSupplierScreen> {
                   onTap: () => {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => FavoriteBelanjaScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => FavoriteBelanjaScreen()),
                     )
                   },
                   borderRadius: BorderRadius.circular(10),
@@ -245,7 +270,9 @@ class _DetailBelanjaScreenState extends State<DetailSupplierScreen> {
                 ),
                 Expanded(
                   child: InkWell(
-                    onTap: () => {},
+                    onTap: () {
+                      _addCart();
+                    },
                     borderRadius: BorderRadius.circular(10),
                     child: Container(
                         padding: const EdgeInsets.all(10),
