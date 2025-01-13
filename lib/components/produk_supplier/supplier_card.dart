@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../screens/keranjang/checkout_screen.dart';
+
 class SupplierCard extends StatelessWidget {
   final String name;
   final String description;
@@ -36,6 +38,7 @@ class SupplierCard extends StatelessWidget {
           ),
         ],
       ),
+      margin: const EdgeInsets.symmetric(vertical: 8),
 
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -113,21 +116,29 @@ class SupplierCard extends StatelessWidget {
                           color: Colors.green,
                         ),
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.green,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                        child: const Center(
-                          child: Text(
-                            'Beli Sekarang',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 10,
-                              fontWeight: FontWeight.bold,
-                            )
-
+                      const SizedBox(width: 40),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => CheckoutScreen()),
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.green,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                          child: const Center(
+                            child: Text(
+                              'Beli Sekarang',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
                         ),
                       )
@@ -157,3 +168,5 @@ class SupplierCard extends StatelessWidget {
     );
   }
 }
+
+

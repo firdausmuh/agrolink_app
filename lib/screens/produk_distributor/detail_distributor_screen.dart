@@ -1,10 +1,7 @@
-import 'package:agrolink/components/toko/shop_card.dart';
 import 'package:agrolink/models/Distributor.dart';
-import 'package:agrolink/models/shop.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../keranjang/keranjang_screen.dart';
 
 
@@ -85,18 +82,6 @@ class _DetailProdukDistributorScreenState extends State<DetailDistributorScreen>
                         },
                       )
                   ),
-                  // shopcard displaying distributor information
-                  // Padding(
-                  //   padding: const EdgeInsets.all(10.0),
-                  //   child: ShopCard(
-                  //     imageUrl: widget.distributor.imageUrl[0], // Use first image from distributor
-                  //     namaToko: widget.distributor.title, // Distributor title
-                  //     isOnline: widget.distributor.isOnline, // Online status
-                  //     alamat: widget.distributor.alamat, // Distributor address
-                  //     rating: widget.distributor.rating, // Rating
-                  //     statusPesanan: widget.distributor.statusPesanan, // Order status
-                  //   ),
-                  // ),
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Column(

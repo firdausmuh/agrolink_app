@@ -1,7 +1,8 @@
-import 'package:agrolink/models/shop.dart';
+import 'package:agrolink/screens/keranjang/checkout_screen.dart';
+import 'package:agrolink/screens/produk_supplier/favorite_belanja_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:agrolink/models/Retailer.dart';
 import 'package:intl/intl.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../keranjang/keranjang_screen.dart';
@@ -13,6 +14,14 @@ class DetailRetailerScreen extends StatefulWidget {
       {super.key,
       // required this.shops,
       required this.retailer});
+
+import '../../models/Retailer.dart';
+import '../keranjang/keranjang_screen.dart';
+
+class DetailRetailerScreen extends StatefulWidget {
+  final produk_retailer retailer;
+  const DetailRetailerScreen({super.key, required this.retailer});
+
 
   @override
   State<DetailRetailerScreen> createState() =>
@@ -43,7 +52,7 @@ class _DetailProdukRetailerScreenState extends State<DetailRetailerScreen> {
 
   String formatCurrency(double value) {
     final formatter =
-        NumberFormat("#,##0", "id_ID"); //Locale for Indonesian formating
+    NumberFormat("#,##0", "id_ID"); //Locale for Indonesian formating
     return formatter.format(value);
   }
 
@@ -54,8 +63,6 @@ class _DetailProdukRetailerScreenState extends State<DetailRetailerScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leadingWidth: 50,
-        titleSpacing: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),
@@ -88,6 +95,7 @@ class _DetailProdukRetailerScreenState extends State<DetailRetailerScreen> {
                           );
                         },
                       )),
+
                   const SizedBox(
                     height: 5,
                   ),
@@ -354,6 +362,21 @@ class _DetailProdukRetailerScreenState extends State<DetailRetailerScreen> {
                         const SizedBox(
                           height: 10,
                         ),
+                        // Row(
+                        //   children: [
+                        //     Flexible(
+                        //       child: Text(
+                        //         widget.belanja.readyStock,
+                        //         style: TextStyle(
+                        //             color: Colors.black.withOpacity(0.8),
+                        //             fontSize: 16),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        const SizedBox(
+                          height: 10,
+                        ),
                       ],
                     ),
                   )
@@ -367,7 +390,13 @@ class _DetailProdukRetailerScreenState extends State<DetailRetailerScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
-                  onTap: () => {},
+                  onTap: () => {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => FavoriteBelanjaScreen()),
+                    ),
+                  },
                   borderRadius: BorderRadius.circular(10),
                   child: Container(
                       padding: const EdgeInsets.all(10),
@@ -392,7 +421,7 @@ class _DetailProdukRetailerScreenState extends State<DetailRetailerScreen> {
                     child: Container(
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                            color: Colors.green.withOpacity(0.8),
+                            color: Colors.green,
                             borderRadius: BorderRadius.circular(10)),
                         child: const Text(
                           'Add to cart',

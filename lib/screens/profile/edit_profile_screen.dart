@@ -81,7 +81,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               radius: 40,
                               backgroundColor: Colors.grey[200],
                               backgroundImage: const AssetImage(
-                                  'assets/images/profile1.png'),
+                                  'assets/images/profile/profile1.png'),
                             ),
                             Positioned(
                               bottom: 0,

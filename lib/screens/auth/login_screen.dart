@@ -1,6 +1,12 @@
+import 'package:agrolink/screens/home/customer_home.dart';
+import 'package:agrolink/screens/home/produsen_home.dart';
+import 'package:agrolink/screens/home/supplier_home.dart';
 import 'package:agrolink/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../home/distributor_home.dart';
+import '../home/home_screen.dart';
+import '../home/retailer_home.dart';
 import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -60,7 +66,40 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         );
       }
-
+      // update form faiz
+      // Navigasi berdasarkan role
+      // if (role == 'Supplier') {
+      //   Navigator.pushReplacement(
+      //     context,
+      //     MaterialPageRoute(builder: (context) => const SupplierHome()),
+      //   );
+      // } else if (role == 'Produsen') {
+      //   Navigator.pushReplacement(
+      //     context,
+      //     MaterialPageRoute(builder: (context) => const SupplierHome()), // Menggunakan halaman SupplierHome untuk Producer
+      //   );
+      // }
+      // else if (role == 'Distributor') {
+      //   Navigator.pushReplacement(
+      //     context,
+      //     MaterialPageRoute(builder: (context) =>  ProdusenHome()), // Ganti dengan halaman DistributorHome Anda
+      //   );
+      // } else if (role == 'Retailer') {
+      //   Navigator.pushReplacement(
+      //     context,
+      //     MaterialPageRoute(builder: (context) => DistributorHome()), // Ganti dengan halaman RetailerHome Anda
+      //   );
+      // } else if (role == 'Customer') {
+      //   Navigator.pushReplacement(
+      //     context,
+      //     MaterialPageRoute(builder: (context) => const MainScreen()), // Ganti dengan halaman HomeScreen untuk Customer
+      //   );
+      // } else {
+      //   Navigator.pushReplacement(
+      //     context,
+      //     MaterialPageRoute(builder: (context) => const MainScreen()), // Halaman default jika role tidak dikenali
+      //   );
+      // }
     } else {
       // Credentials are invalid, show an error SnackBar
       ScaffoldMessenger.of(context).showSnackBar(
@@ -72,55 +111,6 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     }
   }
-
-  // void _login() async {
-  //   // Simple validation logic for the example
-  //   if (_passwordController.text != '' && _usernameController.text != '') {
-  //     // Simulate checking credentials and user role
-  //     String role = "";
-  //     if (_usernameController.text == "supplier") {
-  //       role = "Supplier";
-  //     } else if (_usernameController.text == "distributor") {
-  //       role = "Distributor";
-  //     } else if (_usernameController.text == "produsen") {
-  //       role = "Produsen";
-  //     } else if (_usernameController.text == "retailer") {
-  //       role = "Retailer";
-  //     } else {
-  //       role = "Customer";  // Default role if none match
-  //     }
-  //
-  //     // Store user data and role in SharedPreferences
-  //     SharedPreferences prefs = await SharedPreferences.getInstance();
-  //     prefs.setString('username', _usernameController.text);
-  //     prefs.setBool('isLoggedIn', true);
-  //     prefs.setString('role', role); // Save the role
-  //
-  //     // Show success SnackBar based on role
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(
-  //         content: Text('Successfully logged in as $role!'),
-  //         backgroundColor: Colors.green,
-  //       ),
-  //     );
-  //
-  //     // Navigate to the MainScreen
-  //     Navigator.pushReplacement(
-  //       context,
-  //       MaterialPageRoute(builder: (context) => const MainScreen()),
-  //     );
-  //   } else {
-  //     // Credentials are invalid, show an error SnackBar
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(
-  //         content: Text("Login credentials do not match"),
-  //         backgroundColor: Colors.red, // Set the color of the SnackBar to red
-  //         duration: Duration(seconds: 3), // SnackBar will disappear after 3 seconds
-  //       ),
-  //     );
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

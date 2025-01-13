@@ -9,6 +9,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../keranjang/keranjang_screen.dart';
 
+import '../keranjang/checkout_screen.dart';
+
 class DistributorScreen extends StatefulWidget {
   const DistributorScreen({super.key});
 
@@ -88,13 +90,14 @@ class _ProdukDistributorScreenState extends State<DistributorScreen> {
                                   description: distributor.description,
                                   readyStock: distributor.readyStock,
                                   category: distributor.category,
-                                  // isOnline: distributor.isOnline,
-                                  // alamat: distributor.alamat,
-                                  // statusPesanan: distributor.statusPesanan[4],
                                   price: distributor.harga,
                                   imageUrl: distributor.imageUrl[0],
                                   onAddPressed: () {
                                     // Handle add to cart action
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => CheckoutScreen()),
+                                    );
                                     SnackBar(
                                       content: Text(
                                           "${distributor.title} masuk ke keranjang"),

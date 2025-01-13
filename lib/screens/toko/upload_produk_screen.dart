@@ -1,25 +1,27 @@
-import 'package:agrolink/screens/toko/toko_screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
-import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
 class UploadProdukScreen extends StatefulWidget {
-  const UploadProdukScreen({super.key});
+  final List<Map<String, dynamic>> produkList;
+
+  const UploadProdukScreen({Key? key, required this.produkList}) : super(key: key);
 
   @override
   State<UploadProdukScreen> createState() => _UploadProdukScreenState();
 }
 
 class _UploadProdukScreenState extends State<UploadProdukScreen> {
-  final List<String> uploadedImages = [];
   File? _image;
-  final TextEditingController _textController = TextEditingController();
-  final ImagePicker _picker = ImagePicker();
-
   final TextEditingController _namaController = TextEditingController();
   final TextEditingController _hargaController = TextEditingController();
+  final TextEditingController _deskripsiController = TextEditingController();
+  final TextEditingController _minimalPembelianController =
+  TextEditingController();
+  final TextEditingController _alamatController = TextEditingController();
+  final TextEditingController _kualitasController = TextEditingController();
+  final ImagePicker _picker = ImagePicker();
 
   Future<void> _pickImage() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
@@ -31,8 +33,6 @@ class _UploadProdukScreenState extends State<UploadProdukScreen> {
       final fileName = DateTime.now().millisecondsSinceEpoch.toString();
       final savedImage = await imageFile.copy('$path/$fileName.png');
 
-      print(savedImage);
-
       setState(() {
         _image = savedImage;
       });
@@ -40,43 +40,42 @@ class _UploadProdukScreenState extends State<UploadProdukScreen> {
   }
 
   void _upload() {
-    if (_namaController.text != '' &&
-        _hargaController.text != '' &&
+    if (_namaController.text.isNotEmpty &&
+        _hargaController.text.isNotEmpty &&
         _image != null) {
+      // Membuat salinan list produk yang dapat dimodifikasi
+      List<Map<String, dynamic>> updatedList = List.from(widget.produkList);
+
+      // Tambahkan produk baru ke daftar produk yang dapat dimodifikasi
+      updatedList.add({
+        'nama': _namaController.text,
+        'harga': _hargaController.text,
+        'deskripsi': _deskripsiController.text,
+        'minimalPembelian': _minimalPembelianController.text,
+        'alamat': _alamatController.text,
+        'kualitas': _kualitasController.text,
+        'image': _image,
+      });
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text("Upload success"),
+          content: Text("Upload berhasil!"),
           backgroundColor: Colors.green,
-          duration: Duration(seconds: 3),
+          duration: Duration(seconds: 2),
         ),
       );
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => TokoScreen(
-              namaProdukUpload: _namaController.text,
-              hargaProdukUpload: _hargaController.text,
-              imageProdukUpload: _image),
-        ),
-      );
+      // Kembali ke layar sebelumnya dengan data yang diperbarui
+      Navigator.pop(context, updatedList);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text("Check missing data!"),
+          content: Text("Lengkapi semua data!"),
           backgroundColor: Colors.red,
           duration: Duration(seconds: 3),
         ),
       );
     }
-  }
-
-  void addPhoto() {
-    // Tambahkan logika untuk memilih foto dari galeri
-    setState(() {
-      uploadedImages.add(
-          'assets/images/produsen/sayur_sawi3sayur_sawi3.png'); // Contoh gambar
-    });
   }
 
   @override
@@ -86,10 +85,7 @@ class _UploadProdukScreenState extends State<UploadProdukScreen> {
         backgroundColor: Colors.white,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-          ),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
         ),
         title: const Text(
           'Upload Produk',
@@ -103,7 +99,6 @@ class _UploadProdukScreenState extends State<UploadProdukScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Foto Produk dan Tambah Foto
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -124,86 +119,49 @@ class _UploadProdukScreenState extends State<UploadProdukScreen> {
                 ],
               ),
               const SizedBox(height: 10),
-              // Box Foto Produk dengan Scroll Horizontal
               Container(
-                  height: 250,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: Colors.grey),
+                height: 250,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.grey),
+                ),
+                child: _image != null
+                    ? Center(
+                  child: Image.file(
+                    _image!,
+                    height: 250,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
                   ),
-                  child: _image != null
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              child: Container(
-                                width: 250,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Image.file(
-                                  _image!,
-                                  height: 250,
-                                  width: 250,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
-                      : Center(
-                          child: ElevatedButton(
-                            onPressed: _pickImage,
-                            child: const Icon(
-                              Icons.add_a_photo,
-                              size: 50,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        )),
-              const SizedBox(height: 10),
-              // Supported Format dan Maksimal Ukuran
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Supported Format: JPG, PNG',
-                    style: TextStyle(color: Colors.grey, fontSize: 12),
+                )
+                    : const Center(
+                  child: Text(
+                    "Belum ada gambar",
+                    style: TextStyle(color: Colors.grey),
                   ),
-                  Text(
-                    'Maks: 23MB',
-                    style: TextStyle(color: Colors.grey, fontSize: 12),
-                  ),
-                ],
+                ),
               ),
               const SizedBox(height: 20),
-              // Isi nama produk
-              const Text(
-                'Isi nama produk yang kamu jual',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-              const SizedBox(height: 10),
               buildInputField(
                   'Nama Produk', 'Masukkan nama produk', _namaController),
               buildInputField(
-                  'Harga Produk', 'Masukkan nama produk', _hargaController),
-              buildInputField('Kategori Produk', 'Masukkan kategori produk',
-                  _textController),
+                  'Harga Produk', 'Masukkan harga produk', _hargaController),
               buildInputField(
-                  'Alamat Produk', 'Masukkan alamat produk', _textController),
+                  'Deskripsi Produk',
+                  'Masukkan deskripsi produk',
+                  _deskripsiController,
+                  maxLines: 3),
               buildInputField(
-                  'Stok Tersedia', 'Masukkan stok tersedia', _textController),
-              buildInputField('Minimum Pemesanan', 'Masukkan minimum pemesanan',
-                  _textController),
+                  'Minimal Pembelian',
+                  'Masukkan minimal pembelian',
+                  _minimalPembelianController),
               buildInputField(
-                  'Kondisi Produk', 'Masukkan kondisi produk', _textController),
-              buildInputField('Deskripsi Produk', 'Masukkan deskripsi produk',
-                  _textController,
-                  maxLines: 5),
-              const SizedBox(height: 20),
-              // Tombol Upload Produk
+                  'Alamat Produk', 'Masukkan alamat produk', _alamatController),
+              buildInputField(
+                  'Kualitas Produk',
+                  'Masukkan kualitas produk (contoh: A, Premium)',
+                  _kualitasController),
+              const SizedBox(height: 10),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -214,10 +172,7 @@ class _UploadProdukScreenState extends State<UploadProdukScreen> {
                     ),
                     padding: const EdgeInsets.symmetric(vertical: 15),
                   ),
-                  onPressed: () {
-                    // Logika upload produk
-                    _upload();
-                  },
+                  onPressed: _upload,
                   child: const Text(
                     'Upload Produk',
                     style: TextStyle(color: Colors.white, fontSize: 16),
@@ -263,7 +218,7 @@ class _UploadProdukScreenState extends State<UploadProdukScreen> {
                 borderSide: const BorderSide(color: Color(0xFF406A52)),
               ),
               contentPadding:
-                  const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+              const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
             ),
           ),
         ],

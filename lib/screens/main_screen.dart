@@ -1,9 +1,10 @@
+import 'package:agrolink/screens/home/customer_home.dart';
+import 'package:agrolink/screens/home/distributor_home.dart';
 import 'package:agrolink/screens/home/home_screen.dart';
+import 'package:agrolink/screens/home/produsen_home.dart';
+import 'package:agrolink/screens/home/retailer_home.dart';
+import 'package:agrolink/screens/home/supplier_home.dart';
 import 'package:agrolink/screens/keranjang/keranjang_screen.dart';
-import 'package:agrolink/screens/produk_distributor/distributor_screen.dart';
-import 'package:agrolink/screens/produk_produsen/produsen_screen.dart';
-import 'package:agrolink/screens/produk_retailer/retailer_screen.dart';
-import 'package:agrolink/screens/produk_supplier/supplier_screen.dart';
 import 'package:agrolink/screens/profile/profile_screen.dart';
 import 'package:agrolink/screens/riwayat_transaksi/riwayat_screen.dart';
 import 'package:agrolink/screens/toko/toko_screen.dart';
@@ -60,6 +61,15 @@ class _MainScreenState extends State<MainScreen> {
       icon: Icon(Icons.person_outline, size: 28), // Ikon diperbesar
       label: 'Profile',
     ),
+  ];
+
+  //update from faizr
+  final List<Widget> _listWidget = [
+    HomeScreen(),
+    const KeranjangScreen(),
+    const TokoScreen(),
+    const RiwayatScreen(),
+    const ProfileScreen(),
   ];
 
   @override
@@ -137,13 +147,15 @@ Future<Widget> homeScreenArranger() async {
 
   late Widget defaultHomeScreen;
   if (role == 'Supplier') {
-    defaultHomeScreen = const RetailerScreen();
+    defaultHomeScreen = const SupplierHome();
   } else if (role == 'Produsen') {
-    defaultHomeScreen = const SupplierScreen();
+    defaultHomeScreen = const SupplierHome();
   } else if (role == 'Distributor') {
-    defaultHomeScreen = const ProdusenScreen();
+    defaultHomeScreen = const ProdusenHome();
   } else if (role == 'Retailer') {
-    defaultHomeScreen = const DistributorScreen();
+    defaultHomeScreen = const DistributorHome();
+  } else if (role == 'Customer') {
+    defaultHomeScreen = const RetailerHome();
   } else {
     defaultHomeScreen = HomeScreen();
   }

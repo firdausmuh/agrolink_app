@@ -5,6 +5,8 @@ import '../../components/produk_retailer/retailer_card.dart';
 import 'package:agrolink/screens/produk_supplier/favorite_belanja_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../keranjang/checkout_screen.dart';
+
 class RetailerScreen extends StatefulWidget {
   const RetailerScreen({super.key});
 
@@ -13,7 +15,6 @@ class RetailerScreen extends StatefulWidget {
 }
 
 class _ProdukRetailerScreenState extends State<RetailerScreen> {
-  get shop => null;
 
   @override
   Widget build(BuildContext contex) {
@@ -58,37 +59,6 @@ class _ProdukRetailerScreenState extends State<RetailerScreen> {
               },
             ),
           ),
-          // Padding(
-          //     padding: const EdgeInsets.all(20),
-          //     child: Row(
-          //       children: [
-          //         CircleAvatar(
-          //           radius: 40,
-          //           backgroundImage: NetworkImage(
-          //             shops[0].imageUrl[0],
-          //           ),
-          //         ),
-          //         const SizedBox(width: 15),
-          //         Column(
-          //           crossAxisAlignment: CrossAxisAlignment.start,
-          //           children: [
-          //             Text(
-          //               shops[0].namaToko,
-          //               style: const TextStyle(
-          //                 fontSize: 18,
-          //                 fontWeight: FontWeight.bold,
-          //               ),
-          //             ),
-          //             const SizedBox(height: 5),
-          //             Text(
-          //               shops[0].alamat,
-          //               style: const TextStyle(fontSize: 14, color: Colors.grey),
-          //             )
-          //           ],
-          //         )
-          //       ],
-          //     ),
-          // ),
           Expanded(
             child: SingleChildScrollView(
               child: Padding(
@@ -109,6 +79,7 @@ class _ProdukRetailerScreenState extends State<RetailerScreen> {
                                               DetailRetailerScreen(
                                                   retailer: retailer,
                                                 // shops: shop,
+
                                               )))
                                 },
                                 child: RetailerCard(
@@ -116,18 +87,20 @@ class _ProdukRetailerScreenState extends State<RetailerScreen> {
                                   description: retailer.description,
                                   readyStock: retailer.readyStock,
                                   category: retailer.category,
-                                  // shopImage: retailer.shopImage[0],
-                                  shopName: retailer.namaToko,
                                   price: retailer.harga,
                                   imageUrl: retailer.imageUrl[0],
                                   onAddPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => CheckoutScreen()),
+                                    );
                                     ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(
                                           content: Text(
                                               "${retailer.title} masuk ke keranjang"),
                                         )
                                     );
-                                  }, shopImage: 'assets/images/toko/lydiastore.png',
+                                  }, // Handle add to cart action
                                 ),
                               ),
                               const Divider(),

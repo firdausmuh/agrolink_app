@@ -13,15 +13,19 @@ class _RiwayatScreenState extends State<RiwayatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Riwayat Pembelian'),
         backgroundColor: Colors.white,
         elevation: 0,
         leadingWidth: 50,
-        titleSpacing: 0,
-        leading: IconButton(
-            onPressed: () => Navigator.pop(context),
-            icon: const Icon(Icons.arrow_back, color: Colors.black)
+        titleSpacing: 20,
+        title: const Text(
+          "Riwayat Pembelian",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
         ),
+        centerTitle: false, // Mengatur teks di tengah
       ),
       body: ListView.builder(
         padding: const EdgeInsets.all(16),

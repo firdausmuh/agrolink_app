@@ -12,11 +12,6 @@ import '../../models/Produsen.dart';
 import '../produk_produsen/detail_produsen_screen.dart';
 
 class HomeScreen extends StatelessWidget {
-  Future<String?> _getUsername() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('username');
-  }
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -37,7 +32,7 @@ class HomeScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                     Expanded(
+                    Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -53,9 +48,7 @@ class HomeScreen extends StatelessWidget {
                                       fontSize: 20, fontWeight: FontWeight.w700),
                                 ),
                               ),
-                              SizedBox(
-                                width: 6,
-                              ),
+                              SizedBox(width: 6),
                               Icon(
                                 Icons.waving_hand,
                                 color: Colors.green,
@@ -66,9 +59,7 @@ class HomeScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(
-                      width: 12,
-                    ),
+                    const SizedBox(width: 12),
                     GestureDetector(
                       onTap: () {
                         // Navigate to the profile page
@@ -80,45 +71,41 @@ class HomeScreen extends StatelessWidget {
                       child: CircleAvatar(
                         radius: 24,
                         backgroundColor: Colors.grey[200],
-                        backgroundImage:
-                        const AssetImage('assets/images/profile2.png'),
+                        backgroundImage: const AssetImage('assets/images/profile/profile2.png'),
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 8),
+
               // Section iklan
+              const SizedBox(height: 8),
               SizedBox(
-                height: 200, // Tetap menjaga tinggi agar tidak terlalu besar
+                height: 200,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
-                    // Gambar iklan pertama
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: ClipRRect(
-                        borderRadius:
-                        BorderRadius.circular(5), // Opsional: Tambahkan radius
+                        borderRadius: BorderRadius.circular(5),
                         child: Image.asset(
                           'assets/images/iklan.png',
-                          width: 400, // Ukuran lebar tetap
-                          height: 200, // Ukuran tinggi tetap
+                          width: 400,
+                          height: 200,
                           fit: BoxFit.cover,
                         ),
                       ),
                     ),
                     const SizedBox(width: 10),
-                    // Gambar iklan kedua
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: ClipRRect(
-                        borderRadius:
-                        BorderRadius.circular(5), // Opsional: Tambahkan radius
+                        borderRadius: BorderRadius.circular(5),
                         child: Image.asset(
                           'assets/images/banner2.png',
-                          width: 400, // Ukuran lebar tetap
-                          height: 200, // Ukuran tinggi tetap
+                          width: 400,
+                          height: 200,
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -127,19 +114,8 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
 
-              // Row(
-              //   children: [
-              //     Expanded(
-              //         child: Image.asset(
-              //       'assets/images/iklan.png',
-              //       fit: BoxFit.cover),
-              //     ),
-              //   ],
-              // ),
+              const SizedBox(height: 20),
 
-              const SizedBox(
-                height: 20,
-              ),
               // Content Produk
               Expanded(
                 child: SingleChildScrollView(
@@ -151,176 +127,141 @@ class HomeScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Layanan Pertanian',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 24,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Layanan Pertanian',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 24,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: InkWell(
+                                    borderRadius: BorderRadius.circular(20),
+                                    onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => const SupplierScreen()),
+                                    ),
+                                    child: const LayananBox(
+                                      imagePath: 'assets/images/layanan/suplier.jpg',
+                                      label: 'Produk Suplier',
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment
-                                    .spaceBetween, // Even space between items
-                                children: [
-                                  Flexible(
-                                    flex: 1,
-                                    child: InkWell(
-                                      borderRadius: BorderRadius.circular(20),
-                                      onTap: () => {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                              const SupplierScreen()),
-                                        )
-                                      },
-                                      child: const LayananBox(
-                                          imagePath:
-                                          'assets/images/layanan/suplier.jpg',
-                                          label: 'Produk Suplier'),
+                                const SizedBox(width: 10),
+                                Flexible(
+                                  child: InkWell(
+                                    borderRadius: BorderRadius.circular(20),
+                                    onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => const ProdusenScreen()),
+                                    ),
+                                    child: const LayananBox(
+                                      imagePath: 'assets/images/layanan/produsen.jpg',
+                                      label: 'Produk Produsen',
                                     ),
                                   ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Flexible(
-                                    flex: 1,
-                                    child: InkWell(
-                                      borderRadius: BorderRadius.circular(20),
-                                      onTap: () => {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                const ProdusenScreen()))
-                                      },
-                                      child: const LayananBox(
-                                          imagePath:
-                                          'assets/images/layanan/produsen.jpg',
-                                          label: 'Produk Produsen'),
+                                ),
+                                const SizedBox(width: 10),
+                                Flexible(
+                                  child: InkWell(
+                                    borderRadius: BorderRadius.circular(20),
+                                    onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => const DistributorScreen()),
+                                    ),
+                                    child: const LayananBox(
+                                      imagePath: 'assets/images/layanan/distributor.jpg',
+                                      label: 'Produk Distributor',
                                     ),
                                   ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Flexible(
-                                    flex: 1,
-                                    child: InkWell(
-                                      borderRadius: BorderRadius.circular(20),
-                                      onTap: () => {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                const DistributorScreen()))
-                                      },
-                                      child: const LayananBox(
-                                          imagePath:
-                                          'assets/images/layanan/distributor.jpg',
-                                          label: 'Produk Distributor'),
+                                ),
+                                const SizedBox(width: 10),
+                                Flexible(
+                                  child: InkWell(
+                                    borderRadius: BorderRadius.circular(20),
+                                    onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => const RetailerScreen()),
+                                    ),
+                                    child: const LayananBox(
+                                      imagePath: 'assets/images/layanan/retailer.jpg',
+                                      label: 'Produk Retailer',
                                     ),
                                   ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Flexible(
-                                    flex: 1,
-                                    child: InkWell(
-                                      borderRadius: BorderRadius.circular(20),
-                                      onTap: () => {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                const RetailerScreen()))
-                                      },
-                                      child: const LayananBox(
-                                          imagePath:
-                                          'assets/images/layanan/retailer.jpg',
-                                          label: 'Produk Retailer'),
+                                ),
+                                const SizedBox(width: 10),
+                                Flexible(
+                                  child: InkWell(
+                                    borderRadius: BorderRadius.circular(20),
+                                    onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => const InformasiScreen()),
+                                    ),
+                                    child: const LayananBox(
+                                      imagePath: 'assets/images/layanan/informasi.png',
+                                      label: 'Informasi pertanian',
                                     ),
                                   ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Flexible(
-                                    flex: 1,
-                                    child: InkWell(
-                                      borderRadius: BorderRadius.circular(20),
-                                      onTap: () => {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                const InformasiScreen()))
-                                      },
-                                      child: const LayananBox(
-                                          imagePath:
-                                          'assets/images/layanan/informasi.png',
-                                          label: 'Informasi pertanian'),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ]),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
 
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      //const SizedBox(height: 20),
 
-                      // Section terbaru
+                      // Section Produk Pertanian
                       const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: Text(
                           'Produk Pertanian',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 24),
+                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                         ),
                       ),
+                      const SizedBox(height: 8),
+
+                      // List of Products
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Column(
                           children: produsens.map((produsen) {
                             return InkWell(
                               borderRadius: BorderRadius.circular(20),
-                              onTap: () => {
+                              onTap: () {
                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => DetailProdusenScreen(
-                                            produsen: produsen)))
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => DetailProdusenScreen(
+                                      produsen: produsen,
+                                    ),
+                                  ),
+                                );
                               },
-                              child: Column(
-                                children: [
-                                  ProdusenCard(
-                                    name: produsen.title,
-                                    description: produsen.description,
-                                    readyStock: produsen.readyStock,
-                                    category: produsen.category,
-                                    price: produsen.harga,
-                                    imageUrl: produsen.imageUrl[0],
-                                    onAddPressed: () {
-                                      // Handle add to cart action
-                                      SnackBar(
-                                        content: Text(
-                                            "${produsen.title} masuk ke keranjang"),
-                                      );
-                                    },
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                ],
+                              child: ProdusenCard(
+                                name: produsen.title,
+                                description: produsen.description,
+                                readyStock: produsen.readyStock,
+                                category: produsen.category,
+                                price: produsen.harga,
+                                imageUrl: produsen.imageUrl[0],
+                                onAddPressed: () {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text("${produsen.title} masuk ke keranjang")),
+                                  );
+                                },
                               ),
                             );
                           }).toList(),
@@ -335,5 +276,10 @@ class HomeScreen extends StatelessWidget {
         }
       },
     );
+  }
+
+  Future<String?> _getUsername() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('username');
   }
 }

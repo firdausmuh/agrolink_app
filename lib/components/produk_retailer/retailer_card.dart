@@ -341,12 +341,12 @@
 
 import 'package:flutter/material.dart';
 
+import '../../screens/keranjang/checkout_screen.dart';
+
 class RetailerCard extends StatelessWidget {
   final String name;
   final String description;
   final String readyStock;
-  final String shopName;
-  final String shopImage;
   final String category;
   final double price;
   final String imageUrl;
@@ -356,8 +356,6 @@ class RetailerCard extends StatelessWidget {
     Key? key,
     required this.name,
     required this.description,
-    required this.shopName,
-    required this.shopImage,
     required this.readyStock,
     required this.category,
     required this.price,
@@ -467,40 +465,32 @@ class RetailerCard extends StatelessWidget {
                               color: Colors.green,
                             ),
                           ),
-                          const SizedBox(width: 21),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.green,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-                            child: const Center(
-                              child: Text(
+                          const SizedBox(width: 40),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => CheckoutScreen()),
+                              );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.green,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                              child: const Center(
+                                child: Text(
                                   'Beli Sekarang',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 10,
                                     fontWeight: FontWeight.bold,
-                                  )
-
+                                  ),
+                                ),
                               ),
                             ),
                           )
-                          // IconButton(
-                          //   onPressed: onAddPressed,
-                          //   icon: Container(
-                          //     padding: const EdgeInsets.all(4),
-                          //     decoration: const BoxDecoration(
-                          //       color: Colors.red,
-                          //       shape: BoxShape.circle,
-                          //     ),
-                          //     child: const Icon(
-                          //       Icons.add,
-                          //       color: Colors.white,
-                          //       size: 20,
-                          //     ),
-                          //   ),
-                          // ),
                         ],
                       ),
                     ],
