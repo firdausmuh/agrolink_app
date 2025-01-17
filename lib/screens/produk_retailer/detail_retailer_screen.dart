@@ -2,18 +2,17 @@ import 'package:agrolink/screens/keranjang/checkout_screen.dart';
 import 'package:agrolink/screens/produk_supplier/favorite_belanja_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../keranjang/keranjang_screen.dart';
+import 'package:agrolink/models/shop.dart';
 
-class DetailRetailerScreen extends StatefulWidget {
-  // final Shop shops;
-  final produk_retailer retailer;
-  const DetailRetailerScreen(
-      {super.key,
-      // required this.shops,
-      required this.retailer});
+// class DetailRetailerScreen extends StatefulWidget {
+//   // final Shop shops;
+//   final produk_retailer retailer;
+//   const DetailRetailerScreen(
+//       {super.key,
+//       // required this.shops,
+//       required this.retailer});
 
 import '../../models/Retailer.dart';
 import '../keranjang/keranjang_screen.dart';
@@ -121,11 +120,11 @@ class _DetailProdukRetailerScreenState extends State<DetailRetailerScreen> {
                           children: [
                             Flexible(
                                 child: Text(
-                              widget.retailer.namaToko,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w700, fontSize: 20),
+                                  widget.retailer.title,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w700, fontSize: 20),
                             )),
                           ],
                         ),
@@ -154,7 +153,7 @@ class _DetailProdukRetailerScreenState extends State<DetailRetailerScreen> {
                           children: [
                             Flexible(
                               child: Text(
-                                widget.retailer.alamat,
+                                widget.retailer.title,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
@@ -185,9 +184,7 @@ class _DetailProdukRetailerScreenState extends State<DetailRetailerScreen> {
                             )
                           ],
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10,),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -195,9 +192,7 @@ class _DetailProdukRetailerScreenState extends State<DetailRetailerScreen> {
                               Icons.access_time,
                               color: Colors.orange.withOpacity(0.8),
                             ),
-                            const SizedBox(
-                              width: 10,
-                            ),
+                            const SizedBox(width: 10,),
                             // Text(
                             //   widget.shopsshops.statusPesanan,
                             //   style: TextStyle(

@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:agrolink/models/Produsen.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../keranjang/keranjang_screen.dart';
-
 
 class DetailProdusenScreen extends StatefulWidget {
   final produk_produsen produsen;
@@ -16,19 +14,27 @@ class DetailProdusenScreen extends StatefulWidget {
 }
 
 class _DetailProdukProdusenScreenState extends State<DetailProdusenScreen> {
-  int selectedIndext = 1;
+  int selectedIndext = 0; // Indeks untuk ukuran/jumlah yang dipilih
 
   _addCart() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('cart_title', widget.produsen.title);
-    prefs.setString('cart_description', widget.produsen.description);
-    prefs.setString('cart_stock', widget.produsen.readyStock);
-    prefs.setDouble('cart_harga', widget.produsen.harga);
-    prefs.setString('cart_imageUrl', widget.produsen.imageUrl[0]);
+    List<String>? cartItems = prefs.getStringList('cart_items') ?? [];
+
+    // Ambil ukuran/jumlah yang dipilih
+    String selectedSize = '${widget.produsen.jumlah[selectedIndext]} ${widget.produsen.satuan}';
+
+    // Buat string untuk produk
+    String newItem = '${widget.produsen.title},${widget.produsen.description},${widget.produsen.category},${widget.produsen.harga},${widget.produsen.imageUrl[0]},$selectedSize';
+
+    // Tambahkan item baru ke keranjang
+    cartItems.add(newItem);
+
+    // Simpan kembali ke SharedPreferences
+    await prefs.setStringList('cart_items', cartItems);
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('Successfully add new cart!'),
+        content: Text('Successfully added to cart!'),
         backgroundColor: Colors.green,
       ),
     );
@@ -37,15 +43,13 @@ class _DetailProdukProdusenScreenState extends State<DetailProdusenScreen> {
         context, MaterialPageRoute(builder: (context) => const KeranjangScreen()));
   }
 
-
   String formatCurrency(double value) {
-    final formatter =
-    NumberFormat("#,##0", "id_ID"); //Locale for Indonesian formating
+    final formatter = NumberFormat("#,##0", "id_ID"); // Locale untuk format Indonesia
     return formatter.format(value);
   }
+
   @override
   Widget build(BuildContext context) {
-    print(widget.produsen.jumlah.length);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -106,9 +110,7 @@ class _DetailProdukProdusenScreenState extends State<DetailProdusenScreen> {
                             )
                           ],
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -116,9 +118,7 @@ class _DetailProdukProdusenScreenState extends State<DetailProdusenScreen> {
                               Icons.star,
                               color: Colors.orange.withOpacity(0.8),
                             ),
-                            const SizedBox(
-                              width: 10,
-                            ),
+                            const SizedBox(width: 10),
                             Text(
                               '4.8',
                               style: TextStyle(
@@ -128,21 +128,17 @@ class _DetailProdukProdusenScreenState extends State<DetailProdusenScreen> {
                             )
                           ],
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10),
                         const Row(
                           children: [
                             Text(
-                              'Select size',
+                              'Pilih Jumlah beli',
                               style: TextStyle(
                                   fontWeight: FontWeight.w700, fontSize: 16),
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10),
                         SizedBox(
                           height: 44,
                           child: ListView.builder(
@@ -178,28 +174,22 @@ class _DetailProdukProdusenScreenState extends State<DetailProdusenScreen> {
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
+                                    const SizedBox(width: 10),
                                   ],
                                 );
                               }),
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10),
                         const Row(
                           children: [
                             Text(
-                              'Description',
+                              'Deskripsi',
                               style: TextStyle(
                                   fontWeight: FontWeight.w700, fontSize: 16),
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10),
                         Row(
                           children: [
                             Flexible(
@@ -212,24 +202,7 @@ class _DetailProdukProdusenScreenState extends State<DetailProdusenScreen> {
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        // Row(
-                        //   children: [
-                        //     Flexible(
-                        //       child: Text(
-                        //         widget.belanja.readyStock,
-                        //         style: TextStyle(
-                        //             color: Colors.black.withOpacity(0.8),
-                        //             fontSize: 16),
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10),
                       ],
                     ),
                   )
@@ -245,9 +218,9 @@ class _DetailProdukProdusenScreenState extends State<DetailProdusenScreen> {
                 InkWell(
                   onTap: () => {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => FavoriteBelanjaScreen()),
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => FavoriteBelanjaScreen()),
                     ),
                   },
                   borderRadius: BorderRadius.circular(10),
@@ -262,9 +235,7 @@ class _DetailProdukProdusenScreenState extends State<DetailProdusenScreen> {
                         color: Colors.white,
                       )),
                 ),
-                const SizedBox(
-                  width: 20,
-                ),
+                const SizedBox(width: 20),
                 Expanded(
                   child: InkWell(
                     onTap: () {
@@ -277,7 +248,7 @@ class _DetailProdukProdusenScreenState extends State<DetailProdusenScreen> {
                             color: Colors.green,
                             borderRadius: BorderRadius.circular(10)),
                         child: const Text(
-                          'Add to cart',
+                          'Tambahkan ke Keranjang',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: Colors.white,

@@ -12,7 +12,7 @@ class _RiwayatCardState extends State<RiwayatCard> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
-      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
@@ -50,18 +50,18 @@ class _RiwayatCardState extends State<RiwayatCard> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Nama produk dan tombol selesai
+                // Nama produk dan status
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Expanded(
                       child: Text(
-                        'Beras Premium',
+                        'Basreng Daun Jeruk',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 14,
                           fontWeight: FontWeight.bold,
                         ),
-                        maxLines: 2,
+                        maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -73,13 +73,12 @@ class _RiwayatCardState extends State<RiwayatCard> {
                       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 15),
                       child: Center(
                         child: Text(
-                            'Selesai',
-                            style: TextStyle(
-                              color: Colors.green[800],
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                            )
-
+                          'Selesai', // Ganti dengan status yang sesuai
+                          style: TextStyle(
+                            color: Colors.green[800],
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     )
@@ -88,20 +87,20 @@ class _RiwayatCardState extends State<RiwayatCard> {
                 const SizedBox(height: 6),
                 // Keterangan jumlah barang
                 const Text(
-                  '1 pack barang',
+                  'Jumlah Produk: 80 Gram',
                   style: TextStyle(fontSize: 16, color: Colors.grey, fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(height: 8),
                 // Total belanja
                 const Text(
-                  'Total Belanja: Rp 65.000',
+                  'Total Belanja: Rp 15.000',
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
                 ),
-                //const SizedBox(height: 6),
+                const SizedBox(height: 6),
                 // Ulasan produk dan tombol beli lagi
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -116,17 +115,13 @@ class _RiwayatCardState extends State<RiwayatCard> {
                       onPressed: () {
                         // Logic untuk membeli lagi
                       },
-                      icon: const Icon(Icons.shopping_cart_outlined,
-                          color: Colors.green),
+                      icon: const Icon(Icons.shopping_cart_outlined, color: Colors.green),
                       label: const Text(
                         'Beli Lagi',
                         style: TextStyle(color: Colors.black),
                       ),
                       style: TextButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 6,
-                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                       ),
                     ),
                   ],

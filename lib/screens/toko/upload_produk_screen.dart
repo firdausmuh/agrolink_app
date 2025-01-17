@@ -59,7 +59,7 @@ class _UploadProdukScreenState extends State<UploadProdukScreen> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text("Upload berhasil!"),
+          content: Text("Upload produk berhasil!"),
           backgroundColor: Colors.green,
           duration: Duration(seconds: 2),
         ),

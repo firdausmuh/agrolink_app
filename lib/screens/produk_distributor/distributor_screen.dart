@@ -94,14 +94,7 @@ class _ProdukDistributorScreenState extends State<DistributorScreen> {
                                   imageUrl: distributor.imageUrl[0],
                                   onAddPressed: () {
                                     // Handle add to cart action
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) => CheckoutScreen()),
-                                    );
-                                    SnackBar(
-                                      content: Text(
-                                          "${distributor.title} masuk ke keranjang"),
-                                    );
+                                    _addToCart(distributors);
                                   },
                                 ),
                               ),
@@ -118,6 +111,29 @@ class _ProdukDistributorScreenState extends State<DistributorScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+  // Fungsi untuk menambahkan produk ke keranjang
+  void _addToCart(distributors) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // Ambil daftar item keranjang yang sudah ada
+    List<String>? cartItemsString = prefs.getStringList('cart_items') ?? [];
+
+    // Buat string untuk produk
+    String newItem = '${distributors.title},${distributors.description},${distributors.category},${distributors.harga},${distributors.imageUrl[0]},${distributors.rating},1'; // Menambahkan kuantitas default 1
+
+    // Tambahkan item baru ke keranjang
+    cartItemsString.add(newItem); // Simpan sebagai string
+
+    // Simpan kembali ke SharedPreferences
+    await prefs.setStringList('cart_items', cartItemsString);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("${distributors.title} masuk ke keranjang"),
+        backgroundColor: Colors.green,
       ),
     );
   }

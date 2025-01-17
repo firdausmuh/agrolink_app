@@ -25,10 +25,10 @@ class produk_distributor {
 List<produk_distributor> distributors = [
   produk_distributor(
       title: "Bumbu Kari Ayam",
-      description: "Bumbu kari ayam adalah campuran rempah-rempah yang digunakan untuk membuat hidangan kari ayam yang kaya rasa, gurih, dan sedikit pedas. Berikut adalah daftar bumbu yang umumnya digunakan untuk membuat kari ayam: Bawang merah, bawang putih, jahe, kunyit, lengkuas, kemiri, dan cabai merah dan lain-lain",
+      description: "Bumbu kari ayam adalah campuran rempah-rempah yang digunakan untuk membuat hidangan kari ayam yang kaya rasa dan sedikit pedas. Berikut adalah daftar bumbu yang umumnya digunakan untuk membuat kari ayam: Bawang merah, bawang putih.",
       readyStock: "20Kg",
       category: "Produk Distributor",
-      imageUrl: ['assets/images/distributor/bumbu_kari.png', 'assets/images/distributor/bumbu_kari.png'],
+      imageUrl: ['assets/images/distributor/bumbu_kari.png'],
       harga: 65000,
       rating: 3.2,
       jumlah: [10, 20, 30, 40, 50, 60],
@@ -36,10 +36,10 @@ List<produk_distributor> distributors = [
   ),
   produk_distributor(
       title: "Pakan Ayam",
-      description: "Pakan ayam adalah makanan yang diberikan kepada ayam untuk mendukung pertumbuhannya, produksi telur, atau kualitas daging ayam. Pakan ayam yang baik harus mengandung berbagai nutrisi penting seperti protein, lemak, karbohidrat, vitamin, dan mineral.",
+      description: "Pakan ayam adalah makanan yang diberikan kepada ayam untuk mendukung pertumbuhannya.",
       readyStock: "20Pcs",
       category: "Produk Distributor",
-      imageUrl: ['assets/images/distributor/pakan_ayam.png', 'assets/images/distributor/pakanayam2.png'],
+      imageUrl: ['assets/images/distributor/pakan_ayam.png'],
       harga: 15000,
       rating: 3.2,
       jumlah: [10, 20, 30, 40, 50, 60],

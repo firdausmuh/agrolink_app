@@ -167,11 +167,6 @@ class _RetailerHomeState extends State<RetailerHome> {
                             ),
                           ),
                           onChanged: _onSearchChanged, // Panggil metode debounce
-                          // onChanged: (query) {
-                          //   setState(() {
-                          //     searchQuery = query;
-                          //   });
-                          // },
                         ),
                       ),
                       const SizedBox(width: 8),

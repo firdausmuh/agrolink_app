@@ -1,12 +1,6 @@
-import 'package:agrolink/screens/home/customer_home.dart';
-import 'package:agrolink/screens/home/produsen_home.dart';
-import 'package:agrolink/screens/home/supplier_home.dart';
 import 'package:agrolink/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../home/distributor_home.dart';
-import '../home/home_screen.dart';
-import '../home/retailer_home.dart';
 import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -56,7 +50,6 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           );
         }
-
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -66,40 +59,6 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         );
       }
-      // update form faiz
-      // Navigasi berdasarkan role
-      // if (role == 'Supplier') {
-      //   Navigator.pushReplacement(
-      //     context,
-      //     MaterialPageRoute(builder: (context) => const SupplierHome()),
-      //   );
-      // } else if (role == 'Produsen') {
-      //   Navigator.pushReplacement(
-      //     context,
-      //     MaterialPageRoute(builder: (context) => const SupplierHome()), // Menggunakan halaman SupplierHome untuk Producer
-      //   );
-      // }
-      // else if (role == 'Distributor') {
-      //   Navigator.pushReplacement(
-      //     context,
-      //     MaterialPageRoute(builder: (context) =>  ProdusenHome()), // Ganti dengan halaman DistributorHome Anda
-      //   );
-      // } else if (role == 'Retailer') {
-      //   Navigator.pushReplacement(
-      //     context,
-      //     MaterialPageRoute(builder: (context) => DistributorHome()), // Ganti dengan halaman RetailerHome Anda
-      //   );
-      // } else if (role == 'Customer') {
-      //   Navigator.pushReplacement(
-      //     context,
-      //     MaterialPageRoute(builder: (context) => const MainScreen()), // Ganti dengan halaman HomeScreen untuk Customer
-      //   );
-      // } else {
-      //   Navigator.pushReplacement(
-      //     context,
-      //     MaterialPageRoute(builder: (context) => const MainScreen()), // Halaman default jika role tidak dikenali
-      //   );
-      // }
     } else {
       // Credentials are invalid, show an error SnackBar
       ScaffoldMessenger.of(context).showSnackBar(

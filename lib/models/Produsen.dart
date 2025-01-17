@@ -25,33 +25,33 @@ class produk_produsen {
 List<produk_produsen> produsens = [
   produk_produsen(
       title: "Sayur Kangkung",
-      description: "Kangkung, yang memiliki nama ilmiah Ipomoea aquatica, adalah salah satu jenis sayuran hijau yang populer di banyak negara Asia, termasuk Indonesia. Kangkung dikenal sebagai sayuran yang tumbuh cepat dan mudah dibudidayakan, terutama di daerah tropis dengan banyak air.",
+      description: "Kangkung yang memiliki nama ilmiah Ipomoea aquatica adalah salah satu sayuran hijau",
       readyStock: "20Pack",
       category: "Produk Produsen",
-      imageUrl: ['assets/images/produsen/sayur_kangkung1.png', 'assets/images/produsen/sayur_kangkung2.png'],
-      harga: 65000,
+      imageUrl: ['assets/images/produsen/sayur_kangkung1.png'],
+      harga: 6000,
       rating: 3.2,
       jumlah: [10, 20, 30, 40, 50, 60],
       satuan: 'kg'
   ),
   produk_produsen(
       title: "Sayur Sawi Jadi",
-      description: "Sawi adalah jenis sayuran hijau yang termasuk dalam keluarga Brassicaceae atau kubis-kubisan. Sayuran ini sering digunakan dalam berbagai masakan Asia karena rasanya yang segar dan kandungan gizinya yang tinggi. Di Indonesia, sawi sangat populer dan tersedia dalam beberapa varietas.",
+      description: "Sawi adalah jenis sayuran hijau",
       readyStock: "20Pcs",
       category: "Produk Produsen",
-      imageUrl: ['assets/images/produsen/sayur_sawi1.png', 'assets/images/produsen/sayur_sawi2.png', 'assets/images/produsen/sayur_sawi3.png'],
-      harga: 15000,
+      imageUrl: ['assets/images/produsen/sayur_sawi1.png'],
+      harga: 2000,
       rating: 4.2,
       jumlah: [10, 20, 30, 40, 50, 60],
       satuan: 'pcs'
   ),
   produk_produsen(
       title: "Buah Naga Segar",
-      description: "Buah naga, dikenal juga sebagai pitaya, adalah buah tropis yang berasal dari kaktus genus Hylocereus atau Selenicereus. Buah ini populer karena bentuknya yang unik, rasa manisnya yang menyegarkan, serta manfaat kesehatannya yang beragam.",
+      description: "Buah naga dikenal sebagai adalah buah tropis dan merupakan buah segar sehat untuk badan",
       readyStock: "20Kg",
       category: "Produk Produsen",
-      imageUrl: ['assets/images/produsen/buah_naga1.png', 'assets/images/produsen/buah_naga2.png'],
-      harga: 65000,
+      imageUrl: ['assets/images/produsen/buah_naga1.png'],
+      harga: 9000,
       rating: 3.2,
       jumlah: [10, 20, 30, 40, 50, 60],
       satuan: 'kg'

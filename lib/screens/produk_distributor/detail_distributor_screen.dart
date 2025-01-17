@@ -18,15 +18,23 @@ class _DetailProdukDistributorScreenState extends State<DetailDistributorScreen>
 
   _addCart() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('cart_title', widget.distributor.title);
-    prefs.setString('cart_description', widget.distributor.description);
-    prefs.setString('cart_stock', widget.distributor.readyStock);
-    prefs.setDouble('cart_harga', widget.distributor.harga);
-    prefs.setString('cart_imageUrl', widget.distributor.imageUrl[0]);
+    List<String>? cartItems = prefs.getStringList('cart_items') ?? [];
+
+    // Ambil ukuran/jumlah yang dipilih
+    String selectedSize = '${widget.distributor.jumlah[selectedIndext]} ${widget.distributor.satuan}';
+
+    // Buat string untuk produk
+    String newItem = '${widget.distributor.title},${widget.distributor.description},${widget.distributor.category},${widget.distributor.harga},${widget.distributor.imageUrl[0]},$selectedSize';
+
+    // Tambahkan item baru ke keranjang
+    cartItems.add(newItem);
+
+    // Simpan kembali ke SharedPreferences
+    await prefs.setStringList('cart_items', cartItems);
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('Successfully add new cart!'),
+        content: Text('Successfully added to cart!'),
         backgroundColor: Colors.green,
       ),
     );
@@ -36,10 +44,10 @@ class _DetailProdukDistributorScreenState extends State<DetailDistributorScreen>
   }
 
   String formatCurrency(double value) {
-    final formatter =
-    NumberFormat("#,##0", "id_ID"); //Locale for Indonesian formating
+    final formatter = NumberFormat("#,##0", "id_ID"); // Locale untuk format Indonesia
     return formatter.format(value);
   }
+
   @override
   Widget build(BuildContext context) {
     print(widget.distributor.jumlah.length);
@@ -134,7 +142,7 @@ class _DetailProdukDistributorScreenState extends State<DetailDistributorScreen>
                         const Row(
                           children: [
                             Text(
-                              'Select size',
+                              'Pilih jumlah beli',
                               style: TextStyle(
                                   fontWeight: FontWeight.w700, fontSize: 16),
                             ),
@@ -256,7 +264,7 @@ class _DetailProdukDistributorScreenState extends State<DetailDistributorScreen>
                             color: Colors.green,
                             borderRadius: BorderRadius.circular(10)),
                         child: const Text(
-                          'Add to cart',
+                          'Tambahkan ke keranjang',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: Colors.white,
