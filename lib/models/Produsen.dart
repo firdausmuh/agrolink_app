@@ -24,33 +24,33 @@ class produk_produsen {
 
 List<produk_produsen> produsens = [
   produk_produsen(
-      title: "Sayur Kangkung",
-      description: "Kangkung yang memiliki nama ilmiah Ipomoea aquatica adalah salah satu sayuran hijau",
+      title: "Basreng Daun Jeruk ",
+      description: "Basreng (bakso goreng) daun jeruk adalah camilan renyah yang terbuat dari bakso ikan yang digoreng hingga kering, kemudian diberi taburan daun jeruk untuk aroma segar dan rasa khas.",
       readyStock: "20Pack",
       category: "Produk Produsen",
-      imageUrl: ['assets/images/produsen/sayur_kangkung1.png'],
+      imageUrl: ['assets/images/produsen/Basreng_daun_jeruk.png'],
       harga: 6000,
       rating: 3.2,
       jumlah: [10, 20, 30, 40, 50, 60],
-      satuan: 'kg'
+      satuan: 'gram'
   ),
   produk_produsen(
-      title: "Sayur Sawi Jadi",
-      description: "Sawi adalah jenis sayuran hijau",
+      title: "Bumbu Kari",
+      description: "Bumbu kari siap saji adalah campuran rempah yang diracik secara praktis untuk membuat hidangan kari. Biasanya terdiri dari bahan seperti kunyit, ketumbar, jintan, dan santan bubuk.",
       readyStock: "20Pcs",
       category: "Produk Produsen",
-      imageUrl: ['assets/images/produsen/sayur_sawi1.png'],
+      imageUrl: ['assets/images/produsen/bumbu_kari.png'],
       harga: 2000,
       rating: 4.2,
       jumlah: [10, 20, 30, 40, 50, 60],
-      satuan: 'pcs'
+      satuan: 'gram'
   ),
   produk_produsen(
-      title: "Buah Naga Segar",
-      description: "Buah naga dikenal sebagai adalah buah tropis dan merupakan buah segar sehat untuk badan",
+      title: "Beras Premium",
+      description: "Beras premium adalah jenis beras berkualitas tinggi dengan butiran utuh, bersih, dan mengkilap. Memiliki tekstur pulen dan aroma harum saat dimasak, beras ini cocok untuk hidangan istimewa.",
       readyStock: "20Kg",
       category: "Produk Produsen",
-      imageUrl: ['assets/images/produsen/buah_naga1.png'],
+      imageUrl: ['assets/images/produsen/beras_premium.png'],
       harga: 9000,
       rating: 3.2,
       jumlah: [10, 20, 30, 40, 50, 60],
