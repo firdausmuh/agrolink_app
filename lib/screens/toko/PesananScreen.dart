@@ -113,26 +113,36 @@ class _PesananScreenState extends State<PesananScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            ElevatedButton(
-                              onPressed: () {
+                            GestureDetector(
+                              onTap: () {
                                 setState(() {
                                   _showRingkasan = !_showRingkasan; // Toggle visibilitas ringkasan
                                 });
                               },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                padding: const EdgeInsets.symmetric(vertical: 4),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "Cek Ringkasan",
+                                    style: TextStyle(
+                                      color: Colors.green,
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
+                                  const Icon(
+                                    Icons.arrow_forward_ios,
+                                    size: 10,
+                                    color: Colors.grey,
+                                  ),
+                                ],
                               ),
-                              child: const Text("Cek Ringkasan"),
                             ),
                             Row(
                               children: [
                                 const SizedBox(width: 5),
                                 SizedBox(
-                                  width: 100,
+                                  width: 80, // Ukuran tombol "Tolak"
                                   child: ElevatedButton(
                                     onPressed: () {
                                       // Logic untuk menolak pesanan
@@ -142,14 +152,14 @@ class _PesananScreenState extends State<PesananScreen> {
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(8),
                                       ),
-                                      padding: const EdgeInsets.symmetric(vertical: 4),
+                                      padding: const EdgeInsets.symmetric(vertical: 2), // Padding diperkecil
                                     ),
-                                    child: const Text("Tolak"),
+                                    child: const Text("Tolak", style: TextStyle(fontSize: 12, color: Colors.black)), // Warna teks hitam
                                   ),
                                 ),
                                 const SizedBox(width: 10),
                                 SizedBox(
-                                  width: 120,
+                                  width: 80, // Ukuran tombol "Konfirmasi"
                                   child: ElevatedButton(
                                     onPressed: () {
                                       // Logic untuk mengonfirmasi pesanan
@@ -158,9 +168,9 @@ class _PesananScreenState extends State<PesananScreen> {
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(8),
                                       ),
-                                      padding: const EdgeInsets.symmetric(vertical: 10),
+                                      padding: const EdgeInsets.symmetric(vertical: 2), // Padding diperkecil
                                     ),
-                                    child: const Text("Konfirmasi"),
+                                    child: const Text("Konfirmasi", style: TextStyle(fontSize: 12, color: Colors.black)), // Warna teks hitam
                                   ),
                                 ),
                               ],
@@ -190,15 +200,17 @@ class _PesananScreenState extends State<PesananScreen> {
                         ],
                       ),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text("Pelanggan: Muhamad Firdaus", style: TextStyle(fontSize: 16)),
-                          SizedBox(height: 5),
-                          Text("Jenis Produk: Produk Produsen", style: TextStyle(fontSize: 16)),
-                          SizedBox(height: 5),
-                          Text("Total Produk: 150 Gram", style: TextStyle(fontSize: 16)),
-                          SizedBox(height: 5),
-                          Text("Catatan: Segera Dikirim yah kak", style: TextStyle(fontSize: 16)),
+                        children: [
+                          _buildSummaryRow('Pelanggan', 'Muhamad Firdaus'),
+                          _buildSummaryRow('Jenis Produk', 'Produk Produsen'),
+                          _buildSummaryRow('Total Produk', '150 Gram'),
+                          _buildSummaryRow('Catatan Penjual', 'Segera Dikirim Yah Kak'),
+                          const Divider(color: Colors.grey, thickness: 1),
+                          _buildSummaryRow(
+                            'Total Tagihan',
+                            'Rp. 30.000',
+                            isTotal: true,
+                          ),
                         ],
                       ),
                     ),
@@ -221,7 +233,6 @@ class _PesananScreenState extends State<PesananScreen> {
                     style: TextStyle(color: Colors.grey, fontSize: 16),
                   )
                 ],
-
               ),
             ),
             // Tab Selesai
@@ -239,11 +250,35 @@ class _PesananScreenState extends State<PesananScreen> {
                     style: TextStyle(color: Colors.grey, fontSize: 16),
                   )
                 ],
-
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildSummaryRow(String title, String value, {bool isTotal = false}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              fontWeight: isTotal ? FontWeight.w700 : FontWeight.w400,
+              fontSize: isTotal ? 18 : 14,
+            ),
+          ),
+          Text(
+            value,
+            style: TextStyle(
+              fontWeight: isTotal ? FontWeight.w700 : FontWeight.w400,
+              fontSize: isTotal ? 18 : 14,
+            ),
+          ),
+        ],
       ),
     );
   }
