@@ -2,6 +2,9 @@ import 'package:agrolink/components/payment/payment_card.dart';
 import 'package:agrolink/screens/riwayat_transaksi/riwayat_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
+import '../toko/toko_screen.dart';
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({super.key});
@@ -11,6 +14,9 @@ class PaymentScreen extends StatefulWidget {
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
+  final ImagePicker _picker = ImagePicker();
+  String? _uploadedImagePath;
+
   void _showSuccessMessage() async {
     // Tampilkan dialog sukses
     showDialog(
@@ -18,8 +24,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Success'),
-          content: const Text('Pembayaran pesanan Anda telah berhasil dan di approve oleh penjual!'),
+          title: const Text('Approved'),
+          content: const Text('Pembayaran kamu telah diterima oleh seller. Silahkan menunggu hingga produk pesanan anda sampai.'),
           actions: [
             TextButton(
               onPressed: () {
@@ -37,8 +43,18 @@ class _PaymentScreenState extends State<PaymentScreen> {
     if (mounted) {
       Navigator.of(context).pop(); // Tutup dialog
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const RiwayatScreen()),
+        MaterialPageRoute(builder: (context) => const TokoScreen()),
       );
+    }
+  }
+
+  Future<void> _uploadImage() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      setState(() {
+        _uploadedImagePath = image.path; // Simpan path gambar yang diupload
+      });
+      _showSuccessMessage(); // Tampilkan pesan sukses setelah upload
     }
   }
 
@@ -67,15 +83,47 @@ class _PaymentScreenState extends State<PaymentScreen> {
         padding: const EdgeInsets.all(16),
         itemCount: 1,
         itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              // Panggil fungsi untuk menampilkan pesan sukses
-              _showSuccessMessage();
-            },
-            child: const PaymentCard(),
+          return Column(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  // Panggil fungsi untuk menampilkan pesan sukses
+                  _showSuccessMessage();
+                },
+                child: const PaymentCard(),
+              ),
+              const SizedBox(height: 20),
+              GestureDetector(
+                onTap: _uploadImage,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.green,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20), // Adjust padding as needed
+                  child: const Center(
+                    child: Text(
+                      'Upload Bukti Pembayaran',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16, // Adjust font size as needed
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              if (_uploadedImagePath != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 16.0),
+                  child: Text('Uploaded Image: $_uploadedImagePath'),
+                ),
+            ],
           );
         },
       ),
     );
   }
 }
+
+

@@ -234,7 +234,7 @@ class _ProdukProdusenScreenState extends State<ProdusenScreen> {
     List<String>? cartItemsString = prefs.getStringList('cart_items') ?? [];
 
     // Buat string untuk produk
-    String newItem = '${produsens.title},${produsens.description},${produsens.category},${produsens.harga},${produsens.imageUrl[0]},${produsens.rating},1'; // Menambahkan kuantitas default 1
+    String newItem = '${produsens.title},${produsens.description},${produsens.category},${produsens.size},${produsens.harga},${produsens.imageUrl[0]},${produsens.rating},1'; // Menambahkan kuantitas default 1
 
     // Tambahkan item baru ke keranjang
     cartItemsString.add(newItem); // Simpan sebagai string

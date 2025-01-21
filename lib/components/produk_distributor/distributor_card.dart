@@ -152,7 +152,7 @@ class DistributorCard extends StatelessWidget {
                       Text(
                         'Rp. ${price.toStringAsFixed(0)}',
                         style: const TextStyle(
-                          fontSize: 20,
+                          fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.green,
                         ),

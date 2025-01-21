@@ -1,5 +1,9 @@
 import 'package:agrolink/screens/pembayaran/payment_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:intl/intl.dart'; // Import the intl package
+import '../../models/ShippingMethod.dart'; // Pastikan untuk mengimpor kelas ShippingMethod
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
@@ -12,9 +16,22 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   String selectedPaymentMethod = 'COD';
   bool showNoteField = false;
   int totalHarga = 0;
+  int shippingCost = 0;
+  int protectionFee = 0;
+  bool isProtectionSelected = false;
+  String selectedAddress = 'Terbansari gank v No.106, RT.04/RW.01, Terban, Kec. Gondokusuman, Kota Yogyakarta, Daerah Istimewa Yogyakarta';
+  String? selectedShippingMethod;
+  bool isExpanded = false; // Menyimpan status apakah ExpansionTile terbuka atau tidak
 
-  List<int> hargaItem = [25000, 30000, 15000];
-  List<int> jumlahItem = [1, 1, 1];
+  List<int> hargaItem = [25000];
+  List<int> jumlahItem = [1];
+
+  // Data ongkir
+  List<ShippingMethod> shippingMethods = [
+    ShippingMethod(agent: 'Ninja Express', serviceType: 'Standard', estimatedTime: '1 - 2 Hari', cost: 'Rp. 9.000'),
+    ShippingMethod(agent: 'J&T', serviceType: 'Express', estimatedTime: '3 - 6 Hari', cost: 'Rp. 8.000'),
+    ShippingMethod(agent: 'JNE', serviceType: 'CTC', estimatedTime: '1 - 2 Hari', cost: 'Rp. 10.000'),
+  ];
 
   void updateTotalHarga() {
     setState(() {
@@ -22,18 +39,45 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       for (int i = 0; i < hargaItem.length; i++) {
         totalHarga += hargaItem[i] * jumlahItem[i];
       }
+      totalHarga += shippingCost + protectionFee;
     });
+  }
+
+  Future<void> _openGoogleMaps() async {
+    final LatLng initialPosition = LatLng(-7.797068, 110.370529); // Initial position (Yogyakarta)
+
+    final LatLng? selectedLocation = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MapScreen(initialPosition: initialPosition),
+      ),
+    );
+
+    if (selectedLocation != null) {
+      final List<Placemark> placemarks = await placemarkFromCoordinates(
+        selectedLocation.latitude,
+        selectedLocation.longitude,
+      );
+
+      if (placemarks.isNotEmpty) {
+        final Placemark placemark = placemarks.first;
+        setState(() {
+          selectedAddress = '${placemark.street}, ${placemark.subLocality}, ${placemark.locality}, ${placemark.administrativeArea}, ${placemark.postalCode}, ${placemark.country}';
+        });
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     updateTotalHarga();
+    final NumberFormat currencyFormatter = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp', decimalDigits: 0);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
-          icon: const Icon(Icons.arrow_back, color: Colors.black,),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
         ),
         title: const Text(
           'Checkout Screen',
@@ -50,40 +94,60 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 'Alamat Pengiriman kamu',
                 style: TextStyle(
                   fontWeight: FontWeight.w700,
-                  fontSize: 18,
+                  fontSize: 16,
+                  color: Colors.black,
                 ),
               ),
-              const SizedBox(height: 10),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Terbansari gank v No.106, RT.04/RW.01, Terban, Kec. Gondokusuman, Kota Yogyakarta, Daerah Istimewa Yogyakarta',
+              GestureDetector(
+                onTap: _openGoogleMaps,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.location_on,
+                                color: Colors.red,
+                                size: 20,
+                              ),
+                              const SizedBox(width: 8),
+                              const Text(
+                                'Kos Belakang Batik Canting Mas',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 13,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Icon(
+                          Icons.arrow_forward_ios,
+                          size: 18,
+                          color: Colors.grey,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      selectedAddress,
                       style: const TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 13,
                         color: Colors.grey,
                       ),
-                      maxLines: 3,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  const Icon(
-                    Icons.arrow_forward_ios,
-                    size: 18,
-                    color: Colors.grey,
-                  ),
-                ],
+                  ],
+                ),
               ),
-              const SizedBox(height: 8),
               const Divider(color: Colors.grey, thickness: 1),
-
-              // Kartu Produk
-              const SizedBox(height: 10),
-
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 10.0),
                 padding: const EdgeInsets.all(10.0),
@@ -101,27 +165,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Row untuk Nama Toko dan Harga Total
-
-                    Row(
-                      children: [
-                        Image.asset(
-                          'assets/images/toko/shop_image.png',
-                          width: 40,
-                          height: 40,
-                        ),
-                        const SizedBox(width: 10),
-                        const Text(
-                          'Lydia Store',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-
                     // Row untuk Gambar Produk dan Informasi Produk
                     Row(
                       children: [
@@ -132,159 +175,183 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
                             image: const DecorationImage(
-                              image: AssetImage('assets/images/produk_supplier/bayam1.png'), // Ganti sesuai aset Anda
+                              image: AssetImage('assets/images/distributor/sabun_herba.png'), // Ganti sesuai aset Anda
                               fit: BoxFit.cover,
                             ),
                           ),
                         ),
                         const SizedBox(width: 10),
-
                         // Detail Produk
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text(
-                                'Sayur Sawi',
+                                'Sabun Herba Bidara',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w700,
-                                  fontSize: 14,
+                                  fontSize: 16,
                                 ),
                               ),
                               const SizedBox(height: 5),
                               const Text(
-                                'Keterangan: Fresh vegetables',
+                                'Jenis : Produk Distributor',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w400,
-                                  fontSize: 12,
+                                  fontSize: 14,
                                   color: Colors.grey,
                                 ),
                               ),
                               const SizedBox(height: 5),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text(
-                                    'Request Stok: 50 pack',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                  const Text(
-                                    'Count: 2',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ],
+                              const Text(
+                                'Dibeli : 1 Barang',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                ),
                               ),
-
+                              const SizedBox(height: 5),
+                              const Text(
+                                'Total : Rp25.000',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              const SizedBox(height: 5),
                             ],
                           ),
                         ),
-
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(Icons.security, color: Colors.green, size: 18,),
+                            const SizedBox(width: 4),
+                            const Text(
+                              'Proteksi Produk Rusak',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 13,
+                              ),
+                            ),
+                            const SizedBox(width: 110),
+                            Text(
+                              currencyFormatter.format(3000),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ],
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              isProtectionSelected = !isProtectionSelected;
+                              protectionFee = isProtectionSelected ? 3000 : 0;
+                            });
+                          },
+                          child: Container(
+                            width: 20, // Adjusted width for better visibility
+                            height: 20, // Adjusted height for better visibility
+                            decoration: BoxDecoration(
+                              color: isProtectionSelected ? Colors.green : Colors.white,
+                              border: Border.all(
+                                color: isProtectionSelected ? Colors.green : Colors.grey,
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Center(
+                              child: isProtectionSelected
+                                  ? Icon(
+                                Icons.check, // Checkmark icon
+                                color: Colors.white, // Color of the icon
+                                size: 10, // Size of the icon
+                              )
+                                  : null, // No icon when not selected
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ],
                 ),
               ),
-
-
-              // Card(
-              //   shape: RoundedRectangleBorder(
-              //     borderRadius: BorderRadius.circular(10),
-              //   ),
-              //   elevation: 3,
-              //   child: Padding(
-              //     padding: const EdgeInsets.all(12.0),
-              //     child: Column(
-              //       crossAxisAlignment: CrossAxisAlignment.start,
-              //       children: [
-              //         Row(
-              //           children: [
-              //             Image.asset(
-              //               'assets/images/toko/shop_image.png',
-              //               width: 40,
-              //               height: 40,
-              //             ),
-              //             const SizedBox(width: 10),
-              //             const Text(
-              //               'Lydia Store',
-              //               style: TextStyle(
-              //                 fontWeight: FontWeight.w700,
-              //                 fontSize: 16,
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //         const Divider(color: Colors.grey, thickness: 1),
-              //         Row(
-              //           crossAxisAlignment: CrossAxisAlignment.start,
-              //           children: [
-              //             Image.asset(
-              //               'assets/images/produk_supplier/bayam.png',
-              //               width: 100,
-              //               height: 80,
-              //               fit: BoxFit.cover,
-              //             ),
-              //             const SizedBox(width: 10),
-              //             Expanded(
-              //               child: Column(
-              //                 crossAxisAlignment: CrossAxisAlignment.start,
-              //                 children: const [
-              //                   Text(
-              //                     'Sayur Sawi',
-              //                     style: TextStyle(
-              //                       fontWeight: FontWeight.w700,
-              //                       fontSize: 16,
-              //                     ),
-              //                   ),
-              //                   SizedBox(height: 5),
-              //                   Text(
-              //                     'Segar, kualitas terbaik.',
-              //                     style: TextStyle(
-              //                       fontSize: 12,
-              //                       color: Colors.grey,
-              //                     ),
-              //                   ),
-              //                   SizedBox(height: 5),
-              //                   Text(
-              //                     'Request stok: 50 pack',
-              //                     style: TextStyle(
-              //                       fontSize: 12,
-              //                     ),
-              //                   ),
-              //                   SizedBox(height: 5),
-              //                   Text(
-              //                     'Total count: 2',
-              //                     style: TextStyle(
-              //                       fontSize: 12,
-              //                     ),
-              //                   ),
-              //                 ],
-              //               ),
-              //             ),
-              //             Column(
-              //               children: const [
-              //                 Text(
-              //                   'Rp. 30.000',
-              //                   style: TextStyle(
-              //                     fontWeight: FontWeight.w700,
-              //                     fontSize: 16,
-              //                   ),
-              //                 ),
-              //               ],
-              //             ),
-              //           ],
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // ),
-
-              const SizedBox(height: 20),
+              Container(
+                padding: const EdgeInsets.all(10.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.grey), // Garis border abu-abu
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Pilih Metode Pengiriman',
+                      style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
+                    ),
+                    const SizedBox(width: 8),
+                    const Icon(Icons.directions_car, size: 18),
+                    const Spacer(),
+                    IconButton(
+                      icon: Icon(
+                        isExpanded ? Icons.arrow_drop_down : Icons.arrow_right,
+                        size: 24,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          isExpanded = !isExpanded; // Toggle status ekspansi
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              // ExpansionTile untuk menampilkan daftar pengiriman
+              if (isExpanded) // Hanya tampilkan jika isExpanded true
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: shippingMethods.length,
+                  itemBuilder: (context, index) {
+                    final method = shippingMethods[index];
+                    return Card(
+                      child: ListTile(
+                        leading: Image.asset(
+                          'assets/images/shipping/${method.agent.toLowerCase().replaceAll(' ', '_')}.png', // Pastikan nama file sesuai
+                          width: 40,
+                          height: 40,
+                        ),
+                        title: Text(method.agent),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Jenis Layanan: ${method.serviceType}'),
+                            Text('Estimasi Waktu: ${method.estimatedTime}'),
+                            Text('Biaya: ${method.cost}'),
+                          ],
+                        ),
+                        trailing: Radio<String>(
+                          value: method.agent,
+                          groupValue: selectedShippingMethod,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedShippingMethod = value;
+                              shippingCost = int.parse(method.cost.replaceAll(RegExp(r'[^0-9]'), ''));
+                            });
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                ),
 
               // Metode Pembayaran
               Row(
@@ -376,13 +443,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
               ),
               const SizedBox(height: 10),
-              _buildSummaryRow('Total Harga (1 barang)', 'Rp. 25.000'),
-              _buildSummaryRow('Total Ongkos Kirim', 'Rp. 50.000'),
-              _buildSummaryRow('Total Biaya Proteksi', 'Rp. 5.000'),
+              _buildSummaryRow('Total Harga (1 barang)', currencyFormatter.format(25000)),
+              _buildSummaryRow('Total Ongkos Kirim', currencyFormatter.format(shippingCost)),
+              _buildSummaryRow('Total Biaya Proteksi', currencyFormatter.format(protectionFee)),
               const Divider(color: Colors.grey, thickness: 1),
               _buildSummaryRow(
                 'Total Tagihan',
-                'Rp. 80.000',
+                currencyFormatter.format(totalHarga),
                 isTotal: true,
               ),
             ],
@@ -448,6 +515,61 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class MapScreen extends StatefulWidget {
+  final LatLng initialPosition;
+
+  const MapScreen({required this.initialPosition, super.key});
+
+  @override
+  State<MapScreen> createState() => _MapScreenState();
+}
+
+class _MapScreenState extends State<MapScreen> {
+  late GoogleMapController _controller;
+  LatLng? _selectedLocation;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Pilih Alamat'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.check),
+            onPressed: () {
+              if (_selectedLocation != null) {
+                Navigator.pop(context, _selectedLocation);
+              }
+            },
+          ),
+        ],
+      ),
+      body: GoogleMap(
+        initialCameraPosition: CameraPosition(
+          target: widget.initialPosition,
+          zoom: 15,
+        ),
+        onMapCreated: (GoogleMapController controller) {
+          _controller = controller;
+        },
+        onTap: (LatLng latLng) {
+          setState(() {
+            _selectedLocation = latLng;
+          });
+        },
+        markers: _selectedLocation != null
+            ? {
+          Marker(
+            markerId: const MarkerId('selectedLocation'),
+            position: _selectedLocation!,
+          ),
+        }
+            : {},
       ),
     );
   }

@@ -50,7 +50,7 @@ class _PaymentCardState extends State<PaymentCard> {
                     ),
                     SizedBox(height: 4),
                     Text(
-                      '17 Desember 2024, 23:11',
+                      '20 Januari 2025, 23:11',
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.grey,
@@ -99,7 +99,7 @@ class _PaymentCardState extends State<PaymentCard> {
           ),
           const SizedBox(height: 8),
           const Text(
-            'Rp. 254.000',
+            'Rp. 40.000',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,

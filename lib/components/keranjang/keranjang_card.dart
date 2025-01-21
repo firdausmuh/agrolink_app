@@ -7,7 +7,7 @@ class KeranjangCard extends StatefulWidget {
   final String? category; // Pastikan ini ada
   final double? harga; // Harga satuan
   final String? imageUrl;
-  final String? size;
+  final String? selectSize; // Ukuran produk
   final Function()? onDelete;
   final Function(int quantity)? onQuantityChanged; // Callback untuk perubahan kuantitas
 
@@ -19,7 +19,7 @@ class KeranjangCard extends StatefulWidget {
     this.category,
     this.harga,
     this.imageUrl,
-    this.size,
+    this.selectSize,
     this.onDelete,
     this.onQuantityChanged, // Inisialisasi callback
   });
@@ -29,12 +29,12 @@ class KeranjangCard extends StatefulWidget {
 }
 
 class _KeranjangCardState extends State<KeranjangCard> {
-  int quantity = 1;
+  int quantity = 1; // Inisialisasi quantity dengan nilai default
 
   @override
   void initState() {
     super.initState();
-    quantity = int.tryParse(widget.size ?? '1') ?? 1; // Ambil jumlah awal dari data
+    // Tidak perlu mengubah quantity dari size
   }
 
   void decreaseQuantity() {
@@ -127,17 +127,17 @@ class _KeranjangCardState extends State<KeranjangCard> {
                 Row(
                   children: [
                     const Text(
-                      'Size produk : ',
+                      'Jumlah produk : ',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 14,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      widget.size ?? '',
+                      widget.selectSize ?? '', // Ukuran produk tetap
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 14,
                         color: Colors.green[800],
                         fontWeight: FontWeight.bold,
                       ),

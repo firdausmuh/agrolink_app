@@ -26,10 +26,10 @@ List<produk_distributor> distributors = [
   produk_distributor(
       title: "Kopi Song Lim SW",
       description: "Kopi Song Lim SW adalah perpaduan kopi berkualitas tinggi yang menawarkan cita rasa khas dan aroma yang menggugah selera.",
-      readyStock: "20Kg",
+      readyStock: "20 Kg",
       category: "Produk Distributor",
       imageUrl: ['assets/images/distributor/kopi_kemasan.png'],
-      harga: 65000,
+      harga: 50000,
       rating: 3.2,
       jumlah: [10, 20, 30, 40, 50, 60],
       satuan: 'kg'
@@ -37,23 +37,23 @@ List<produk_distributor> distributors = [
   produk_distributor(
       title: "Madu Alsifa",
       description: "Madu Alsifa adalah madu murni berkualitas tinggi yang dihasilkan dari lebah pilihan, menawarkan rasa manis alami dan manfaat kesehatan yang melimpah",
-      readyStock: "20Pcs",
+      readyStock: "20 Gram",
       category: "Produk Distributor",
       imageUrl: ['assets/images/distributor/madu_asli.png'],
-      harga: 15000,
+      harga: 92500,
       rating: 3.2,
       jumlah: [10, 20, 30, 40, 50, 60],
-      satuan: 'pcs'
+      satuan: 'gram'
   ),
   produk_distributor(
       title: "Sabun Herba Bidara",
       description: "Sabun Herba Bidara adalah sabun alami yang diformulasikan dengan ekstrak daun bidara, dikenal karena manfaatnya dalam merawat kesehatan kulit.",
-      readyStock: "20Kg",
+      readyStock: "20 Batang",
       category: "Produk Distributor",
       imageUrl: ['assets/images/distributor/sabun_herba.png'],
-      harga: 65000,
+      harga: 25000,
       rating: 3.2,
       jumlah: [10, 20, 30, 40, 50, 60],
-      satuan: 'kg'
+      satuan: 'batang'
   ),
 ];

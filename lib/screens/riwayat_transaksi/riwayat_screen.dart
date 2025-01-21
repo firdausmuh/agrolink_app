@@ -29,7 +29,7 @@ class _RiwayatScreenState extends State<RiwayatScreen> {
       ),
       body: ListView.builder(
         padding: const EdgeInsets.all(16),
-        itemCount: 2, // Ganti dengan jumlah data riwayat sebenarnya
+        itemCount: 1, // Ganti dengan jumlah data riwayat sebenarnya
         itemBuilder: (context, index) {
           return const RiwayatCard();
         },

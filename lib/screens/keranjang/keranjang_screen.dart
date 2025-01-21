@@ -36,7 +36,7 @@ class _KeranjangScreenState extends State<KeranjangScreen> {
     double total = 0;
     for (var item in cartItems) {
       if (item.length > 6) { // Pastikan item memiliki cukup elemen
-        double price = double.tryParse(item[3] ?? '0') ?? 0; // Pastikan price valid
+        double price = double.tryParse(item[4] ?? '0') ?? 0; // Pastikan price valid
         int quantity = int.tryParse(item[6] ?? '1') ?? 1; // Pastikan quantity valid
         total += price * quantity; // Hitung total berdasarkan harga dan kuantitas
       } else {
@@ -60,7 +60,7 @@ class _KeranjangScreenState extends State<KeranjangScreen> {
   void _updateQuantity(int index, int quantity) async {
     setState(() {
       if (cartItems[index].length > 6) {
-        cartItems[index][6] = quantity.toString();
+        cartItems[index][6] = quantity.toString(); // Update quantity
       } else {
         print("Tidak dapat memperbarui kuantitas, item tidak valid: ${cartItems[index]}");
       }
@@ -101,16 +101,13 @@ class _KeranjangScreenState extends State<KeranjangScreen> {
                 itemCount: cartItems.length,
                 itemBuilder: (context, index) {
                   final item = cartItems[index];
-                  print("Title: ${item[0]}"); // Debugging untuk title
-                  print("Description: ${item[1]}"); // Debugging untuk deskripsi
-                  print("Category: ${item[2]}"); // Debugging untuk kategori
                   return KeranjangCard(
                     title: item[0],
                     description: item[1],
-                    imageUrl: item[4],
-                    size: item[5],
-                    category: item[2], // Pastikan ini adalah indeks yang benar untuk kategori
-                    harga: double.tryParse(item[3]) ?? 0,
+                    imageUrl: item[5],
+                    selectSize: item[6], // Ukuran produk tetap
+                    category: item[3], // Pastikan ini adalah indeks yang benar untuk kategori
+                    harga: double.tryParse(item[4]) ?? 0,
                     onDelete: () => _removeItem(index),
                     onQuantityChanged: (quantity) {
                       _updateQuantity(index, quantity);

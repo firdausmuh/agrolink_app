@@ -5,8 +5,15 @@ import 'package:path_provider/path_provider.dart';
 
 class UploadProdukScreen extends StatefulWidget {
   final List<Map<String, dynamic>> produkList;
+  final int? index; // Tambahkan parameter index
+  final bool isEdit;
 
-  const UploadProdukScreen({Key? key, required this.produkList}) : super(key: key);
+  const UploadProdukScreen({
+    Key? key,
+    required this.produkList,
+    this.index,
+    this.isEdit = false,
+  }) : super(key: key);
 
   @override
   State<UploadProdukScreen> createState() => _UploadProdukScreenState();
@@ -17,11 +24,26 @@ class _UploadProdukScreenState extends State<UploadProdukScreen> {
   final TextEditingController _namaController = TextEditingController();
   final TextEditingController _hargaController = TextEditingController();
   final TextEditingController _deskripsiController = TextEditingController();
-  final TextEditingController _minimalPembelianController =
-  TextEditingController();
-  final TextEditingController _alamatController = TextEditingController();
-  final TextEditingController _kualitasController = TextEditingController();
+  final TextEditingController _stokTersediaController = TextEditingController();
+  final TextEditingController _ketahananController = TextEditingController();
+  final TextEditingController _kategoriController = TextEditingController();
   final ImagePicker _picker = ImagePicker();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.index != null) {
+      // Jika index tidak null, isi data produk untuk diedit
+      final produk = widget.produkList[widget.index!];
+      _namaController.text = produk['nama'];
+      _hargaController.text = produk['harga'];
+      _deskripsiController.text = produk['deskripsi'];
+      _stokTersediaController.text = produk['stoktersedia'];
+      _ketahananController.text = produk['ketahanan'];
+      _kategoriController.text = produk['kategori'];
+      _image = File(produk['image']); // Mengambil path gambar
+    }
+  }
 
   Future<void> _pickImage() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
@@ -46,16 +68,29 @@ class _UploadProdukScreenState extends State<UploadProdukScreen> {
       // Membuat salinan list produk yang dapat dimodifikasi
       List<Map<String, dynamic>> updatedList = List.from(widget.produkList);
 
-      // Tambahkan produk baru ke daftar produk yang dapat dimodifikasi
-      updatedList.add({
-        'nama': _namaController.text,
-        'harga': _hargaController.text,
-        'deskripsi': _deskripsiController.text,
-        'minimalPembelian': _minimalPembelianController.text,
-        'alamat': _alamatController.text,
-        'kualitas': _kualitasController.text,
-        'image': _image,
-      });
+      if (widget.index != null) {
+        // Jika index tidak null, update produk yang ada
+        updatedList[widget.index!] = {
+          'nama': _namaController.text,
+          'harga': _hargaController.text,
+          'deskripsi': _deskripsiController.text,
+          'stoktersedia': _stokTersediaController.text,
+          'ketahanan': _ketahananController.text,
+          'kategori': _kategoriController.text,
+          'image': _image!.path, // Simpan path gambar
+        };
+      } else {
+        // Tambahkan produk baru ke daftar produk yang dapat dimodifikasi
+        updatedList.add({
+          'nama': _namaController.text,
+          'harga': _hargaController.text,
+          'deskripsi': _deskripsiController.text,
+          'stoktersedia': _stokTersediaController.text,
+          'ketahanan': _ketahananController.text,
+          'kategori': _kategoriController.text,
+          'image': _image!.path, // Simpan path gambar
+        });
+      }
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -87,9 +122,9 @@ class _UploadProdukScreenState extends State<UploadProdukScreen> {
           onPressed: () => Navigator.pop(context),
           icon: const Icon(Icons.arrow_back, color: Colors.black),
         ),
-        title: const Text(
-          'Upload Produk',
-          style: TextStyle(
+        title: Text(
+          widget.isEdit ? 'Update Produk' : 'Upload Produk', // Mengubah judul berdasarkan parameter
+          style: const TextStyle(
               color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700),
         ),
       ),
@@ -142,25 +177,13 @@ class _UploadProdukScreenState extends State<UploadProdukScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-              buildInputField(
-                  'Nama Produk', 'Masukkan nama produk', _namaController),
-              buildInputField(
-                  'Harga Produk', 'Masukkan harga produk', _hargaController),
-              buildInputField(
-                  'Deskripsi Produk',
-                  'Masukkan deskripsi produk',
-                  _deskripsiController,
-                  maxLines: 3),
-              buildInputField(
-                  'Minimal Pembelian',
-                  'Masukkan minimal pembelian',
-                  _minimalPembelianController),
-              buildInputField(
-                  'Alamat Produk', 'Masukkan alamat produk', _alamatController),
-              buildInputField(
-                  'Kualitas Produk',
-                  'Masukkan kualitas produk (contoh: A, Premium)',
-                  _kualitasController),
+              buildInputField('Nama Produk', 'Masukkan nama produk', _namaController),
+              buildInputField('Kategori Produk', 'Masukkan kategori produk', _kategoriController),
+              buildInputField('Harga Produk', 'Masukkan harga produk', _hargaController),
+              buildInputField('Stok Tersedia', 'Masukkan Jumlah Stok Tersedia', _stokTersediaController),
+              buildInputField('Ketahanan Produk', 'Masukkan ketahanan produk', _ketahananController),
+              buildInputField('Deskripsi Produk', 'Masukkan deskripsi produk', _deskripsiController, maxLines: 3),
+
               const SizedBox(height: 10),
               SizedBox(
                 width: double.infinity,
@@ -173,9 +196,9 @@ class _UploadProdukScreenState extends State<UploadProdukScreen> {
                     padding: const EdgeInsets.symmetric(vertical: 15),
                   ),
                   onPressed: _upload,
-                  child: const Text(
-                    'Upload Produk',
-                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  child: Text(
+                    widget.isEdit ? 'Update Produk' : 'Upload Produk', // Mengubah teks tombol berdasarkan parameter
+                    style: const TextStyle(color: Colors.white, fontSize: 16),
                   ),
                 ),
               ),

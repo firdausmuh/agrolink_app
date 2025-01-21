@@ -39,7 +39,7 @@ class _RiwayatCardState extends State<RiwayatCard> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Image.asset(
-                'assets/images/retailer/beras.png', // Path ke gambar produk
+                'assets/images/distributor/sabun_herba.png', // Path ke gambar produk
                 fit: BoxFit.cover,
               ),
             ),
@@ -56,9 +56,9 @@ class _RiwayatCardState extends State<RiwayatCard> {
                   children: [
                     const Expanded(
                       child: Text(
-                        'Basreng Daun Jeruk',
+                        'Sabun Herba Bidara',
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
                         maxLines: 1,
@@ -70,13 +70,13 @@ class _RiwayatCardState extends State<RiwayatCard> {
                         color: Colors.green[300],
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 15),
+                      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                       child: Center(
                         child: Text(
-                          'Selesai', // Ganti dengan status yang sesuai
+                          'Diproses', // Ganti dengan status yang sesuai
                           style: TextStyle(
                             color: Colors.green[800],
-                            fontSize: 12,
+                            fontSize: 8,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -87,13 +87,13 @@ class _RiwayatCardState extends State<RiwayatCard> {
                 const SizedBox(height: 6),
                 // Keterangan jumlah barang
                 const Text(
-                  'Jumlah Produk: 80 Gram',
-                  style: TextStyle(fontSize: 16, color: Colors.grey, fontWeight: FontWeight.w700),
+                  'Jumlah Produk: 10 Gram',
+                  style: TextStyle(fontSize: 14, color: Colors.grey, fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(height: 8),
                 // Total belanja
                 const Text(
-                  'Total Belanja: Rp 15.000',
+                  'Total Belanja: Rp 40.000',
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
@@ -107,23 +107,27 @@ class _RiwayatCardState extends State<RiwayatCard> {
                   children: [
                     const Expanded(
                       child: Text(
-                        'Ulasan Produk: Good',
+                        'Distributor',
                         style: TextStyle(fontSize: 14, color: Colors.grey),
                       ),
                     ),
-                    TextButton.icon(
-                      onPressed: () {
-                        // Logic untuk membeli lagi
-                      },
-                      icon: const Icon(Icons.shopping_cart_outlined, color: Colors.green),
-                      label: const Text(
-                        'Beli Lagi',
-                        style: TextStyle(color: Colors.black),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.green[300],
+                        borderRadius: BorderRadius.circular(6),
                       ),
-                      style: TextButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 14),
+                      child: Center(
+                        child: Text(
+                          'Beli Lagi', // Ganti dengan status yang sesuai
+                          style: TextStyle(
+                            color: Colors.green[800],
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
-                    ),
+                    )
                   ],
                 ),
               ],
