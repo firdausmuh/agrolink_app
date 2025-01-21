@@ -359,7 +359,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 children: const [
                   Text(
                     'Metode Pembayaran',
-                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
                   ),
                   Text(
                     'Lihat semua',
@@ -407,13 +407,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   activeColor: Colors.green,
                 ),
               ),
-              const Divider(color: Colors.grey, thickness: 1),
+              const Divider(color: Colors.grey, thickness: 1, height:  1,),
               ListTile(
-                leading: const Icon(Icons.note_alt, color: Colors.grey),
+                leading: const Icon(Icons.note_alt, color: Colors.grey, size: 20),
                 title: const Text('Kasih catatan'),
                 trailing: IconButton(
                   icon: Icon(
-                    showNoteField ? Icons.expand_less : Icons.expand_more,
+                    showNoteField ? Icons.arrow_drop_down : Icons.arrow_right,
                     color: Colors.grey,
                   ),
                   onPressed: () {
@@ -429,18 +429,19 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   child: TextField(
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      hintText: 'Catatan untuk penjual...',
+                      hintText: 'Pastikan tidak ada data pribadi yang tercantum',
                     ),
                     maxLines: null,
                     keyboardType: TextInputType.multiline,
                   ),
                 ),
-              const Divider(color: Colors.grey, thickness: 1),
+              const Divider(color: Colors.grey, thickness: 1, height: 1,),
+              const SizedBox(height: 10),
 
               // Ringkasan Transaksi
               const Text(
                 'Cek ringkasan transaksimu, yuk',
-                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
               ),
               const SizedBox(height: 10),
               _buildSummaryRow('Total Harga (1 barang)', currencyFormatter.format(25000)),
@@ -458,37 +459,83 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF199D52),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            minimumSize: const Size(double.infinity, 50),
-          ),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const PaymentScreen(),
-              ),
-            );
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Icon(Icons.check_circle_outline, color: Colors.white, size: 24),
-              SizedBox(width: 8),
-              Text(
-                'Bayar Sekarang',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
+        child: Column(
+          mainAxisSize: MainAxisSize.min, // Ensures the column takes minimum space
+          children: [
+            // ElevatedButton(
+            //   style: ElevatedButton.styleFrom(
+            //     backgroundColor: const Color(0xFF199D52),
+            //     shape: RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.circular(10),
+            //     ),
+            //     minimumSize: const Size(double.infinity, 50),
+            //   ),
+            //   onPressed: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //         builder: (context) => const PaymentScreen(),
+            //       ),
+            //     );
+            //   },
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     children: const [
+            //       Icon(Icons.check_circle_outline, color: Colors.white, size: 24),
+            //       SizedBox(width: 8),
+            //       Text(
+            //         'Bayar Sekarang',
+            //         style: TextStyle(
+            //           color: Colors.white,
+            //           fontSize: 18,
+            //           fontWeight: FontWeight.w700,
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF199D52),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
+                minimumSize: const Size(double.infinity, 50),
               ),
-            ],
-          ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PaymentScreen(totalHarga: totalHarga),
+                  ),
+                );
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Icon(Icons.check_circle_outline, color: Colors.white, size: 24),
+                  SizedBox(width: 8),
+                  Text(
+                    'Bayar Sekarang',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 10), // Add some space between the button and the text
+            const Text(
+              "Dengan melanjutkan Pembayaran kamu menyetujui biaya Ongkos Kirim & Proteksi",
+              textAlign: TextAlign.center, // Center the text
+              style: TextStyle(
+                fontSize: 12, // Font size for the text
+                color: Colors.grey, // Color of the text
+              ),
+            ),
+          ],
         ),
       ),
     );

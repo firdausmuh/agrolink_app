@@ -7,7 +7,9 @@ import 'package:image_picker/image_picker.dart';
 import '../toko/toko_screen.dart';
 
 class PaymentScreen extends StatefulWidget {
-  const PaymentScreen({super.key});
+  final int totalHarga;
+
+  const PaymentScreen({required this.totalHarga, super.key});
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
@@ -90,7 +92,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   // Panggil fungsi untuk menampilkan pesan sukses
                   _showSuccessMessage();
                 },
-                child: const PaymentCard(),
+                child: PaymentCard(totalHarga: widget.totalHarga),
               ),
               const SizedBox(height: 20),
               GestureDetector(
@@ -125,5 +127,3 @@ class _PaymentScreenState extends State<PaymentScreen> {
     );
   }
 }
-
-
