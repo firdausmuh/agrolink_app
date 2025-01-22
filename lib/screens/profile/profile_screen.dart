@@ -3,9 +3,14 @@ import 'package:agrolink/screens/profile/edit_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
+  @override
+  _ProfileScreenState createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   Future<SharedPreferences?> _getPrefs() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs;
@@ -47,7 +52,7 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
           actionsAlignment:
-              MainAxisAlignment.center, // Center-align the actions
+          MainAxisAlignment.center, // Center-align the actions
           actions: [
             TextButton(
               onPressed: () {
@@ -78,134 +83,6 @@ class ProfileScreen extends StatelessWidget {
       },
     );
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Padding(
-  //     padding: const EdgeInsets.symmetric(horizontal: 20.0),
-  //     child: SingleChildScrollView(
-  //       child: Column(
-  //         children: [
-  //           const SizedBox(height: 20),
-  //           // Profile Image and Name
-  //           Center(
-  //             child: _customContainer(
-  //               Row(
-  //                 children: [
-  //                   const CircleAvatar(
-  //                     radius: 32,
-  //                     child: CircleAvatar(
-  //                       radius: 30,
-  //                       backgroundImage:
-  //                           AssetImage('assets/images/profile1.png'),
-  //                     ),
-  //                   ),
-  //                   const SizedBox(
-  //                     width: 10,
-  //                   ),
-  //                   const Expanded(
-  //                     child: Column(
-  //                       crossAxisAlignment: CrossAxisAlignment.start,
-  //                       children: [
-  //                         Text(
-  //                           'Nadila Azucena',
-  //                           style: TextStyle(fontSize: 16),
-  //                         ),
-  //                         Text(
-  //                           'Bergabung pada: 5 Maret 2024',
-  //                           style: TextStyle(fontSize: 12, color: Colors.grey),
-  //                         ),
-  //                       ],
-  //                     ),
-  //                   ),
-  //                   InkWell(
-  //                     onTap: () => {
-  //                       Navigator.push(
-  //                         context,
-  //                         MaterialPageRoute(
-  //                             builder: (context) => const EditProfileScreen()),
-  //                       )
-  //                     },
-  //                     child: const Column(
-  //                       children: [
-  //                         Icon(
-  //                           Icons.edit,
-  //                           color: Colors.blue,
-  //                           size: 20,
-  //                         ),
-  //                         SizedBox(
-  //                           height: 5,
-  //                         ),
-  //                         Text(
-  //                           'Edit',
-  //                           style: TextStyle(fontSize: 12),
-  //                         ),
-  //                       ],
-  //                     ),
-  //                   )
-  //                 ],
-  //               ),
-  //             ),
-  //           ),
-  //           const SizedBox(height: 20),
-  //           // Informasi Pribadi Section
-  //           Container(
-  //             child: Column(
-  //               crossAxisAlignment: CrossAxisAlignment.start,
-  //               children: [
-  //                 const Text(
-  //                   'Informasi Pribadi',
-  //                   style: TextStyle(
-  //                       fontSize: 16,
-  //                       fontWeight: FontWeight.bold,
-  //                       color: Colors.blue),
-  //                 ),
-  //                 const SizedBox(height: 20),
-  //                 _customContainer(
-  //                   SizedBox(
-  //                     height: 400,
-  //                     child: Column(
-  //                       mainAxisAlignment: MainAxisAlignment.spaceAround,
-  //                       children: [
-  //                         _buildInfoRow(
-  //                             Icons.person_outlined, 'Nadila Azucena', false),
-  //                         _buildInfoRow(Icons.email_outlined,
-  //                             'rencabesar@gmail.com', false),
-  //                         _buildInfoRow(
-  //                             Icons.phone_outlined, '089532123456', false),
-  //                         _buildInfoRow(Icons.store_outlined, 'Toko', false),
-  //                         _buildInfoRow(Icons.cake_outlined, '20 Tahun', false),
-  //                         _buildInfoRow(Icons.location_on_outlined,
-  //                             'Bogor, Indonesia', true),
-  //                       ],
-  //                     ),
-  //                   ),
-  //                 ),
-  //                 const SizedBox(
-  //                   height: 10,
-  //                 ),
-  //                 InkWell(
-  //                   onTap: () => _showCustomLogoutDialog(context),
-  //                   child: _customContainer(
-  //                     _buildInfoRow(
-  //                       Icons.logout,
-  //                       'Keluar',
-  //                       true,
-  //                       textColor: Colors.red,
-  //                     ),
-  //                   ),
-  //                 ),
-  //                 const SizedBox(
-  //                   height: 20,
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -250,7 +127,7 @@ class ProfileScreen extends StatelessWidget {
                                 child: CircleAvatar(
                                   radius: 30,
                                   backgroundImage:
-                                      AssetImage('assets/images/profile/profile2.png'),
+                                  AssetImage('assets/images/profile/profile2.png'),
                                 ),
                               ),
                               const SizedBox(
@@ -278,8 +155,10 @@ class ProfileScreen extends StatelessWidget {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            const EditProfileScreen()),
-                                  )
+                                            EditProfileScreen()),
+                                  ).then((_) {
+                                    setState(() {});
+                                  })
                                 },
                                 child: const Column(
                                   children: [
@@ -321,20 +200,22 @@ class ProfileScreen extends StatelessWidget {
                                 height: 400,
                                 child: Column(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                  MainAxisAlignment.spaceAround,
                                   children: [
                                     _buildInfoRow(Icons.person_outlined,
-                                        prefs!.getString('nama') ?? '', false),
+                                        prefs.getString('nama') ?? '', false),
                                     _buildInfoRow(Icons.email_outlined,
-                                        prefs!.getString('email') ?? '', false),
+                                        prefs.getString('email') ?? '', false),
                                     _buildInfoRow(Icons.phone_outlined,
-                                        prefs!.getString('phone') ?? '', false),
-                                    _buildInfoRow(
-                                        Icons.store_outlined, 'Toko', false),
-                                    _buildInfoRow(
-                                        Icons.cake_outlined, '22 Tahun', false),
+                                        prefs.getString('phone') ?? '', false),
+                                    _buildInfoRow(Icons.store_outlined,
+                                        prefs.getString('toko') ?? 'Toko', false),
+                                    _buildInfoRow(Icons.cake_outlined,
+                                        prefs.getString('age') ?? '22 Tahun', false),
                                     _buildInfoRow(Icons.location_on_outlined,
-                                        'Bogor Raya, Indonesia', true),
+                                        prefs.getString('address') ?? 'Bogor Raya, Indonesia', false),
+                                    _buildInfoRow(Icons.transgender_outlined,
+                                        prefs.getString('gender') ?? 'Laki-laki', false),
                                   ],
                                 ),
                               ),

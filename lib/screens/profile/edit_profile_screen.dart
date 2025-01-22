@@ -21,15 +21,27 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
   final _addressController = TextEditingController();
+  final _tokoController = TextEditingController();
 
   String _gender = 'Laki-laki';
   String _age = '22 Tahun';
 
-  void _handleSubmit() {
+  void _handleSubmit() async {
     if (_formKey.currentState!.validate()) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('nama', _nameController.text);
+      prefs.setString('phone', _phoneController.text);
+      prefs.setString('email', _emailController.text);
+      prefs.setString('address', _addressController.text);
+      prefs.setString('gender', _gender);
+      prefs.setString('age', _age);
+      prefs.setString('toko', _tokoController.text);
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Profile updated successfully')),
       );
+
+      Navigator.pop(context);
     }
   }
 
@@ -48,7 +60,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           _nameController.text = prefs!.getString('nama') ?? '';
           _phoneController.text = prefs.getString('phone') ?? '';
           _emailController.text = prefs.getString('email') ?? '';
-          _addressController.text = '';
+          _addressController.text = prefs.getString('address') ?? '';
+          _tokoController.text = prefs.getString('toko') ?? '';
+          _gender = prefs.getString('gender') ?? 'Laki-laki';
+          _age = prefs.getString('age') ?? '22 Tahun';
 
           return Scaffold(
             appBar: AppBar(
@@ -81,7 +96,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               radius: 40,
                               backgroundColor: Colors.grey[200],
                               backgroundImage: const AssetImage(
-                                  'assets/images/profile/profile1.png'),
+                                  'assets/images/profile/profile2.png'),
                             ),
                             Positioned(
                               bottom: 0,
@@ -143,10 +158,44 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       _buildLabel('Jenis Kelamin'),
-                                      _buildTextField(_gender),
+                                      DropdownButtonFormField<String>(
+                                        value: _gender,
+                                        onChanged: (String? newValue) {
+                                          setState(() {
+                                            _gender = newValue!;
+                                          });
+                                        },
+                                        items: <String>['Laki-laki', 'Perempuan']
+                                            .map<DropdownMenuItem<String>>((String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
+                                        decoration: InputDecoration(
+                                          filled: true,
+                                          fillColor: Colors.black.withOpacity(0.02),
+                                          contentPadding: const EdgeInsets.symmetric(
+                                            horizontal: 16,
+                                            vertical: 12,
+                                          ),
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(8),
+                                            borderSide: BorderSide(color: Colors.grey[300]!),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(8),
+                                            borderSide: BorderSide(color: Colors.grey[300]!),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(8),
+                                            borderSide: BorderSide(color: Colors.blue[400]!),
+                                          ),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -154,7 +203,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       _buildLabel('Usia'),
                                       _buildTextField(_age),
@@ -165,20 +214,23 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             ),
                             const SizedBox(height: 16),
 
-                            _buildLabel('No. Handphone/WhatsApp'),
-                            _buildTextField(_phoneController),
-                            const SizedBox(height: 16),
-
                             _buildLabel('Email'),
                             _buildTextField(_emailController),
                             const SizedBox(height: 16),
 
+                            _buildLabel('No. Handphone/WhatsApp'),
+                            _buildTextField(_phoneController),
+                            const SizedBox(height: 16),
+
+                            _buildLabel('Toko'),
+                            _buildTextField(_tokoController),
+                            const SizedBox(height: 16),
+
                             _buildLabel('Alamat'),
                             _buildTextField(_addressController, maxLines: 3),
+                            const SizedBox(height: 16),
 
-                            const SizedBox(
-                              height: 20,
-                            ),
+
 
                             SizedBox(
                               width: double.infinity,
@@ -268,6 +320,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     _nameController.dispose();
     _phoneController.dispose();
     _emailController.dispose();
+    _tokoController.dispose();
     _addressController.dispose();
     super.dispose();
   }
