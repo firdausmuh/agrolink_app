@@ -223,7 +223,7 @@ class _TokoScreenState extends State<TokoScreen> {
                       ),
                       const SizedBox(height: 5),
                       const Text(
-                        'Pesanan Produk >',
+                        'Pesanan Produk',
                         style: TextStyle(fontSize: 14, color: Colors.grey),
                       ),
                     ],
@@ -252,7 +252,7 @@ class _TokoScreenState extends State<TokoScreen> {
                       ),
                       const SizedBox(height: 5),
                       const Text(
-                        'Lihat Grafik',
+                        'Laporan Penjualan',
                         style: TextStyle(fontSize: 14, color: Colors.grey),
                       ),
                     ],

@@ -105,7 +105,7 @@ class _KeranjangScreenState extends State<KeranjangScreen> {
                     title: item[0],
                     description: item[1],
                     imageUrl: item[5],
-                    selectSize: item[6], // Ukuran produk tetap
+                    //selectSize: item[6], // Ukuran produk tetap
                     category: item[3], // Pastikan ini adalah indeks yang benar untuk kategori
                     harga: double.tryParse(item[4]) ?? 0,
                     onDelete: () => _removeItem(index),
