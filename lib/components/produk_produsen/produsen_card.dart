@@ -138,7 +138,7 @@ class ProdusenCard extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
-                              context, 
+                              context,
                               MaterialPageRoute(builder: (context) => CheckoutScreen()),
                           );
                         },
@@ -186,3 +186,5 @@ class ProdusenCard extends StatelessWidget {
     );
   }
 }
+
+

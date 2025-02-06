@@ -265,7 +265,7 @@ class _PesananScreenState extends State<PesananScreen> {
                     child: Row(
                       children: [
                         Text(
-                          isBerlangsung ? "Cek Pengiriman" : "Cek Ringkasan",
+                          isBerlangsung ? "Cek Pengiriman" : "Lihat Invoice",
                           style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
@@ -475,7 +475,7 @@ class _PesananScreenState extends State<PesananScreen> {
                             children: [
                               const Padding(
                                 padding: EdgeInsets.all(8.0),
-                                child: Text("Basreng daun jeruk"),
+                                child: Text("Sabun Herba"),
                               ),
                               const Padding(
                                 padding: EdgeInsets.all(8.0),

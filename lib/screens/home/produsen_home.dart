@@ -144,7 +144,7 @@ class _ProdusenHomeState extends State<ProdusenHome> {
                       ],
                     ),
                   ),
-                  // Search and Filter Section
+                  // Search Section
                   Row(
                     children: [
                       Expanded(
@@ -154,44 +154,20 @@ class _ProdusenHomeState extends State<ProdusenHome> {
                             hintText: 'Cari Produk Produsen...',
                             prefixIcon: const Icon(Icons.search),
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(6),
+                              borderRadius: BorderRadius.circular(20),
                               borderSide: const BorderSide(color: Colors.grey, width: 1.5),
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(6),
+                              borderRadius: BorderRadius.circular(20),
                               borderSide: const BorderSide(color: Colors.grey, width: 1.5),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(6),
-                              borderSide: const BorderSide(color: Colors.blue, width: 2.0),
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide: const BorderSide(color: Colors.green, width: 2.0),
                             ),
                           ),
                           onChanged: _onSearchChanged, // Panggil metode debounce
-                          // onChanged: (query) {
-                          //   setState(() {
-                          //     searchQuery = query;
-                          //   });
-                          // },
                         ),
-                      ),
-                      const SizedBox(width: 8),
-                      IconButton(
-                        icon: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.yellow,
-                            border: Border.all(color: Colors.yellow, width: 6),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          padding: const EdgeInsets.all(8),
-                          child: const Icon(
-                            Icons.filter_list,
-                            color: Colors.deepOrange,
-                            size: 24,
-                          ),
-                        ),
-                        onPressed: () {
-                          print('Filter button pressed');
-                        },
                       ),
                     ],
                   ),
@@ -280,4 +256,3 @@ class _ProdusenHomeState extends State<ProdusenHome> {
     return prefs.getString('username');
   }
 }
-

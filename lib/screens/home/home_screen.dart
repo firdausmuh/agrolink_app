@@ -234,39 +234,39 @@ class HomeScreen extends StatelessWidget {
                       const SizedBox(height: 8),
 
                       // List of Products
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Column(
-                          children: produsens.map((produsen) {
-                            return InkWell(
-                              borderRadius: BorderRadius.circular(20),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => DetailProdusenScreen(
-                                      produsen: produsen,
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: ProdusenCard(
-                                name: produsen.title,
-                                description: produsen.description,
-                                readyStock: produsen.readyStock,
-                                category: produsen.category,
-                                price: produsen.harga,
-                                imageUrl: produsen.imageUrl[0],
-                                onAddPressed: () {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text("${produsen.title} masuk ke keranjang")),
-                                  );
-                                },
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(horizontal: 20),
+                      //   child: Column(
+                      //     children: produsens.map((produsen) {
+                      //       return InkWell(
+                      //         borderRadius: BorderRadius.circular(20),
+                      //         onTap: () {
+                      //           Navigator.push(
+                      //             context,
+                      //             MaterialPageRoute(
+                      //               builder: (context) => DetailProdusenScreen(
+                      //                 produsen: produsen,
+                      //               ),
+                      //             ),
+                      //           );
+                      //         },
+                      //         child: ProdusenCard(
+                      //           name: produsen.title,
+                      //           description: produsen.description,
+                      //           readyStock: produsen.readyStock,
+                      //           category: produsen.category,
+                      //           price: produsen.harga,
+                      //           imageUrl: produsen.imageUrl[0],
+                      //           onAddPressed: () {
+                      //             ScaffoldMessenger.of(context).showSnackBar(
+                      //               SnackBar(content: Text("${produsen.title} masuk ke keranjang")),
+                      //             );
+                      //           },
+                      //         ),
+                      //       );
+                      //     }).toList(),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
