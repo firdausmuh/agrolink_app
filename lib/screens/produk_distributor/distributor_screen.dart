@@ -5,11 +5,6 @@ import 'package:agrolink/screens/produk_distributor/detail_distributor_screen.da
 import 'package:agrolink/screens/produk_supplier/favorite_belanja_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../keranjang/keranjang_screen.dart';
-
-import '../keranjang/checkout_screen.dart';
 
 class DistributorScreen extends StatefulWidget {
   const DistributorScreen({super.key});
@@ -122,7 +117,7 @@ class _ProdukDistributorScreenState extends State<DistributorScreen> {
     List<String>? cartItemsString = prefs.getStringList('cart_items') ?? [];
 
     // Buat string untuk produk
-    String newItem = '${distributors.title},${distributors.description},${distributors.category},${distributors.harga},${distributors.imageUrl[0]},${distributors.rating},1'; // Menambahkan kuantitas default 1
+    String newItem = '${distributors.title},${distributors.description},${distributors.category},${distributors.size},${distributors.harga},${distributors.imageUrl[0]},${distributors.rating},1'; // Menambahkan kuantitas default 1
 
     // Tambahkan item baru ke keranjang
     cartItemsString.add(newItem); // Simpan sebagai string

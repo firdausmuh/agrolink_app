@@ -4,18 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../keranjang/keranjang_screen.dart';
-import 'package:agrolink/models/shop.dart';
-
-// class DetailRetailerScreen extends StatefulWidget {
-//   // final Shop shops;
-//   final produk_retailer retailer;
-//   const DetailRetailerScreen(
-//       {super.key,
-//       // required this.shops,
-//       required this.retailer});
-
 import '../../models/Retailer.dart';
-import '../keranjang/keranjang_screen.dart';
 
 class DetailRetailerScreen extends StatefulWidget {
   final produk_retailer retailer;
@@ -28,19 +17,44 @@ class DetailRetailerScreen extends StatefulWidget {
 }
 
 class _DetailProdukRetailerScreenState extends State<DetailRetailerScreen> {
-  int selectedIndext = 1;
+  int selectedIndext = 0;
 
   _addCart() async {
+    // Ambil jumlah yang dipilih oleh pengguna
+    double selectedQuantity = widget.retailer.jumlah[selectedIndext];
+
+    // Ambil jumlah stok yang tersedia (dalam Kg)
+    double readyStock = double.parse(widget.retailer.readyStock.split(' ')[0]);
+
+    // Periksa apakah jumlah yang dipilih melebihi stok yang tersedia dan lebih dari 30 Kg
+    if (selectedQuantity > readyStock || selectedQuantity > 30) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Jumlah Produk Tidak Tersedia"),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return; // Hentikan eksekusi jika kondisi terpenuhi
+    }
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('cart_title', widget.retailer.title);
-    prefs.setString('cart_description', widget.retailer.description);
-    prefs.setString('cart_stock', widget.retailer.readyStock);
-    prefs.setDouble('cart_harga', widget.retailer.harga);
-    prefs.setString('cart_imageUrl', widget.retailer.imageUrl[0]);
+    List<String>? cartItems = prefs.getStringList('cart_items') ?? [];
+
+    // Ambil ukuran/jumlah yang dipilih
+    String selectedSize = '${widget.retailer.jumlah[selectedIndext]} ${widget.retailer.satuan}';
+
+    // Buat string untuk produk
+    String newItem = '${widget.retailer.imageUrl[0]},${widget.retailer.title},${widget.retailer.description},${selectedSize},${widget.retailer.harga}';
+
+    // Tambahkan item baru ke keranjang
+    cartItems.add(newItem);
+
+    // Simpan kembali ke SharedPreferences
+    await prefs.setStringList('cart_items', cartItems);
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('Successfully add new cart!'),
+        content: Text('Successfully added to cart!'),
         backgroundColor: Colors.green,
       ),
     );
@@ -57,7 +71,6 @@ class _DetailProdukRetailerScreenState extends State<DetailRetailerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.retailer.jumlah.length);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -94,136 +107,6 @@ class _DetailProdukRetailerScreenState extends State<DetailRetailerScreen> {
                           );
                         },
                       )),
-
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    height: MediaQuery.sizeOf(context).width,
-                    child: ListView.builder(itemBuilder: (context, index) {
-                      return SizedBox(
-                        width: MediaQuery.sizeOf(context).width,
-                        child: Image.asset(
-                          widget.retailer.imageUrl[index],
-                          fit: BoxFit.cover,
-                        ),
-                      );
-                    }),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(
-                                child: Text(
-                                  widget.retailer.title,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.w700, fontSize: 20),
-                            )),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        // Row(
-                        //   crossAxisAlignment: CrossAxisAlignment.center,
-                        //   children: [
-                        //     Flexible(
-                        //       child: Text(
-                        //         widget.shops.isOnline as String,
-                        //         maxLines: 1,
-                        //         overflow: TextOverflow.ellipsis,
-                        //         style: const TextStyle(
-                        //             fontWeight: FontWeight.w700, fontSize: 24),
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Flexible(
-                              child: Text(
-                                widget.retailer.title,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w700, fontSize: 24),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.star,
-                              color: Colors.orange.withOpacity(0.8),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              '4.9',
-                              style: TextStyle(
-                                  color: Colors.grey.withOpacity(0.8),
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700),
-                            )
-                          ],
-                        ),
-                        const SizedBox(height: 10,),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.access_time,
-                              color: Colors.orange.withOpacity(0.8),
-                            ),
-                            const SizedBox(width: 10,),
-                            // Text(
-                            //   widget.shopsshops.statusPesanan,
-                            //   style: TextStyle(
-                            //       color: Colors.orange.withOpacity(0.8),
-                            //       fontSize: 20,
-                            //       fontWeight: FontWeight.w700),
-                            // )
-                          ],
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 8, horizontal: 12),
-                          child: const Center(
-                            child: Text('Beli Sekarang',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.bold,
-                                )),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
@@ -248,9 +131,7 @@ class _DetailProdukRetailerScreenState extends State<DetailRetailerScreen> {
                             )
                           ],
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -258,9 +139,7 @@ class _DetailProdukRetailerScreenState extends State<DetailRetailerScreen> {
                               Icons.star,
                               color: Colors.orange.withOpacity(0.8),
                             ),
-                            const SizedBox(
-                              width: 10,
-                            ),
+                            const SizedBox(width: 10),
                             Text(
                               '4.8',
                               style: TextStyle(
@@ -270,21 +149,17 @@ class _DetailProdukRetailerScreenState extends State<DetailRetailerScreen> {
                             )
                           ],
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10),
                         const Row(
                           children: [
                             Text(
-                              'Select size',
+                              'Pilih Jumlah beli',
                               style: TextStyle(
                                   fontWeight: FontWeight.w700, fontSize: 16),
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10),
                         SizedBox(
                           height: 44,
                           child: ListView.builder(
@@ -308,40 +183,34 @@ class _DetailProdukRetailerScreenState extends State<DetailRetailerScreen> {
                                                 ? const Color(0xFFD3B398)
                                                 : Colors.black.withOpacity(0.1),
                                             borderRadius:
-                                                BorderRadius.circular(10)),
+                                            BorderRadius.circular(10)),
                                         child: Text(
-                                          '${widget.retailer.jumlah[index]} ${widget.retailer.satuan}',
+                                          '${widget.retailer.jumlah[index].toInt()} ${widget.retailer.satuan}',
                                           style: TextStyle(
                                               fontSize: 16,
                                               color: isSelected
                                                   ? Colors.white
                                                   : Colors.black
-                                                      .withOpacity(0.3)),
+                                                  .withOpacity(0.3)),
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
+                                    const SizedBox(width: 10),
                                   ],
                                 );
                               }),
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10),
                         const Row(
                           children: [
                             Text(
-                              'Description',
+                              'Deskripsi',
                               style: TextStyle(
                                   fontWeight: FontWeight.w700, fontSize: 16),
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10),
                         Row(
                           children: [
                             Flexible(
@@ -354,24 +223,7 @@ class _DetailProdukRetailerScreenState extends State<DetailRetailerScreen> {
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        // Row(
-                        //   children: [
-                        //     Flexible(
-                        //       child: Text(
-                        //         widget.belanja.readyStock,
-                        //         style: TextStyle(
-                        //             color: Colors.black.withOpacity(0.8),
-                        //             fontSize: 16),
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10),
                       ],
                     ),
                   )
@@ -404,9 +256,7 @@ class _DetailProdukRetailerScreenState extends State<DetailRetailerScreen> {
                         color: Colors.white,
                       )),
                 ),
-                const SizedBox(
-                  width: 20,
-                ),
+                const SizedBox(width: 20),
                 Expanded(
                   child: InkWell(
                     onTap: () {
@@ -419,7 +269,7 @@ class _DetailProdukRetailerScreenState extends State<DetailRetailerScreen> {
                             color: Colors.green,
                             borderRadius: BorderRadius.circular(10)),
                         child: const Text(
-                          'Add to cart',
+                          'Tambahkan ke Keranjang',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: Colors.white,

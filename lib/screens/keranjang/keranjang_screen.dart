@@ -35,9 +35,9 @@ class _KeranjangScreenState extends State<KeranjangScreen> {
   double calculateTotal() {
     double total = 0;
     for (var item in cartItems) {
-      if (item.length > 6) { // Pastikan item memiliki cukup elemen
-        double price = double.tryParse(item[4] ?? '0') ?? 0; // Pastikan price valid
-        int quantity = int.tryParse(item[6] ?? '1') ?? 1; // Pastikan quantity valid
+      if (item.length > 4) { // Pastikan item memiliki cukup elemen
+        double price = double.tryParse(item[5] ?? '0') ?? 0; // Pastikan price valid
+        int quantity = int.tryParse(item[4].split(' ')[0] ?? '1') ?? 1; // Pastikan quantity valid
         total += price * quantity; // Hitung total berdasarkan harga dan kuantitas
       } else {
         // Jika item tidak memiliki cukup elemen, cetak peringatan
@@ -59,8 +59,9 @@ class _KeranjangScreenState extends State<KeranjangScreen> {
 
   void _updateQuantity(int index, int quantity) async {
     setState(() {
-      if (cartItems[index].length > 6) {
-        cartItems[index][6] = quantity.toString(); // Update quantity
+      if (cartItems[index].length > 4) {
+        //String size = cartItems[index][3].split(' ')[1]; // Ambil satuan
+        cartItems[index][3] = quantity.toString(); // Update quantity
       } else {
         print("Tidak dapat memperbarui kuantitas, item tidak valid: ${cartItems[index]}");
       }
@@ -102,12 +103,11 @@ class _KeranjangScreenState extends State<KeranjangScreen> {
                 itemBuilder: (context, index) {
                   final item = cartItems[index];
                   return KeranjangCard(
-                    title: item[0],
-                    description: item[1],
-                    imageUrl: item[5],
-                    //selectSize: item[6], // Ukuran produk tetap
-                    category: item[3], // Pastikan ini adalah indeks yang benar untuk kategori
-                    harga: double.tryParse(item[4]) ?? 0,
+                    title: item[1],
+                    description: item[2],
+                    imageUrl: item[0],
+                    selectSize: item[4], // Ukuran produk tetap
+                    harga: double.tryParse(item[5]) ?? 0,
                     onDelete: () => _removeItem(index),
                     onQuantityChanged: (quantity) {
                       _updateQuantity(index, quantity);
@@ -172,3 +172,5 @@ class _KeranjangScreenState extends State<KeranjangScreen> {
     );
   }
 }
+
+

@@ -17,6 +17,23 @@ class _DetailProdukProdusenScreenState extends State<DetailProdusenScreen> {
   int selectedIndext = 0; // Indeks untuk ukuran/jumlah yang dipilih
 
   _addCart() async {
+    // Ambil jumlah yang dipilih oleh pengguna
+    double selectedQuantity = widget.produsen.jumlah[selectedIndext];
+
+    // Ambil jumlah stok yang tersedia (dalam Kg)
+    double readyStock = double.parse(widget.produsen.readyStock.split(' ')[0]);
+
+    // Periksa apakah jumlah yang dipilih melebihi stok yang tersedia dan lebih dari 30 Kg
+    if (selectedQuantity > readyStock || selectedQuantity > 30) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Jumlah Produk Tidak Tersedia"),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return; // Hentikan eksekusi jika kondisi terpenuhi
+    }
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String>? cartItems = prefs.getStringList('cart_items') ?? [];
 
@@ -24,7 +41,7 @@ class _DetailProdukProdusenScreenState extends State<DetailProdusenScreen> {
     String selectedSize = '${widget.produsen.jumlah[selectedIndext]} ${widget.produsen.satuan}';
 
     // Buat string untuk produk
-    String newItem = '${widget.produsen.title},${widget.produsen.description},${widget.produsen.category},${widget.produsen.harga},${widget.produsen.imageUrl[0]},$selectedSize';
+    String newItem = '${widget.produsen.imageUrl[0]},${widget.produsen.title},${widget.produsen.description},${selectedSize},${widget.produsen.harga}';
 
     // Tambahkan item baru ke keranjang
     cartItems.add(newItem);
@@ -164,7 +181,7 @@ class _DetailProdukProdusenScreenState extends State<DetailProdusenScreen> {
                                             borderRadius:
                                             BorderRadius.circular(10)),
                                         child: Text(
-                                          '${widget.produsen.jumlah[index]} ${widget.produsen.satuan}',
+                                          '${widget.produsen.jumlah[index].toInt()} ${widget.produsen.satuan}',
                                           style: TextStyle(
                                               fontSize: 16,
                                               color: isSelected

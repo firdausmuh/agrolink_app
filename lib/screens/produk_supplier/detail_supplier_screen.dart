@@ -1,11 +1,8 @@
-import 'dart:math';
-
 import 'package:agrolink/models/Supplier.dart';
 import 'package:agrolink/screens/produk_supplier/favorite_belanja_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../keranjang/keranjang_screen.dart';
 
 class DetailSupplierScreen extends StatefulWidget {
@@ -17,25 +14,44 @@ class DetailSupplierScreen extends StatefulWidget {
 }
 
 class _DetailBelanjaScreenState extends State<DetailSupplierScreen> {
-  int selectedIndex = 1;
-
-  String formatCurrency(double value) {
-    final formatter =
-        NumberFormat("#,##0", "id_ID"); // Locale for Indonesian formatting
-    return formatter.format(value);
-  }
+  int selectedIndext = 0;
 
   _addCart() async {
+    // Ambil jumlah yang dipilih oleh pengguna
+    double selectedQuantity = widget.supplier.jumlah[selectedIndext];
+
+    // Ambil jumlah stok yang tersedia (dalam Kg)
+    double readyStock = double.parse(widget.supplier.readyStock.split(' ')[0]);
+
+    // Periksa apakah jumlah yang dipilih melebihi stok yang tersedia dan lebih dari 30 Kg
+    if (selectedQuantity > readyStock || selectedQuantity > 30) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Jumlah Produk Tidak Tersedia"),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return; // Hentikan eksekusi jika kondisi terpenuhi
+    }
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('cart_title', widget.supplier.title);
-    prefs.setString('cart_description', widget.supplier.description);
-    prefs.setString('cart_stock', widget.supplier.readyStock);
-    prefs.setDouble('cart_harga', widget.supplier.harga);
-    prefs.setString('cart_imageUrl', widget.supplier.imageUrl[0]);
+    List<String>? cartItems = prefs.getStringList('cart_items') ?? [];
+
+    // Ambil ukuran/jumlah yang dipilih
+    String selectedSize = '${widget.supplier.jumlah[selectedIndext]} ${widget.supplier.satuan}';
+
+    // Buat string untuk produk
+    String newItem = '${widget.supplier.imageUrl[0]},${widget.supplier.title},${widget.supplier.description},${selectedSize},${widget.supplier.harga}';
+
+    // Tambahkan item baru ke keranjang
+    cartItems.add(newItem);
+
+    // Simpan kembali ke SharedPreferences
+    await prefs.setStringList('cart_items', cartItems);
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('Successfully add new cart!'),
+        content: Text('Successfully added to cart!'),
         backgroundColor: Colors.green,
       ),
     );
@@ -44,15 +60,18 @@ class _DetailBelanjaScreenState extends State<DetailSupplierScreen> {
         context, MaterialPageRoute(builder: (context) => const KeranjangScreen()));
   }
 
+  String formatCurrency(double value) {
+    final formatter =
+    NumberFormat("#,##0", "id_ID"); // Locale for Indonesian formatting
+    return formatter.format(value);
+  }
+
   @override
   Widget build(BuildContext context) {
-    print(widget.supplier.jumlah.length);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leadingWidth: 50,
-        titleSpacing: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),
@@ -109,9 +128,7 @@ class _DetailBelanjaScreenState extends State<DetailSupplierScreen> {
                             )
                           ],
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -119,9 +136,7 @@ class _DetailBelanjaScreenState extends State<DetailSupplierScreen> {
                               Icons.star,
                               color: Colors.orange.withOpacity(0.8),
                             ),
-                            const SizedBox(
-                              width: 10,
-                            ),
+                            const SizedBox(width: 10),
                             Text(
                               '4.8',
                               style: TextStyle(
@@ -131,35 +146,31 @@ class _DetailBelanjaScreenState extends State<DetailSupplierScreen> {
                             )
                           ],
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10),
                         const Row(
                           children: [
                             Text(
-                              'Select size',
+                              'Pilih Jumlah beli',
                               style: TextStyle(
                                   fontWeight: FontWeight.w700, fontSize: 16),
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10),
                         SizedBox(
                           height: 44,
                           child: ListView.builder(
                               itemCount: widget.supplier.jumlah.length,
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
-                                final bool isSelected = selectedIndex == index;
+                                final bool isSelected = selectedIndext == index;
 
                                 return Row(
                                   children: [
                                     GestureDetector(
                                       onTap: () => {
                                         setState(() {
-                                          selectedIndex = index;
+                                          selectedIndext = index;
                                         })
                                       },
                                       child: Container(
@@ -169,40 +180,34 @@ class _DetailBelanjaScreenState extends State<DetailSupplierScreen> {
                                                 ? const Color(0xFFD3B398)
                                                 : Colors.black.withOpacity(0.1),
                                             borderRadius:
-                                                BorderRadius.circular(10)),
+                                            BorderRadius.circular(10)),
                                         child: Text(
-                                          '${widget.supplier.jumlah[index]} ${widget.supplier.satuan}',
+                                          '${widget.supplier.jumlah[index].toInt()} ${widget.supplier.satuan}',
                                           style: TextStyle(
                                               fontSize: 16,
                                               color: isSelected
                                                   ? Colors.white
                                                   : Colors.black
-                                                      .withOpacity(0.3)),
+                                                  .withOpacity(0.3)),
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
+                                    const SizedBox(width: 10),
                                   ],
                                 );
                               }),
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10),
                         const Row(
                           children: [
                             Text(
-                              'Description',
+                              'Deskripsi',
                               style: TextStyle(
                                   fontWeight: FontWeight.w700, fontSize: 16),
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10),
                         Row(
                           children: [
                             Flexible(
@@ -215,24 +220,7 @@ class _DetailBelanjaScreenState extends State<DetailSupplierScreen> {
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        // Row(
-                        //   children: [
-                        //     Flexible(
-                        //       child: Text(
-                        //         widget.belanja.readyStock,
-                        //         style: TextStyle(
-                        //             color: Colors.black.withOpacity(0.8),
-                        //             fontSize: 16),
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10),
                       ],
                     ),
                   )
@@ -251,7 +239,7 @@ class _DetailBelanjaScreenState extends State<DetailSupplierScreen> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => FavoriteBelanjaScreen()),
-                    )
+                    ),
                   },
                   borderRadius: BorderRadius.circular(10),
                   child: Container(
@@ -265,9 +253,7 @@ class _DetailBelanjaScreenState extends State<DetailSupplierScreen> {
                         color: Colors.white,
                       )),
                 ),
-                const SizedBox(
-                  width: 20,
-                ),
+                const SizedBox(width: 20),
                 Expanded(
                   child: InkWell(
                     onTap: () {
@@ -280,7 +266,7 @@ class _DetailBelanjaScreenState extends State<DetailSupplierScreen> {
                             color: Colors.green,
                             borderRadius: BorderRadius.circular(10)),
                         child: const Text(
-                          'Add to cart',
+                          'Tambahkan ke Keranjang',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: Colors.white,

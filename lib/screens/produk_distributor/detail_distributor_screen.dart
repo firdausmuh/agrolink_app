@@ -14,9 +14,26 @@ class DetailDistributorScreen extends StatefulWidget {
 }
 
 class _DetailProdukDistributorScreenState extends State<DetailDistributorScreen> {
-  int selectedIndext = 1;
+  int selectedIndext = 0;
 
   _addCart() async {
+    // Ambil jumlah yang dipilih oleh pengguna
+    double selectedQuantity = widget.distributor.jumlah[selectedIndext];
+
+    // Ambil jumlah stok yang tersedia (dalam Kg)
+    double readyStock = double.parse(widget.distributor.readyStock.split(' ')[0]);
+
+    // Periksa apakah jumlah yang dipilih melebihi stok yang tersedia dan lebih dari 30 Kg
+    if (selectedQuantity > readyStock || selectedQuantity > 30) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Jumlah Produk Tidak Tersedia"),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return; // Hentikan eksekusi jika kondisi terpenuhi
+    }
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String>? cartItems = prefs.getStringList('cart_items') ?? [];
 
@@ -24,7 +41,7 @@ class _DetailProdukDistributorScreenState extends State<DetailDistributorScreen>
     String selectedSize = '${widget.distributor.jumlah[selectedIndext]} ${widget.distributor.satuan}';
 
     // Buat string untuk produk
-    String newItem = '${widget.distributor.title},${widget.distributor.description},${widget.distributor.category},${widget.distributor.harga},${widget.distributor.imageUrl[0]},$selectedSize';
+    String newItem = '${widget.distributor.imageUrl[0]},${widget.distributor.title},${widget.distributor.description},${selectedSize},${widget.distributor.harga}';
 
     // Tambahkan item baru ke keranjang
     cartItems.add(newItem);
@@ -50,7 +67,7 @@ class _DetailProdukDistributorScreenState extends State<DetailDistributorScreen>
 
   @override
   Widget build(BuildContext context) {
-    print(widget.distributor.jumlah.length);
+    //print(widget.distributor.jumlah.length);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -176,7 +193,7 @@ class _DetailProdukDistributorScreenState extends State<DetailDistributorScreen>
                                             borderRadius:
                                             BorderRadius.circular(10)),
                                         child: Text(
-                                          '${widget.distributor.jumlah[index]} ${widget.distributor.satuan}',
+                                          '${widget.distributor.jumlah[index].toInt()} ${widget.distributor.satuan}',
                                           style: TextStyle(
                                               fontSize: 16,
                                               color: isSelected
@@ -199,15 +216,13 @@ class _DetailProdukDistributorScreenState extends State<DetailDistributorScreen>
                         const Row(
                           children: [
                             Text(
-                              'Description',
+                              'Deskripsi',
                               style: TextStyle(
                                   fontWeight: FontWeight.w700, fontSize: 16),
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10,),
                         Row(
                           children: [
                             Flexible(

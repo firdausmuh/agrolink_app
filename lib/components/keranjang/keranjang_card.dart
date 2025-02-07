@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 class KeranjangCard extends StatefulWidget {
   final String? title;
   final String? description;
-  final String? stok;
-  final String? category; // Pastikan ini ada
-  final double? harga; // Harga satuan
   final String? imageUrl;
   final String? selectSize; // Ukuran produk
+  final double? harga; // Harga satuan
   final Function()? onDelete;
   final Function(int quantity)? onQuantityChanged; // Callback untuk perubahan kuantitas
 
@@ -15,13 +13,11 @@ class KeranjangCard extends StatefulWidget {
     super.key,
     this.title,
     this.description,
-    this.stok,
-    this.category,
-    this.harga,
     this.imageUrl,
     this.selectSize,
+    this.harga,
     this.onDelete,
-    this.onQuantityChanged, // Inisialisasi callback
+    this.onQuantityChanged,
   });
 
   @override
@@ -34,7 +30,8 @@ class _KeranjangCardState extends State<KeranjangCard> {
   @override
   void initState() {
     super.initState();
-    // Tidak perlu mengubah quantity dari size
+    // Inisialisasi quantity dengan nilai default
+    //quantity = 1; // Atur default quantity
   }
 
   void decreaseQuantity() {
@@ -60,7 +57,8 @@ class _KeranjangCardState extends State<KeranjangCard> {
   @override
   Widget build(BuildContext context) {
     double unitPrice = widget.harga ?? 0;
-    double totalPrice = unitPrice * quantity;
+    double totalPrice = unitPrice * quantity; // Hitung total harga berdasarkan kuantitas
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -127,7 +125,7 @@ class _KeranjangCardState extends State<KeranjangCard> {
                 Row(
                   children: [
                     const Text(
-                      'Jumlah produk : ',
+                      'Jumlah beli: ',
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.black,
@@ -136,27 +134,6 @@ class _KeranjangCardState extends State<KeranjangCard> {
                     ),
                     Text(
                       widget.selectSize ?? '', // Ukuran produk tetap
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.green[800],
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 5),
-                Row(
-                  children: [
-                    const Text(
-                      'Jenis : ',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      widget.category ?? '', // Pastikan ini ada
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.green[800],
@@ -230,3 +207,7 @@ class _KeranjangCardState extends State<KeranjangCard> {
     );
   }
 }
+
+
+
+

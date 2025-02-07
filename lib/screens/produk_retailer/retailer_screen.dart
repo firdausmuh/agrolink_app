@@ -1,6 +1,7 @@
 import 'package:agrolink/components/search_bar.dart';
 import 'package:agrolink/models/Retailer.dart';
 import 'package:agrolink/screens/produk_retailer/detail_retailer_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../components/produk_retailer/retailer_card.dart';
 import 'package:agrolink/screens/produk_supplier/favorite_belanja_screen.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class RetailerScreen extends StatefulWidget {
 class _ProdukRetailerScreenState extends State<RetailerScreen> {
 
   @override
-  Widget build(BuildContext contex) {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -26,24 +27,23 @@ class _ProdukRetailerScreenState extends State<RetailerScreen> {
         titleSpacing: 0,
         leading: IconButton(
             onPressed: () => Navigator.pop(context),
-            icon: const Icon(Icons.arrow_back, color: Colors.black)
-        ),
+            icon: const Icon(Icons.arrow_back, color: Colors.black)),
         title: const Text(
-            'Produk Retailer',
-            style: TextStyle(
+          'Produk Retailer',
+          style: TextStyle(
               color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700),
         ),
         actions: [
           Padding(
-              padding: EdgeInsets.only(right: 10),
-              child: IconButton(
-                  onPressed: () => {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => FavoriteBelanjaScreen()))
-                  },
-                  icon: Icon(Icons.favorite, color: Colors.red.withOpacity(0.6),)),
+            padding: const EdgeInsets.only(right: 10),
+            child: IconButton(
+                onPressed: () => {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => FavoriteBelanjaScreen()))
+                },
+                icon: Icon(Icons.favorite, color: Colors.red.withOpacity(0.6))),
           )
         ],
       ),
@@ -52,9 +52,9 @@ class _ProdukRetailerScreenState extends State<RetailerScreen> {
           Padding(
             padding: const EdgeInsets.all(20),
             child: SearchBarWithController(
-              hintText: 'Cari Produk Retailer yang diinginkan',
+              hintText: 'Cari Produk Produsen yang diinginkan',
               onSearch: (query) {
-                //Handle Search
+                // Handle Search
                 print('Searching for: $query');
               },
             ),
@@ -77,10 +77,7 @@ class _ProdukRetailerScreenState extends State<RetailerScreen> {
                                       MaterialPageRoute(
                                           builder: (context) =>
                                               DetailRetailerScreen(
-                                                  retailer: retailer,
-                                                // shops: shop,
-
-                                              )))
+                                                  retailer: retailer)))
                                 },
                                 child: RetailerCard(
                                   name: retailer.title,
@@ -90,30 +87,46 @@ class _ProdukRetailerScreenState extends State<RetailerScreen> {
                                   price: retailer.harga,
                                   imageUrl: retailer.imageUrl[0],
                                   onAddPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) => CheckoutScreen()),
-                                    );
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                              "${retailer.title} masuk ke keranjang"),
-                                        )
-                                    );
-                                  }, // Handle add to cart action
+                                    _addToCart(retailer); // Panggil fungsi untuk menambahkan ke keranjang
+                                  },
                                 ),
                               ),
-                              const Divider(),
+                              const SizedBox(
+                                height: 10,
+                              )
                             ],
                           );
-                        }).toList()
-                    )
+                        }).toList())
                   ],
                 ),
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  // Fungsi untuk menambahkan produk ke keranjang
+  void _addToCart(retailers) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // Ambil daftar item keranjang yang sudah ada
+    List<String>? cartItemsString = prefs.getStringList('cart_items') ?? [];
+
+    // Buat string untuk produk
+    String newItem = '${retailers.title},${retailers.description},${retailers.category},${retailers.size},${retailers.harga},${retailers.imageUrl[0]},${retailers.rating},1'; // Menambahkan kuantitas default 1
+
+    // Tambahkan item baru ke keranjang
+    cartItemsString.add(newItem); // Simpan sebagai string
+
+    // Simpan kembali ke SharedPreferences
+    await prefs.setStringList('cart_items', cartItemsString);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("${retailers.title} masuk ke keranjang"),
+        backgroundColor: Colors.green,
       ),
     );
   }

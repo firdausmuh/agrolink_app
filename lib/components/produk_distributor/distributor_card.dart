@@ -9,11 +9,8 @@ class DistributorCard extends StatelessWidget {
   final String category;
   final double price;
   final String imageUrl;
-
-  // final bool isOnline; // Menambahkan atribut isOnline
-  // final String alamat; // Menambahkan atribut alamat
-  // final String statusPesanan; // Menambahkan atribut statusPesanan
   final VoidCallback onAddPressed;
+
 
   const DistributorCard({
     Key? key,
@@ -24,9 +21,6 @@ class DistributorCard extends StatelessWidget {
     required this.price,
     required this.imageUrl,
     required this.onAddPressed,
-    // required this.isOnline,
-    // required this.alamat,
-    // required this.statusPesanan,
   }) : super(key: key);
 
   @override
@@ -62,6 +56,8 @@ class DistributorCard extends StatelessWidget {
                 child: Image.asset(
                   imageUrl,
                   fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: double.infinity,
                 ),
               ),
             ),
@@ -113,51 +109,18 @@ class DistributorCard extends StatelessWidget {
                       color: Colors.black,
                     ),
                   ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  // Text(
-                  //   'isOnline: ${isOnline.toString()}',
-                  //   maxLines: 1,
-                  //   overflow: TextOverflow.ellipsis,
-                  //   style: TextStyle(
-                  //     fontSize: 14,
-                  //     color: Colors.black,
-                  //   ),
-                  // ),
-                  // const SizedBox(height: 5,),
-                  // Text(
-                  //   'alamat: ${alamat.toString()}',
-                  //   maxLines: 1,
-                  //   overflow: TextOverflow.ellipsis,
-                  //   style: TextStyle(
-                  //     fontSize: 14,
-                  //     color: Colors.black,
-                  //   ),
-                  // ),
-                  // const SizedBox(height: 5,),
-                  // Text(
-                  //   'status pesanan: ${statusPesanan.toString()}',
-                  //   maxLines: 1,
-                  //   overflow: TextOverflow.ellipsis,
-                  //   style: TextStyle(
-                  //     fontSize: 14,
-                  //     color: Colors.black,
-                  //   ),
-                  // ),
-                  // const SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         'Rp. ${price.toStringAsFixed(0)}',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Colors.green,
+                          color: Colors.green[800],
                         ),
                       ),
-                      const SizedBox(width: 40),
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
