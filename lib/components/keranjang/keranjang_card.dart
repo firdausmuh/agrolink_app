@@ -207,7 +207,3 @@ class _KeranjangCardState extends State<KeranjangCard> {
     );
   }
 }
-
-
-
-
