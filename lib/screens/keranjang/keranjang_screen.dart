@@ -146,7 +146,9 @@ class _KeranjangScreenState extends State<KeranjangScreen> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const CheckoutScreen()),
+                    MaterialPageRoute(
+                      builder: (context) => CheckoutScreen(cartItems: cartItems),
+                    ),
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -172,5 +174,3 @@ class _KeranjangScreenState extends State<KeranjangScreen> {
     );
   }
 }
-
-

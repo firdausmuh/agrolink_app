@@ -228,7 +228,7 @@ class _DistributorHomeState extends State<DistributorHome> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => CheckoutScreen(),
+                                          builder: (context) => CheckoutScreen(cartItems: [],),
                                         ),
                                       );
                                     },

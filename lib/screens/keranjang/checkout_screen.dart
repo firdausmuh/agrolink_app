@@ -1,12 +1,14 @@
-import 'package:agrolink/screens/pembayaran/payment_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart'; // Import the intl package
-import '../../models/ShippingMethod.dart'; // Pastikan untuk mengimpor kelas ShippingMethod
+import '../../models/ShippingMethod.dart';
+import '../pembayaran/payment_screen.dart'; // Pastikan untuk mengimpor kelas ShippingMethod
 
 class CheckoutScreen extends StatefulWidget {
-  const CheckoutScreen({super.key});
+  final List<List<String>> cartItems;
+
+  const CheckoutScreen({super.key, required this.cartItems});
 
   @override
   State<CheckoutScreen> createState() => _CheckoutScreenState();
@@ -23,8 +25,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   String? selectedShippingMethod;
   bool isExpanded = false; // Menyimpan status apakah ExpansionTile terbuka atau tidak
 
-  List<int> hargaItem = [25000];
-  List<int> jumlahItem = [1];
+  List<int> hargaItem = [];
+  List<int> jumlahItem = [];
 
   // Data ongkir
   List<ShippingMethod> shippingMethods = [
@@ -32,6 +34,20 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     ShippingMethod(agent: 'J&T', serviceType: 'Express', estimatedTime: '3 - 6 Hari', cost: 'Rp. 8.000'),
     ShippingMethod(agent: 'JNE', serviceType: 'CTC', estimatedTime: '1 - 2 Hari', cost: 'Rp. 10.000'),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeCartItems();
+  }
+
+  void _initializeCartItems() {
+    for (var item in widget.cartItems) {
+      hargaItem.add(int.tryParse(item[5]) ?? 0);
+      jumlahItem.add(int.tryParse(item[4].split(' ')[0]) ?? 1);
+    }
+    updateTotalHarga();
+  }
 
   void updateTotalHarga() {
     setState(() {
@@ -148,141 +164,140 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 ),
               ),
               const Divider(color: Colors.grey, thickness: 1),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 10.0),
-                padding: const EdgeInsets.all(10.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.shade300,
-                      blurRadius: 5,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Row untuk Gambar Produk dan Informasi Produk
-                    Row(
-                      children: [
-                        // Gambar Produk
-                        Container(
-                          width: 80,
-                          height: 100,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            image: const DecorationImage(
-                              image: AssetImage('assets/images/distributor/sabun_herba.png'), // Ganti sesuai aset Anda
-                              fit: BoxFit.cover,
+              ...widget.cartItems.map((item) {
+                return Container(
+                  margin: const EdgeInsets.symmetric(vertical: 10.0),
+                  padding: const EdgeInsets.all(10.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.shade300,
+                        blurRadius: 5,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            width: 80,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              image: DecorationImage(
+                                image: AssetImage(item[0]), // Ganti sesuai aset Anda
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(width: 10),
-                        // Detail Produk
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  item[1],
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                Text(
+                                  'Jenis : ${item[2]}',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                Text(
+                                  'Dibeli : ${item[4]}',
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                Text(
+                                  'Total : Rp${item[5]}',
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 6),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
                             children: [
+                              const Icon(Icons.security, color: Colors.green, size: 18,),
+                              const SizedBox(width: 4),
                               const Text(
-                                'Sabun Herba Bidara',
+                                'Proteksi Produk Rusak',
                                 style: TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 13,
                                 ),
                               ),
-                              const SizedBox(height: 5),
-                              const Text(
-                                'Jenis : Produk Distributor',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14,
-                                  color: Colors.grey,
+                              const SizedBox(width: 110),
+                              Text(
+                                currencyFormatter.format(3000),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 13,
                                 ),
                               ),
-                              const SizedBox(height: 5),
-                              const Text(
-                                'Dibeli : 1 Barang',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              const SizedBox(height: 5),
-                              const Text(
-                                'Total : Rp25.000',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                              const SizedBox(height: 5),
                             ],
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 6),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            const Icon(Icons.security, color: Colors.green, size: 18,),
-                            const SizedBox(width: 4),
-                            const Text(
-                              'Proteksi Produk Rusak',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 13,
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isProtectionSelected = !isProtectionSelected;
+                                protectionFee = isProtectionSelected ? 3000 : 0;
+                              });
+                            },
+                            child: Container(
+                              width: 20, // Adjusted width for better visibility
+                              height: 20, // Adjusted height for better visibility
+                              decoration: BoxDecoration(
+                                color: isProtectionSelected ? Colors.green : Colors.white,
+                                border: Border.all(
+                                  color: isProtectionSelected ? Colors.green : Colors.grey,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(5),
                               ),
-                            ),
-                            const SizedBox(width: 110),
-                            Text(
-                              currencyFormatter.format(3000),
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 13,
+                              child: Center(
+                                child: isProtectionSelected
+                                    ? Icon(
+                                  Icons.check, // Checkmark icon
+                                  color: Colors.white, // Color of the icon
+                                  size: 10, // Size of the icon
+                                )
+                                    : null, // No icon when not selected
                               ),
-                            ),
-                          ],
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isProtectionSelected = !isProtectionSelected;
-                              protectionFee = isProtectionSelected ? 3000 : 0;
-                            });
-                          },
-                          child: Container(
-                            width: 20, // Adjusted width for better visibility
-                            height: 20, // Adjusted height for better visibility
-                            decoration: BoxDecoration(
-                              color: isProtectionSelected ? Colors.green : Colors.white,
-                              border: Border.all(
-                                color: isProtectionSelected ? Colors.green : Colors.grey,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: Center(
-                              child: isProtectionSelected
-                                  ? Icon(
-                                Icons.check, // Checkmark icon
-                                color: Colors.white, // Color of the icon
-                                size: 10, // Size of the icon
-                              )
-                                  : null, // No icon when not selected
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
               Container(
                 padding: const EdgeInsets.all(10.0),
                 decoration: BoxDecoration(
@@ -444,7 +459,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
               ),
               const SizedBox(height: 10),
-              _buildSummaryRow('Total Harga (1 barang)', currencyFormatter.format(25000)),
+              _buildSummaryRow('Total Harga (${widget.cartItems.length} barang)', currencyFormatter.format(totalHarga - shippingCost - protectionFee)),
               _buildSummaryRow('Total Ongkos Kirim', currencyFormatter.format(shippingCost)),
               _buildSummaryRow('Total Biaya Proteksi', currencyFormatter.format(protectionFee)),
               const Divider(color: Colors.grey, thickness: 1),
@@ -462,38 +477,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min, // Ensures the column takes minimum space
           children: [
-            // ElevatedButton(
-            //   style: ElevatedButton.styleFrom(
-            //     backgroundColor: const Color(0xFF199D52),
-            //     shape: RoundedRectangleBorder(
-            //       borderRadius: BorderRadius.circular(10),
-            //     ),
-            //     minimumSize: const Size(double.infinity, 50),
-            //   ),
-            //   onPressed: () {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(
-            //         builder: (context) => const PaymentScreen(),
-            //       ),
-            //     );
-            //   },
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: const [
-            //       Icon(Icons.check_circle_outline, color: Colors.white, size: 24),
-            //       SizedBox(width: 8),
-            //       Text(
-            //         'Bayar Sekarang',
-            //         style: TextStyle(
-            //           color: Colors.white,
-            //           fontSize: 18,
-            //           fontWeight: FontWeight.w700,
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF199D52),

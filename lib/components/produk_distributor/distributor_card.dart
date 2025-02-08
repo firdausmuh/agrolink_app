@@ -125,7 +125,7 @@ class DistributorCard extends StatelessWidget {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => CheckoutScreen()),
+                            MaterialPageRoute(builder: (context) => CheckoutScreen(cartItems: [],)),
                           );
                         },
                         child: Container(

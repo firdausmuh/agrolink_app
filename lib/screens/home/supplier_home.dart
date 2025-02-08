@@ -228,7 +228,7 @@ class _SupplierHomeState extends State<SupplierHome> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => CheckoutScreen(),
+                                          builder: (context) => CheckoutScreen(cartItems: [],),
                                         ),
                                       );
                                     },

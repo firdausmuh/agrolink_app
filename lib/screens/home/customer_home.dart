@@ -246,7 +246,7 @@ class _CustomerHomeState extends State<CustomerHome> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => CheckoutScreen()),
+                                      builder: (context) => CheckoutScreen(cartItems: [],)),
                                 );
                                 // Handle add to cart action
                                 SnackBar(
