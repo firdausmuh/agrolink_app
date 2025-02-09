@@ -53,15 +53,31 @@ class _KeranjangScreenState extends State<KeranjangScreen> {
     });
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> updatedCartItems = cartItems.map((item) => item.join(',')).toList();
+    List<String> updatedCartItems =   cartItems.map((item) => item.join(',')).toList();
     await prefs.setStringList('cart_items', updatedCartItems);
   }
+
+  // void _updateQuantity(int index, int quantity) async {
+  //   setState(() {
+  //     if (cartItems[index].length > 4) {
+  //       //String size = cartItems[index][3].split(' ')[1]; // Ambil satuan
+  //       cartItems[index][3] = quantity.toString(); // Update quantity
+  //     } else {
+  //       print("Tidak dapat memperbarui kuantitas, item tidak valid: ${cartItems[index]}");
+  //     }
+  //   });
+  //
+  //   // Perbarui SharedPreferences
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   List<String> updatedCartItems = cartItems.map((item) => item.join(',')).toList();
+  //   await prefs.setStringList('cart_items', updatedCartItems);
+  // }
 
   void _updateQuantity(int index, int quantity) async {
     setState(() {
       if (cartItems[index].length > 4) {
-        //String size = cartItems[index][3].split(' ')[1]; // Ambil satuan
-        cartItems[index][3] = quantity.toString(); // Update quantity
+        // Update kuantitas di cartItems
+        cartItems[index][4] = '$quantity ${cartItems[index][4].split(' ')[1]}'; // Format: "quantity satuan"
       } else {
         print("Tidak dapat memperbarui kuantitas, item tidak valid: ${cartItems[index]}");
       }

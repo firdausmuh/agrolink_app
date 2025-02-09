@@ -39,9 +39,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   void initState() {
     super.initState();
     _initializeCartItems();
+    updateTotalHarga();
   }
 
   void _initializeCartItems() {
+    hargaItem.clear();
+    jumlahItem.clear();
+
     for (var item in widget.cartItems) {
       hargaItem.add(int.tryParse(item[5]) ?? 0);
       jumlahItem.add(int.tryParse(item[4].split(' ')[0]) ?? 1);
@@ -52,11 +56,20 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   void updateTotalHarga() {
     setState(() {
       totalHarga = 0;
-      for (int i = 0; i < hargaItem.length; i++) {
-        totalHarga += hargaItem[i] * jumlahItem[i];
+
+      // for (int i = 0; i < hargaItem.length; i++) {
+      //   totalHarga += hargaItem[i] * jumlahItem[i];
+      // }
+
+      for (var item in widget.cartItems) {
+        double hargaProduk = double.tryParse(item[5]) ?? 0; // Ambil harga produk
+        int kuantitas = int.tryParse(item[4].split(' ')[0]) ?? 1; // Ambil kuantitas
+        totalHarga += (hargaProduk * kuantitas).toInt(); // Tambahkan ke total harga
       }
+
       totalHarga += shippingCost + protectionFee;
     });
+    print("Total Harga: $totalHarga");
   }
 
   Future<void> _openGoogleMaps() async {
@@ -268,6 +281,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               setState(() {
                                 isProtectionSelected = !isProtectionSelected;
                                 protectionFee = isProtectionSelected ? 3000 : 0;
+                                updateTotalHarga();
                               });
                             },
                             child: Container(
@@ -360,6 +374,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             setState(() {
                               selectedShippingMethod = value;
                               shippingCost = int.parse(method.cost.replaceAll(RegExp(r'[^0-9]'), ''));
+                              updateTotalHarga();
                             });
                           },
                         ),
@@ -385,12 +400,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
+              //const SizedBox(height: 10),
               ListTile(
                 leading: Image.asset(
                   'assets/images/toko/icon_bca.png',
-                  width: 40,
-                  height: 40,
+                  width: 25,
+                  height: 25,
                 ),
                 title: const Text('BCA Virtual Account'),
                 trailing: Radio<String>(
@@ -407,8 +422,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               ListTile(
                 leading: Image.asset(
                   'assets/images/toko/icon_cod.png',
-                  width: 35,
-                  height: 35,
+                  width: 25,
+                  height: 25,
                 ),
                 title: const Text('COD (Bayar di tempat)'),
                 trailing: Radio<String>(
