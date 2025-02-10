@@ -1,15 +1,21 @@
 import 'package:agrolink/components/payment/payment_card.dart';
-import 'package:agrolink/screens/riwayat_transaksi/riwayat_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../toko/PesananScreen.dart';
 import '../toko/toko_screen.dart';
 
 class PaymentScreen extends StatefulWidget {
   final int totalHarga;
+  final List<List<String>> cartItems; // Tambahkan parameter untuk cartItems
 
-  const PaymentScreen({required this.totalHarga, super.key});
+
+  const PaymentScreen({
+    required this.totalHarga,
+    required this.cartItems, // Terima cartItems dari CheckoutScreen
+    super.key,
+  });
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
@@ -39,13 +45,16 @@ class _PaymentScreenState extends State<PaymentScreen> {
         );
       },
     );
-
     // Tunggu beberapa detik, lalu pindah ke layar riwayat
     await Future.delayed(const Duration(seconds: 5));
     if (mounted) {
       Navigator.of(context).pop(); // Tutup dialog
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const TokoScreen()),
+        MaterialPageRoute(
+          builder: (context) => PesananScreen(
+            cartItems: widget.cartItems, // Teruskan cartItems ke PesananScreen
+          ),
+        ),
       );
     }
   }
@@ -127,3 +136,4 @@ class _PaymentScreenState extends State<PaymentScreen> {
     );
   }
 }
+

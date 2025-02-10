@@ -189,7 +189,7 @@ class _TokoScreenState extends State<TokoScreen> {
                     // Navigasi ke halaman pesanan
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const PesananScreen()),
+                      MaterialPageRoute(builder: (context) => const PesananScreen(cartItems: [],)),
                     );
                   },
                   child: Column(

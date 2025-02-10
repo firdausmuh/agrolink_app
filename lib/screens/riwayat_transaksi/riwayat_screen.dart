@@ -3,7 +3,18 @@ import '../../components/riwayat_transaksi/riwayat_card.dart';
 import '../../models/transaction_model.dart';
 
 class RiwayatScreen extends StatefulWidget {
-  const RiwayatScreen({super.key});
+  final List<Map<String, dynamic>> pesananBaru;
+  final List<Map<String, dynamic>> pesananBerlangsung;
+  final List<Map<String, dynamic>> pesananSelesai;
+  final List<Map<String, dynamic>> pesananDitolak;
+
+  const RiwayatScreen({
+    super.key,
+    required this.pesananBaru,
+    required this.pesananBerlangsung,
+    required this.pesananSelesai,
+    required this.pesananDitolak
+  });
 
   @override
   State<RiwayatScreen> createState() => _RiwayatScreenState();
@@ -11,58 +22,32 @@ class RiwayatScreen extends StatefulWidget {
 
 class _RiwayatScreenState extends State<RiwayatScreen> {
   String? selectedStatus; // Untuk menyimpan status yang dipilih
-  List<Transaction> transactions = [
-    Transaction(
-      id: '1',
-      status: 'Menunggu Konfirmasi',
-      productName: 'Madu Asli',
-      productImage: 'assets/images/distributor/madu_asli.png',
-      customerName: 'Muhamad Firdaus',
-      quantity: 2,
-      productType: 'Distributor',
-      totalPrice: 150000.0,
-    ),
-    Transaction(
-      id: '2',
-      status: 'Dikirim',
-      productName: 'Sabun Herba',
-      productImage: 'assets/images/distributor/sabun_herba.png',
-      customerName: 'Muhamad Firdaus',
-      quantity: 1,
-      productType: 'Distributor',
-      totalPrice: 75000.0,
-    ),
-    Transaction(
-      id: '3',
-      status: 'Dikirim',
-      productName: 'Kopi Kemasan',
-      productImage: 'assets/images/distributor/kopi_kemasan.png',
-      customerName: 'Muhamad Firdaus',
-      quantity: 3,
-      productType: 'Distributor',
-      totalPrice: 225000.0,
-    ),
-    Transaction(
-      id: '4',
-      status: 'Selesai',
-      productName: 'Beras Premium',
-      productImage: 'assets/images/produsen/beras_premium.png',
-      customerName: 'Muhamad Firdaus',
-      quantity: 1,
-      productType: 'Produsen',
-      totalPrice: 120000.0,
-    ),
-    Transaction(
-      id: '5',
-      status: 'Tidak Berhasil',
-      productName: 'Sayur Sawi',
-      productImage: 'assets/images/produsen/sayur_sawi1.png',
-      customerName: 'Muhamad Firdaus',
-      quantity: 1,
-      productType: 'Retailer',
-      totalPrice: 90000.0,
-    ),
-  ];
+  List<Transaction> transactions = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Gabungkan semua daftar pesanan
+    List<Map<String, dynamic>> semuaPesanan = [];
+    semuaPesanan.addAll(widget.pesananBaru);
+    semuaPesanan.addAll(widget.pesananBerlangsung);
+    semuaPesanan.addAll(widget.pesananSelesai);
+
+    // Konversi ke daftar Transaction
+    transactions = semuaPesanan.map((pesanan) {
+      return Transaction(
+        id: '${transactions.length + 1}',
+        status: pesanan['status'] ?? 'Menunggu Konfirmasi',
+        productName: pesanan['nama'],
+        productImage: pesanan['gambar'],
+        customerName: 'Muhamad Firdaus', // Anda bisa menyesuaikan ini
+        quantity: pesanan['jumlah'],
+        productType: pesanan['jenisProduk'],
+        totalPrice: pesanan['harga'],
+      );
+    }).toList();
+  }
 
   void _showStatusFilterDialog(BuildContext context) {
     showDialog(
@@ -81,9 +66,6 @@ class _RiwayatScreenState extends State<RiwayatScreen> {
                 // Menunggu Konfirmasi
                 _buildRadioOption('Menunggu Konfirmasi'),
                 const SizedBox(height: 12),
-                // Diproses
-                _buildRadioOption('Diproses'),
-                const SizedBox(height: 12),
                 // Dikirim
                 _buildRadioOption('Dikirim'),
                 const SizedBox(height: 12),
@@ -91,7 +73,7 @@ class _RiwayatScreenState extends State<RiwayatScreen> {
                 _buildRadioOption('Selesai'),
                 const SizedBox(height: 12),
                 // Tidak Berhasil
-                _buildRadioOption('Tidak Berhasil'),
+                _buildRadioOption('Ditolak'),
               ],
             ),
           ),

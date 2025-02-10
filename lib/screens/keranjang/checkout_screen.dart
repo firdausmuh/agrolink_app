@@ -504,7 +504,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => PaymentScreen(totalHarga: totalHarga),
+                    builder: (context) => PaymentScreen(totalHarga: totalHarga, cartItems: widget.cartItems,),
                   ),
                 );
               },

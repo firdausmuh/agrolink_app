@@ -18,6 +18,10 @@ class Transaction {
     required this.productType,
     required this.totalPrice,
   });
+
+
 }
+
+
 
 

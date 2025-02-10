@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:pdf/widgets.dart' as pw;
 
+import '../riwayat_transaksi/riwayat_screen.dart';
+
 class PesananScreen extends StatefulWidget {
-  const PesananScreen({super.key});
+  final List<List<String>> cartItems;
+
+  const PesananScreen({
+    required this.cartItems, // Terima cartItems dari PaymentScreen
+    super.key,
+  });
 
   @override
   _PesananScreenState createState() => _PesananScreenState();
@@ -12,26 +19,43 @@ class _PesananScreenState extends State<PesananScreen> {
   List<Map<String, dynamic>> _pesananBaru = []; // List untuk menyimpan pesanan baru
   List<Map<String, dynamic>> _pesananBerlangsung = []; // List untuk menyimpan pesanan yang sedang berlangsung
   List<Map<String, dynamic>> _pesananSelesai = []; // List untuk menyimpan pesanan yang selesai
+  List<Map<String, dynamic>> _pesananDitolak = []; // List untuk menyimpan pesanan yang ditolak
   Map<int, bool> _isExpanded = {}; // State untuk melacak apakah ringkasan sedang ditampilkan
 
   @override
   void initState() {
     super.initState();
     // Inisialisasi pesanan baru
-    _pesananBaru = [
-      {
-        'nama': 'Muhamad Firdaus',
-        'jumlah': 1,
-        'harga': 40000,
-        'jenisProduk': 'Produk Produsen',
-        'pengiriman': 'J&T Express',
-        'gambar': 'assets/images/distributor/sabun_herba.png',
-      },
-    ];
+    _pesananBaru = widget.cartItems.map((item) {
+      return {
+        'nama': item[1], // Nama produk
+        'jumlah': int.tryParse(item[4].split(' ')[0]) ?? 1, // Jumlah produk
+        'harga': double.tryParse(item[5]) ?? 0, // Harga produk
+        'jenisProduk': item[2], // Jenis produk
+        'pengiriman': 'J&T Express', // Metode pengiriman
+        'gambar': item[0], // Gambar produk
+        'status': 'Menunggu Konfirmasi', // Status default
+      };
+    }).toList();
+  }
+
+  void _navigateToRiwayatScreen() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => RiwayatScreen(
+          pesananBaru: _pesananBaru,
+          pesananBerlangsung: _pesananBerlangsung,
+          pesananSelesai: _pesananSelesai,
+          pesananDitolak: _pesananDitolak,
+        ),
+      ),
+    );
   }
 
   void _konfirmasiPesanan(int index) {
     var pesanan = _pesananBaru[index];
+    pesanan['status'] = 'Menunggu Konfirmasi'; // Tambahkan status
 
     // Tampilkan pesan konfirmasi
     ScaffoldMessenger.of(context).showSnackBar(
@@ -50,6 +74,7 @@ class _PesananScreenState extends State<PesananScreen> {
 
   void _tolakPesanan(int index) {
     var pesanan = _pesananBaru[index];
+    pesanan['status'] = 'Ditolak'; // Tambahkan status
 
     // Tampilkan pesan penolakan
     ScaffoldMessenger.of(context).showSnackBar(
@@ -59,19 +84,40 @@ class _PesananScreenState extends State<PesananScreen> {
       ),
     );
 
-    // Hapus pesanan dari daftar pesanan baru
+    // Hapus pesanan dari daftar pesanan baru dan tambahkan ke daftar ditolak
     setState(() {
       _pesananBaru.removeAt(index);
+      _pesananDitolak.add(pesanan);
     });
   }
 
   void _kirimPesanan(int index) {
     var pesanan = _pesananBerlangsung[index];
+    pesanan['status'] = 'Dikirim'; // Tambahkan status
 
     // Tampilkan pesan konfirmasi
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text("Pesanan dari ${pesanan['nama']} telah dikirim."),
+        duration: const Duration(seconds: 3),
+      ),
+    );
+
+    // Pindahkan pesanan ke pesanan selesai
+    setState(() {
+      _pesananSelesai.add(pesanan);
+      _pesananBerlangsung.removeAt(index);
+    });
+  }
+
+  void _selesaikanPesanan(int index) {
+    var pesanan = _pesananBerlangsung[index];
+    pesanan['status'] = 'Selesai'; // Tambahkan status
+
+    // Tampilkan pesan konfirmasi
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Pesanan dari ${pesanan['nama']} telah selesai."),
         duration: const Duration(seconds: 3),
       ),
     );
@@ -156,6 +202,10 @@ class _PesananScreenState extends State<PesananScreen> {
                   : _buildEmptyState('Belum ada pesanan yang selesai'),
             ),
           ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: _navigateToRiwayatScreen, // Panggil fungsi navigasi
+          child: const Icon(Icons.history), // Ikon riwayat
         ),
       ),
     );
@@ -320,7 +370,7 @@ class _PesananScreenState extends State<PesananScreen> {
                     ),
                   ],
                 ),
-              if (isBerlangsung) // Tombol Kirim hanya muncul di tab Dikirim
+              if (isBerlangsung) // Tombol Kirim dan Selesai muncul di tab Dikirim
                 Row(
                   children: [
                     const SizedBox(width: 5),
@@ -338,6 +388,23 @@ class _PesananScreenState extends State<PesananScreen> {
                           padding: const EdgeInsets.symmetric(vertical: 2), // Padding diperkecil
                         ),
                         child: const Text("Kirim", style: TextStyle(fontSize: 12, color: Colors.white)), // Warna teks putih
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    SizedBox(
+                      width: 80, // Ukuran tombol "Selesai"
+                      child: ElevatedButton(
+                        onPressed: () {
+                          _selesaikanPesanan(index); // Selesaikan pesanan
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 2), // Padding diperkecil
+                        ),
+                        child: const Text("Selesai", style: TextStyle(fontSize: 12, color: Colors.white)), // Warna teks putih
                       ),
                     ),
                   ],
@@ -583,4 +650,3 @@ class _PesananScreenState extends State<PesananScreen> {
     );
   }
 }
-
