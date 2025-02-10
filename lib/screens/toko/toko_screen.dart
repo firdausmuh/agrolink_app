@@ -67,6 +67,15 @@ class _TokoScreenState extends State<TokoScreen> {
       produkList.removeAt(index);
       _saveProducts(); // Simpan setelah menghapus produk
     });
+
+    // Tampilkan SnackBar setelah produk dihapus
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text("Produk berhasil dihapus"),
+        duration: const Duration(seconds: 2),
+        backgroundColor: Colors.green, // Warna latar belakang SnackBar
+      ),
+    );
   }
 
   void _editProduct(int index) {
@@ -86,6 +95,15 @@ class _TokoScreenState extends State<TokoScreen> {
           produkList = updatedList; // Memperbarui daftar produk dengan yang baru
           _saveProducts(); // Simpan setelah memperbarui produk
         });
+
+        // Tampilkan SnackBar setelah produk berhasil diperbarui
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text("Data produk berhasil diperbarui"),
+            duration: const Duration(seconds: 2),
+            backgroundColor: Colors.green, // Warna latar belakang SnackBar
+          ),
+        );
       }
     });
   }

@@ -62,55 +62,81 @@ class _UploadProdukScreenState extends State<UploadProdukScreen> {
   }
 
   void _upload() {
-    if (_namaController.text.isNotEmpty &&
-        _hargaController.text.isNotEmpty &&
-        _image != null) {
-      // Membuat salinan list produk yang dapat dimodifikasi
-      List<Map<String, dynamic>> updatedList = List.from(widget.produkList);
+    // Validasi harga harus berupa angka
+    final harga = _hargaController.text;
+    final isHargaValid = double.tryParse(harga) != null;
 
-      if (widget.index != null) {
-        // Jika index tidak null, update produk yang ada
-        updatedList[widget.index!] = {
-          'nama': _namaController.text,
-          'harga': _hargaController.text,
-          'deskripsi': _deskripsiController.text,
-          'stoktersedia': _stokTersediaController.text,
-          'ketahanan': _ketahananController.text,
-          'kategori': _kategoriController.text,
-          'image': _image!.path, // Simpan path gambar
-        };
-      } else {
-        // Tambahkan produk baru ke daftar produk yang dapat dimodifikasi
-        updatedList.add({
-          'nama': _namaController.text,
-          'harga': _hargaController.text,
-          'deskripsi': _deskripsiController.text,
-          'stoktersedia': _stokTersediaController.text,
-          'ketahanan': _ketahananController.text,
-          'kategori': _kategoriController.text,
-          'image': _image!.path, // Simpan path gambar
-        });
-      }
+    // Validasi stok: bisa berupa angka atau string dengan satuan (Gram, Kg, Ton)
+    final stok = _stokTersediaController.text;
+    final isStokValid = double.tryParse(stok) != null ||
+        stok.toLowerCase().endsWith('gram') ||
+        stok.toLowerCase().endsWith('kg') ||
+        stok.toLowerCase().endsWith('ton');
 
+    // Memeriksa apakah semua field telah diisi dan format harga/stok valid
+    if (_namaController.text.isEmpty ||
+        _hargaController.text.isEmpty ||
+        _deskripsiController.text.isEmpty ||
+        _stokTersediaController.text.isEmpty ||
+        _ketahananController.text.isEmpty ||
+        _kategoriController.text.isEmpty ||
+        _image == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text("Upload produk berhasil!"),
-          backgroundColor: Colors.green,
-          duration: Duration(seconds: 2),
-        ),
-      );
-
-      // Kembali ke layar sebelumnya dengan data yang diperbarui
-      Navigator.pop(context, updatedList);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Lengkapi semua data!"),
+          content: Text("Data produk harus diisi dengan lengkap"),
           backgroundColor: Colors.red,
           duration: Duration(seconds: 3),
         ),
       );
+      return; // Menghentikan proses upload jika ada field yang kosong
+    } else if (!isHargaValid || !isStokValid) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Harga dan stok produk harus berupa angka valid"),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return; // Menghentikan proses upload jika format harga/stok tidak valid
     }
+
+    // Membuat salinan list produk yang dapat dimodifikasi
+    List<Map<String, dynamic>> updatedList = List.from(widget.produkList);
+
+    if (widget.index != null) {
+      // Jika index tidak null, update produk yang ada
+      updatedList[widget.index!] = {
+        'nama': _namaController.text,
+        'harga': _hargaController.text,
+        'deskripsi': _deskripsiController.text,
+        'stoktersedia': _stokTersediaController.text,
+        'ketahanan': _ketahananController.text,
+        'kategori': _kategoriController.text,
+        'image': _image!.path, // Simpan path gambar
+      };
+    } else {
+      // Tambahkan produk baru ke daftar produk yang dapat dimodifikasi
+      updatedList.add({
+        'nama': _namaController.text,
+        'harga': _hargaController.text,
+        'deskripsi': _deskripsiController.text,
+        'stoktersedia': _stokTersediaController.text,
+        'ketahanan': _ketahananController.text,
+        'kategori': _kategoriController.text,
+        'image': _image!.path, // Simpan path gambar
+      });
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Upload produk berhasil!"),
+        backgroundColor: Colors.green,
+        duration: Duration(seconds: 2),
+      ),
+    );
+
+    // Kembali ke layar sebelumnya dengan data yang diperbarui
+    Navigator.pop(context, updatedList);
   }
 
   @override

@@ -60,7 +60,7 @@ class _PesananScreenState extends State<PesananScreen> {
     // Tampilkan pesan konfirmasi
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text("Anda telah menerima pesanan dari ${pesanan['nama']}"),
+        content: Text("Anda telah mengkonfirmasi pesanan produk ${pesanan['nama']}"),
         duration: const Duration(seconds: 3),
       ),
     );
@@ -98,7 +98,7 @@ class _PesananScreenState extends State<PesananScreen> {
     // Tampilkan pesan konfirmasi
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text("Pesanan dari ${pesanan['nama']} telah dikirim."),
+        content: Text("Pesanan produk ${pesanan['nama']} telah dikirim."),
         duration: const Duration(seconds: 3),
       ),
     );
@@ -117,7 +117,7 @@ class _PesananScreenState extends State<PesananScreen> {
     // Tampilkan pesan konfirmasi
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text("Pesanan dari ${pesanan['nama']} telah selesai."),
+        content: Text("Pesanan produk ${pesanan['nama']} telah selesai."),
         duration: const Duration(seconds: 3),
       ),
     );

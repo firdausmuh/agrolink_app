@@ -15,55 +15,55 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _rememberMe = false; // To remember the user
 
   void _login() async {
-    // Simple validation logic for the example
-    if (_passwordController.text != '' && _usernameController.text != '') {
-      // Check role from SharedPreferences
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? username = prefs.getString('username');
-      String? password = prefs.getString('password');
+    // Validasi jika username atau password kosong
+    if (_usernameController.text.isEmpty || _passwordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Username dan password tidak boleh kosong'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return; // Hentikan proses login jika validasi gagal
+    }
 
-      if (username != null && password != null) {
-        if (username == _usernameController.text && password == _passwordController.text) {
-          // Store user data and role in SharedPreferences
-          prefs.setBool('isLoggedIn', true);
-          String? role = prefs.getString('role');
+    // Lanjutkan proses login jika validasi berhasil
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? username = prefs.getString('username');
+    String? password = prefs.getString('password');
 
-          // Show success SnackBar based on role
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Successfully logged in as $role!'),
-              backgroundColor: Colors.green,
-            ),
-          );
+    if (username != null && password != null) {
+      if (username == _usernameController.text && password == _passwordController.text) {
+        // Store user data and role in SharedPreferences
+        prefs.setBool('isLoggedIn', true);
+        String? role = prefs.getString('role');
 
-          // Navigate to the MainScreen
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const MainScreen()),
-          );
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("Login credentials do not match"),
-              backgroundColor: Colors.red,
-              duration: Duration(seconds: 3),
-            ),
-          );
-        }
+        // Show success SnackBar based on role
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Berhasil login sebagai $role!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+
+        // Navigate to the MainScreen
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const MainScreen()),
+        );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text("Login credentials do not match"),
+            content: Text("Login failed: Username or password is incorrect"),
             backgroundColor: Colors.red,
             duration: Duration(seconds: 3),
           ),
         );
       }
     } else {
-      // Credentials are invalid, show an error SnackBar
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text("Login credentials do not match"),
+          content: Text("Login failed: User not found"),
           backgroundColor: Colors.red,
           duration: Duration(seconds: 3),
         ),

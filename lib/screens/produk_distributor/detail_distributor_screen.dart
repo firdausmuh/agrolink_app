@@ -51,7 +51,7 @@ class _DetailProdukDistributorScreenState extends State<DetailDistributorScreen>
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('Successfully added to cart!'),
+        content: Text('Produk Berhasil di tambahkan kedalam Keranjang!'),
         backgroundColor: Colors.green,
       ),
     );
